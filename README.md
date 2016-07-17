@@ -1,2 +1,2 @@
-# keyboard_remote
-A keyboard sharing tools through different devices
+# Keyboard Remote
+A keyboard sharing tool through different devices
