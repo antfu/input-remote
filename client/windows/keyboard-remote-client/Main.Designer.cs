@@ -35,8 +35,16 @@
             this.OutputTextBox = new System.Windows.Forms.TextBox();
             this.TrayNotifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.TrayMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.connectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.enableToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.notifyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.NotifyConnection = new System.Windows.Forms.ToolStripMenuItem();
+            this.NotifyKeyDown = new System.Windows.Forms.ToolStripMenuItem();
+            this.NotifyKeyUp = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.showConsoleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.DelaySendTest = new System.Windows.Forms.Button();
             this.TrayMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -82,10 +90,68 @@
             // 
             this.TrayMenu.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.TrayMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.connectToolStripMenuItem,
+            this.enableToolStripMenuItem,
+            this.notifyToolStripMenuItem,
+            this.toolStripSeparator1,
             this.showConsoleToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.TrayMenu.Name = "TrayMenu";
-            this.TrayMenu.Size = new System.Drawing.Size(211, 64);
+            this.TrayMenu.ShowCheckMargin = true;
+            this.TrayMenu.ShowImageMargin = false;
+            this.TrayMenu.Size = new System.Drawing.Size(212, 193);
+            // 
+            // connectToolStripMenuItem
+            // 
+            this.connectToolStripMenuItem.Name = "connectToolStripMenuItem";
+            this.connectToolStripMenuItem.Size = new System.Drawing.Size(211, 30);
+            this.connectToolStripMenuItem.Text = "&Connect";
+            this.connectToolStripMenuItem.Click += new System.EventHandler(this.connectToolStripMenuItem_Click);
+            // 
+            // enableToolStripMenuItem
+            // 
+            this.enableToolStripMenuItem.CheckOnClick = true;
+            this.enableToolStripMenuItem.Name = "enableToolStripMenuItem";
+            this.enableToolStripMenuItem.Size = new System.Drawing.Size(211, 30);
+            this.enableToolStripMenuItem.Text = "Enable";
+            // 
+            // notifyToolStripMenuItem
+            // 
+            this.notifyToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.NotifyConnection,
+            this.NotifyKeyDown,
+            this.NotifyKeyUp});
+            this.notifyToolStripMenuItem.Name = "notifyToolStripMenuItem";
+            this.notifyToolStripMenuItem.Size = new System.Drawing.Size(211, 30);
+            this.notifyToolStripMenuItem.Text = "&Notify";
+            // 
+            // NotifyConnection
+            // 
+            this.NotifyConnection.Checked = true;
+            this.NotifyConnection.CheckOnClick = true;
+            this.NotifyConnection.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.NotifyConnection.Name = "NotifyConnection";
+            this.NotifyConnection.Size = new System.Drawing.Size(211, 30);
+            this.NotifyConnection.Text = "Connection";
+            // 
+            // NotifyKeyDown
+            // 
+            this.NotifyKeyDown.CheckOnClick = true;
+            this.NotifyKeyDown.Name = "NotifyKeyDown";
+            this.NotifyKeyDown.Size = new System.Drawing.Size(211, 30);
+            this.NotifyKeyDown.Text = "KeyDown";
+            // 
+            // NotifyKeyUp
+            // 
+            this.NotifyKeyUp.CheckOnClick = true;
+            this.NotifyKeyUp.Name = "NotifyKeyUp";
+            this.NotifyKeyUp.Size = new System.Drawing.Size(211, 30);
+            this.NotifyKeyUp.Text = "KeyUp";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(208, 6);
             // 
             // showConsoleToolStripMenuItem
             // 
@@ -101,10 +167,21 @@
             this.exitToolStripMenuItem.Text = "&Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
+            // DelaySendTest
+            // 
+            this.DelaySendTest.Location = new System.Drawing.Point(234, 12);
+            this.DelaySendTest.Name = "DelaySendTest";
+            this.DelaySendTest.Size = new System.Drawing.Size(158, 42);
+            this.DelaySendTest.TabIndex = 3;
+            this.DelaySendTest.Text = "DelaySendTest";
+            this.DelaySendTest.UseVisualStyleBackColor = true;
+            this.DelaySendTest.Click += new System.EventHandler(this.DelaySendTest_Click);
+            // 
             // Main
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(737, 733);
+            this.Controls.Add(this.DelaySendTest);
             this.Controls.Add(this.OutputTextBox);
             this.Controls.Add(this.CloseButton);
             this.Controls.Add(this.ConnectButton);
@@ -133,6 +210,14 @@
         private System.Windows.Forms.ContextMenuStrip TrayMenu;
         private System.Windows.Forms.ToolStripMenuItem showConsoleToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
+        private System.Windows.Forms.Button DelaySendTest;
+        private System.Windows.Forms.ToolStripMenuItem connectToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem enableToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem NotifyConnection;
+        private System.Windows.Forms.ToolStripMenuItem NotifyKeyDown;
+        private System.Windows.Forms.ToolStripMenuItem NotifyKeyUp;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem notifyToolStripMenuItem;
     }
 }
 

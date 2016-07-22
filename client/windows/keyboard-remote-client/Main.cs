@@ -24,6 +24,8 @@ namespace Antnf.KeyboardRemote.Client
             this.Opacity = 0;
             Control.CheckForIllegalCrossThreadCalls = false;
             receiver = new Receiver("ws://localhost/ws/r");
+            receiver.Socket.OnOpen += Socket_OnOpen;
+            receiver.Socket.OnClose += Socket_OnClose;
             receiver.OnRawMessage += Receiver_OnRawMessage;
             receiver.OnKeyDown += Receiver_OnKeyDown;
             receiver.OnKeyUp += Receiver_OnKeyUp;
@@ -32,11 +34,16 @@ namespace Antnf.KeyboardRemote.Client
             receiver.Connect();
         }
 
-        private void Receiver_OnKeyUp(Receiver receiver, KeyActionInfo info)
+        private void Socket_OnClose(object sender, WebSocketSharp.CloseEventArgs e)
         {
-            Notify(info.Key, "KeyUp");
-            Log("KeyUp", info.Key);
+            connectToolStripMenuItem.Checked = true;
         }
+
+        private void Socket_OnOpen(object sender, EventArgs e)
+        {
+            connectToolStripMenuItem.Checked = true;
+        }
+
 
         private void Receiver_OnRawMessage(Receiver receiver, dynamic data)
         {
@@ -45,14 +52,28 @@ namespace Antnf.KeyboardRemote.Client
 
         private void Receiver_OnPeerStateChange(Receiver receiver, PeerState state)
         {
-            Notify(state.ToString(), "State");
+            if(NotifyConnection.Checked)
+                Notify(state.ToString(), "State");
             Log("State", state.ToString());
         }
 
         private void Receiver_OnKeyDown(Receiver receiver, KeyActionInfo info)
         {
-            Notify(info.Key,"KeyDown");
+            if (NotifyKeyDown.Checked)
+                Notify(info.Key,"KeyDown");
             Log("KeyDown", info.Key);
+            if (enableToolStripMenuItem.Checked)
+                Actor.KeyDown((byte)info.KeyCode);
+        }
+
+        private void Receiver_OnKeyUp(Receiver receiver, KeyActionInfo info)
+        {
+            if (NotifyKeyUp.Checked)
+                Notify(info.Key, "KeyUp");
+            Log("KeyUp", info.Key);
+            if (enableToolStripMenuItem.Checked)
+                Actor.KeyUp((byte)info.KeyCode);
+
         }
 
         private void Log(string action, string msg = "")
@@ -85,5 +106,22 @@ namespace Antnf.KeyboardRemote.Client
         {
             Environment.Exit(0);
         }
+
+        private void DelaySendTest_Click(object sender, EventArgs e)
+        {
+            Actor.KeyDown(16);
+            Actor.KeyPress(38);
+            Actor.KeyUp(16);
+        }
+
+        private void connectToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (NotifyConnection.Checked)
+                receiver.Close();
+            else
+                receiver.Connect();
+                
+        }
+        
     }
 }
