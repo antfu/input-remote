@@ -61,7 +61,7 @@ function send_event(event) {
     delete pressed[obj.keyCode];
     $('#pressed [code="'+obj.keyCode+'"]').remove();
   }
-  console.log(event);
+  console.log(event,obj);
   client.sendkey(obj);
 }
 document.addEventListener('keydown', function(event) {
