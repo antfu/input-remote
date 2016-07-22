@@ -16,6 +16,11 @@ recivers = {}
 selector = {'s':senders,'r':recivers}
 invertor = {'r':senders,'s':recivers}
 
+msg = {
+    'online': '{"action":"system","subaction":"peerstate","data":{"state":true}}',
+    'offline': '{"action":"system","subaction":"peerstate","data":{"state":false}}'
+}
+
 class index_handler(tornado.web.RequestHandler):
     def get(self):
         self.render('index.html')
@@ -37,12 +42,12 @@ class ws_handler(tornado.websocket.WebSocketHandler):
             return
         selector[self.type][self.channel_id] = self
         if self.channel_id in invertor[self.type].keys():
-            invertor[self.type][self.channel_id].send_message(dict(online=True))
-            self.send_message(dict(online=True))
+            invertor[self.type][self.channel_id].write_message(msg['online'])
+            self.write_message(msg['online'])
 
     def on_close(self,*args,**kwargs):
         del(selector[self.type][self.channel_id])
-        invertor[self.type][self.channel_id].send_message(dict(online=False))
+        invertor[self.type][self.channel_id].write_message(msg['offline'])
 
     def on_message(self, message):
         if self.channel_id in invertor[self.type].keys():

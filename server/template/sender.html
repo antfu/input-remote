@@ -35,42 +35,43 @@ client.onstatechange = function(state) {
   if (state) $('#state').addClass('teal').text('Online');
   else $('#state').removeClass('teal').text('Offline');
 }
-function send_event(event) {
+function sendkey(event) {
+  var keycode = event.keyCode;
   var obj = {};
-  obj.key = event.key;
-  obj.keyCode = event.keyCode;
-  obj.metaKey = event.metaKey;
-  obj.repeat = event.repeat;
-  obj.shiftKey = event.shiftKey;
-  obj.charCode = event.charCode;
-  obj.ctrlKey = event.ctrlKey;
-  obj.altKey = event.altKey;
-  obj.type = event.type;
+  obj.action = 'key';
+  obj.subaction = event.type;
+  obj.data = {};
+  obj.data.keyaction = event.type;
+  obj.data.key = event.key;
+  obj.data.keycode = event.keyCode;
+  obj.data.is_shift_down = event.shiftKey;
+  obj.data.is_ctrl_down = event.ctrlKey;
+  obj.data.is_alt_down = event.altKey;
 
-  if (obj.type == 'keydown')
-    if (pressed[obj.keyCode] == undefined)
+  if (event.type == 'keydown')
+    if (pressed[keycode] == undefined)
     {
-        pressed[obj.keyCode] = obj;
-        var new_label = $('<div class="ui teal label" code="'+obj.keyCode+'">' + obj.key + '</div>')
+        pressed[keycode] = obj;
+        var new_label = $('<div class="ui teal label" code="'+keycode+'">' + event.key + '</div>')
         $('#pressed').append(new_label);
     }
     else
       return;
   else
   {
-    delete pressed[obj.keyCode];
-    $('#pressed [code="'+obj.keyCode+'"]').remove();
+    delete pressed[keycode];
+    $('#pressed [code="'+keycode+'"]').remove();
   }
   console.log(event,obj);
   client.sendkey(obj);
 }
 document.addEventListener('keydown', function(event) {
-    send_event(event);
+    sendkey(event);
     event.preventDefault();
     return false;
 });
 document.addEventListener('keyup', function(event) {
-    send_event(event);
+    sendkey(event);
     event.preventDefault();
     return false;
 });

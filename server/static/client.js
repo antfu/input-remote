@@ -9,7 +9,7 @@
 
 var WSClient = function(url,channel_id,auth,debug)
 {
-  var wsc = {}
+  var wsc = this;
   wsc.channel_id = channel_id;
   wsc.connected = false;
   wsc.online = false;
@@ -39,15 +39,21 @@ var WSClient = function(url,channel_id,auth,debug)
     wsc.ws.onmessage = function (evt) {
       var data = JSON.parse(evt.data);
       if (wsc.debug)
-        console.log('[Sender] Received: ',data);
-      if (data.online != undefined)
+        console.log('[Sender] Received: ', data);
+
+      if (data.action == "system")
       {
-        wsc.online = data.online;
-        if (wsc.onstatechange)
-          wsc.onstatechange(wsc.online);
+        if (data.subaction == "peerstate")
+        {
+          wsc.online = data.data.state;
+          if (wsc.onstatechange)
+            wsc.onstatechange(wsc.online);
+        }
       }
-      if (data.key != undefined && wsc.onkey)
-        wsc.onkey(data.key);
+      else if (data.action == "key")
+      {
+        wsc.onkey(data.data);
+      }
     };
   }
   wsc.disconnect = function()
@@ -58,10 +64,10 @@ var WSClient = function(url,channel_id,auth,debug)
     wsc.connected = false;
     wsc.onstatechange(false);
   }
-  wsc.sendkey = function(key)
+  wsc.sendkey = function(obj)
   {
     if (wsc.ws == undefined) return;
-    wsc.ws.send(JSON.stringify({key:key}));
+    wsc.ws.send(JSON.stringify(obj));
   }
   return wsc;
 };

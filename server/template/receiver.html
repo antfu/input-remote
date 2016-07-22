@@ -40,11 +40,11 @@ client.connect();
 client.onkey = function(key) {
   console.log(key);
   var char = key.key;
-  var code = key.keyCode;
+  var code = key.keycode;
   if (!char) return;
   if (char == ' ') char = 'Space';
 
-  if (key.type == 'keydown')
+  if (key.keyaction == 'keydown')
   {
     if (pressed[code] ==  undefined)
     {
@@ -58,9 +58,9 @@ client.onkey = function(key) {
     $('#pressed [code="'+code+'"]').remove();
 
     if (code == 16 || code == 17 || code == 18) return; //Ctrl Shift Alt
-    if (key.altKey) char = 'Alt + ' + char;
-    if (key.shiftKey) char = 'Shift + ' + char;
-    if (key.ctrlKey) char = 'Ctrl + ' + char;
+    if (key.is_alt_down) char = 'Alt + ' + char;
+    if (key.is_shift_down) char = 'Shift + ' + char;
+    if (key.is_alt_down) char = 'Ctrl + ' + char;
     var new_label = $('<div class="ui basic small label">' + char + '</div>')
     var current_time = Math.floor(Date.now() / 1000);
     if (current_time - last_time > 60)

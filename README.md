@@ -22,7 +22,7 @@ A keyboard sharing tool through different devices
 #### Key Data
 ```javascript
 {
-  keyaction: [up|down],
+  keyaction: [keyup|keydown],
   key: "s",
   keycode: 83,
   is_shift_down: bool,

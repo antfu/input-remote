@@ -12,11 +12,11 @@ namespace Antnf.KeyboardRemote.Client
     }
     class KeyActionInfo
     {
-        public int KeyCode { get; }
-        public string Key { get; }
-        public KeyActionType ActionType { get; }
-        public bool IsShiftDown { get; }
-        public bool IsCtrlDown { get; }
-        public bool IsAltDown { get; }
+        public int KeyCode { get; set; }
+        public string Key { get; set; }
+        public KeyActionType ActionType { get; set; }
+        public bool IsShiftDown { get; set; }
+        public bool IsCtrlDown { get; set; }
+        public bool IsAltDown { get; set; }
     }
 }
