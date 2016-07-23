@@ -45,3 +45,15 @@ function init_header(type) {
   $('#qrcode_display').popup({popup: '#qrcode_popup'});
   $('#link_copy').popup();
 }
+
+function change_favicon(src) {
+  var link = document.createElement('link'),
+      oldLink = document.getElementById('favion');
+  link.id = 'favion';
+  link.rel = 'shortcut icon';
+  link.href = src;
+  if (oldLink) {
+    document.head.removeChild(oldLink);
+  }
+  document.head.appendChild(link);
+}

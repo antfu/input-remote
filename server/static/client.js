@@ -7,7 +7,20 @@ var WSClient = function(url,debug)
   wsc.online = false;
   wsc.url = url;
   wsc.debug = debug;
-
+  wsc.get_state = function()
+  {
+    if (!wsc.connected)
+    {
+      change_favicon('/static/icons/black_red.png');
+      return 'Disconnect';
+    } else if (!wsc.online) {
+      change_favicon('/static/icons/black_grey.png');
+      return 'Waiting';
+    } else {
+      change_favicon('/static/icons/black_green.png');
+      return 'Online';
+    }
+  }
   wsc.connect = function()
   {
     wsc.ws = new WebSocket(wsc.url);
@@ -15,6 +28,8 @@ var WSClient = function(url,debug)
       wsc.connected = true;
       if (wsc.onopen)
         wsc.onopen();
+      if (wsc.onstatechange)
+        wsc.onstatechange(wsc.get_state());
       if (wsc.debug)
         console.log('[Sender] Connection established: ',wsc.url);
     };
@@ -26,6 +41,9 @@ var WSClient = function(url,debug)
         console.log('[Sender] Connection lost: ',wsc.url);
       wsc.ws = undefined;
       wsc.connected = false;
+      wsc.online = false;
+      if (wsc.onstatechange)
+        wsc.onstatechange(wsc.get_state());
     };
     wsc.ws.onmessage = function (evt) {
       var data = JSON.parse(evt.data);
@@ -38,7 +56,7 @@ var WSClient = function(url,debug)
         {
           wsc.online = data.data.state;
           if (wsc.onstatechange)
-            wsc.onstatechange(wsc.online);
+            wsc.onstatechange(wsc.get_state());
         }
       }
       else if (data.action == "key")
