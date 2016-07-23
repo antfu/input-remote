@@ -13,7 +13,9 @@ namespace Antnf.KeyboardRemote.Client.Receiver
     public partial class Main : Form
     {
         private WebsocketAgent agent;
-        private string ws_url;
+        private string ws_url = "";
+        private string http_url = "http://localhost/receiver/";
+        private SettingHelper settings = new SettingHelper("setting.json");
 
         public Main()
         {
@@ -22,11 +24,17 @@ namespace Antnf.KeyboardRemote.Client.Receiver
 
         private string url_to_ws(string url)
         {
-            return url.Replace("https", "wss").Replace("http", "ws").Replace("receiver", "ws") + "&t=receiver";
+            url = url.Replace("https", "wss").Replace("http", "ws").Replace("receiver", "ws") + "&t=receiver";
+            if (url.IndexOf('?') == -1)
+                url = url.Replace('&', '?');
+            return url;
         }
         
         private void Reconnect()
         {
+            if (agent != null)
+                agent.Close();
+
             agent = new WebsocketAgent(ws_url);
             agent.Socket.OnOpen += Socket_OnOpen;
             agent.Socket.OnClose += Socket_OnClose;
@@ -38,13 +46,25 @@ namespace Antnf.KeyboardRemote.Client.Receiver
             agent.Connect();
         }
 
+        private void AddressInput()
+        {
+            var url_input = new AddressInput();
+            url_input.url = this.http_url;
+            url_input.ShowDialog();
+            this.http_url = url_input.url;
+            this.ws_url = url_to_ws(this.http_url);
+            settings["http_url"] = this.http_url;
+            settings["ws_url"] = this.ws_url;
+        }
+
         private void Main_Load(object sender, EventArgs e)
         {
             this.Opacity = 0;
             Control.CheckForIllegalCrossThreadCalls = false;
-            var url_input = new AddressInput();
-            url_input.ShowDialog();
-            ws_url = url_to_ws(url_input.url);
+            this.http_url = settings["http_url"];
+            this.ws_url = settings["ws_url"];
+            if (this.http_url == null || this.ws_url == null || this.http_url == "" || this.ws_url == "")
+                AddressInput();
             Reconnect();
         }
 

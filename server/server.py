@@ -136,6 +136,8 @@ def run():
             (r'/ws',ws_handler),
             (r'/sender',sender_handler),
             (r'/receiver',receiver_handler),
+            (r'/s',sender_handler),
+            (r'/r',receiver_handler),
             (r'/new',new_handler),
             (r'/auth_failed',auth_failed_handler),
             (r'/localmode',localmode_handler),
