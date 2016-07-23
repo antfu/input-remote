@@ -129,6 +129,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="icon.ico" />
+    <None Include="Resources\green.ico" />
+    <None Include="Resources\grey.ico" />
+    <None Include="Resources\normal.ico" />
+    <None Include="Resources\red.ico" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Antnf.KeyboardRemote.Client\Antnf.KeyboardRemote.Client.csproj">

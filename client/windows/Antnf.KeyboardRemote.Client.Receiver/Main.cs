@@ -16,10 +16,21 @@ namespace Antnf.KeyboardRemote.Client.Receiver
         private string ws_url = "";
         private string http_url = "http://localhost/receiver/";
         private SettingHelper settings = new SettingHelper("setting.json");
+        private bool connected = false;
+        private bool online = false;
 
         public Main()
         {
             InitializeComponent();
+        }
+        private void UpdateNotifyIcon()
+        {
+            if (!this.connected)
+                TrayNotifyIcon.Icon = Properties.Resources.red;
+            else if (!this.online)
+                TrayNotifyIcon.Icon = Properties.Resources.grey;
+            else
+                TrayNotifyIcon.Icon = Properties.Resources.green;
         }
 
         private string url_to_ws(string url)
@@ -71,12 +82,16 @@ namespace Antnf.KeyboardRemote.Client.Receiver
         private void Socket_OnClose(object sender, WebSocketSharp.CloseEventArgs e)
         {
             connectToolStripMenuItem.Checked = false;
+            this.connected = false;
+            UpdateNotifyIcon();
             Notify("Reason: " + e.Reason, "Socket Closed");
         }
 
         private void Socket_OnOpen(object sender, EventArgs e)
         {
             connectToolStripMenuItem.Checked = true;
+            this.connected = true;
+            UpdateNotifyIcon();
         }
 
 
@@ -91,6 +106,8 @@ namespace Antnf.KeyboardRemote.Client.Receiver
 
             if (NotifyConnection.Checked)
                 Notify(state.ToString(), "State");
+            this.online = (state == PeerState.Online);
+            UpdateNotifyIcon();
             Log("State", state.ToString());
 
         }
@@ -146,10 +163,7 @@ namespace Antnf.KeyboardRemote.Client.Receiver
 
         private void changeAddrToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            agent.Close();
-            var url_input = new AddressInput();
-            url_input.ShowDialog();
-            ws_url = url_to_ws(url_input.url);
+            AddressInput();
             Reconnect();
         }
     }
