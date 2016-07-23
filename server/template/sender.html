@@ -75,122 +75,12 @@ body
 
 {% block scripts %}
 <script>
-var is_shift_down = false;
-var is_ctrl_down = false;
-var is_alt_down = false;
-function init_keyboards() {
-  $('.keyboard key').each(function(i,e) {
-    e = $(e);
-    e.mousedown(function(){
-      var event = {};
-      event.type = "keydown";
-      event.key = e.text();
-      event.keyCode = e.attr('code');
-      event.shiftKey = is_shift_down;
-      event.ctrlKey = is_ctrl_down;
-      event.altKey = is_alt_down;
-      e.down = true;
-      sendkey(event);
-    });
-    e.mouseup(function(){
-      var event = {};
-      event.type = "keyup";
-      event.key = e.text();
-      event.keyCode = e.attr('code');
-      event.shiftKey = is_shift_down;
-      event.ctrlKey = is_ctrl_down;
-      event.altKey = is_alt_down;
-      e.down = false;
-      sendkey(event);
-    });
-    e.mouseleave(function(){
-      if (e.down)
-      {
-        var event = {};
-        event.type = "keyup";
-        event.key = e.text();
-        event.keyCode = e.attr('code');
-        event.shiftKey = is_shift_down;
-        event.ctrlKey = is_ctrl_down;
-        event.altKey = is_alt_down;
-        sendkey(event);
-        e.down =false;
-      }
-    });
-  })
-}
-var numpad = {
-  keys:["123","456","789","0"],
-  row:4,
-  span:[0,0,0,2],
-  target:'.keyboard.numpad'
-}
-var qwert_full = {
-  keys:[
-    "1234567890-=",
-    "QWERTYUIOP[]",
-    "ASDFGHJKL;''",
-    [
-      {code:16,key:'Shift',display:'<i class="icon arrow up"></i>',width:1.5},
-      "ZXCVBNM,./",
-      {code:8,key:'Backspace',display:'<i class="icon arrow circle left"></i>',width:1.5}
-    ]
-  ],
-  span:[0,1,2,0],
-  row:4,
-  target:'.keyboard.qwert'
-}
-var qwert = {
-  keys:[
-    "QWERTYUIOP",
-    "ASDFGHJKL",
-    "ZXCVBNM"
-  ],
-  span:[0,1,2],
-  row:3,
-  target:'.keyboard.qwert'
-}
-var func = {
-  keys:[[
-    {code:38,key:"↑"}
-  ],[
-    {code:37,key:"←"},
-    {code:40,key:"↓"},
-    {code:39,key:"→"}
-  ],[
-  ]],
-  span:[2,0,0],
-  row:3,
-  target:'.keyboard.functional'
-}
 
-function make_keyboard(keymap) {
-  var target = $(keymap.target).empty();
-  for (var r=0; r<keymap.row; r++)
-  {
-    if (keymap.span)
-      for (var s=0; s<keymap.span[r]; s++)
-        target.append('<span></span>')
-    var keys = keymap.keys[r];
-    if (typeof keys == "string")
-      keys = [keys];
-    for (var c=0; c<keys.length; c++)
-    {
-      var obj = keys[c];
-      if (typeof obj == "string")
-        for (var k=0; k<obj.length; k++)
-          target.append('<key code="'+obj.charCodeAt(k)+'" key="'+obj[k]+'">'+obj[k]+'</key>');
-      else
-        target.append('<key code="'+obj.code+'" key="'+obj.key+'" style="width:'+(32*(obj.width||1))+'px">'+(obj.display||obj.key)+'</key>')
-    }
-    target.append('<br>')
-  }
-}
-make_keyboard(qwert);
-make_keyboard(numpad);
-make_keyboard(func);
-init_keyboards();
-
+var keyboard = new Keyboard(sendkey);
+keyboard.make(keyboard.qwert);
+keyboard.make(keyboard.numpad);
+keyboard.make(keyboard.func);
+keyboard.register_key_event($('.keyboard key'));
 
 var pressed = {};
 var client = new WSClient('ws://'+location.host+'/ws/s','hello',true,true);

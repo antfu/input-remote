@@ -1,10 +1,3 @@
-/*
-* @Author: Anthony
-* @Date:   2016-03-20 08:09:17
-* @Last Modified by:   Anthony
-* @Last Modified time: 2016-04-08 19:57:03
-*/
-
 'use strict';
 
 var WSClient = function(url,channel_id,auth,debug)
