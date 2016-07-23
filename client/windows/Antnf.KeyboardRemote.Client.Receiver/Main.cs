@@ -13,17 +13,21 @@ namespace Antnf.KeyboardRemote.Client.Receiver
     public partial class Main : Form
     {
         private WebsocketAgent agent;
+        private string ws_url;
 
         public Main()
         {
             InitializeComponent();
         }
 
-        private void Main_Load(object sender, EventArgs e)
+        private string url_to_ws(string url)
         {
-            this.Opacity = 0;
-            Control.CheckForIllegalCrossThreadCalls = false;
-            agent = new WebsocketAgent("ws://localhost/ws/r");
+            return url.Replace("https", "wss").Replace("http", "ws").Replace("receiver", "ws") + "&t=receiver";
+        }
+        
+        private void Reconnect()
+        {
+            agent = new WebsocketAgent(ws_url);
             agent.Socket.OnOpen += Socket_OnOpen;
             agent.Socket.OnClose += Socket_OnClose;
             agent.OnRawMessage += Receiver_OnRawMessage;
@@ -34,9 +38,20 @@ namespace Antnf.KeyboardRemote.Client.Receiver
             agent.Connect();
         }
 
+        private void Main_Load(object sender, EventArgs e)
+        {
+            this.Opacity = 0;
+            Control.CheckForIllegalCrossThreadCalls = false;
+            var url_input = new AddressInput();
+            url_input.ShowDialog();
+            ws_url = url_to_ws(url_input.url);
+            Reconnect();
+        }
+
         private void Socket_OnClose(object sender, WebSocketSharp.CloseEventArgs e)
         {
-            connectToolStripMenuItem.Checked = true;
+            connectToolStripMenuItem.Checked = false;
+            Notify("Reason: " + e.Reason, "Socket Closed");
         }
 
         private void Socket_OnOpen(object sender, EventArgs e)
@@ -52,9 +67,12 @@ namespace Antnf.KeyboardRemote.Client.Receiver
 
         private void Receiver_OnPeerStateChange(WebsocketAgent sender, PeerState state)
         {
-            if(NotifyConnection.Checked)
+            stateToolStripMenuItem.Text = state.ToString();
+
+            if (NotifyConnection.Checked)
                 Notify(state.ToString(), "State");
             Log("State", state.ToString());
+
         }
 
         private void Receiver_OnKeyDown(WebsocketAgent sender, KeyActionInfo info)
@@ -87,16 +105,6 @@ namespace Antnf.KeyboardRemote.Client.Receiver
             TrayNotifyIcon.ShowBalloonTip(100);
         }
 
-        private void ConnectButton_Click(object sender, EventArgs e)
-        {
-            agent.Connect();
-        }
-
-        private void CloseButton_Click(object sender, EventArgs e)
-        {
-            agent.Close();
-        }
-
         private void showConsoleToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Opacity = 1;
@@ -108,20 +116,21 @@ namespace Antnf.KeyboardRemote.Client.Receiver
             Environment.Exit(0);
         }
 
-        private void DelaySendTest_Click(object sender, EventArgs e)
-        {
-            Actor.KeyDown(16);
-            Actor.KeyPress(38);
-            Actor.KeyUp(16);
-        }
-
         private void connectToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (NotifyConnection.Checked)
+            if (connectToolStripMenuItem.Checked)
                 agent.Close();
             else
-                agent.Connect();
+                Reconnect();
         }
-        
+
+        private void changeAddrToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            agent.Close();
+            var url_input = new AddressInput();
+            url_input.ShowDialog();
+            ws_url = url_to_ws(url_input.url);
+            Reconnect();
+        }
     }
 }

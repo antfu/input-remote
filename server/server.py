@@ -33,12 +33,20 @@ def new_channel():
     channel_auth[channel_id] = auth_code
     return channel_id, auth_code
 
+class BasicHandler(tornado.web.RequestHandler):
+    def auth(self):
+        self.channel_id = self.get_argument('c','default')
+        self.auth = self.get_argument('a','default')
+        if not self.channel_id in channel_auth.keys() or  channel_auth[self.channel_id] != self.auth:
+            self.redirect('/auth_failed')
+            return False
+        return True
 
-class index_handler(tornado.web.RequestHandler):
+class index_handler(BasicHandler):
     def get(self):
         self.render('index.html')
 
-class new_handler(tornado.web.RequestHandler):
+class new_handler(BasicHandler):
     def get(self):
         new_type = self.get_argument('type',None)
         if not new_type:
@@ -48,13 +56,19 @@ class new_handler(tornado.web.RequestHandler):
         self.redirect('/{}?c={}&a={}'.format(new_type, channel_id, auth_code))
 
 
-class sender_handler(tornado.web.RequestHandler):
+class sender_handler(BasicHandler):
     def get(self):
+        if not self.auth(): return
         self.render('sender.html')
 
-class receiver_handler(tornado.web.RequestHandler):
+class receiver_handler(BasicHandler):
     def get(self):
+        if not self.auth(): return
         self.render('receiver.html')
+
+class auth_failed_handler(BasicHandler):
+    def get(self):
+        self.render('auth_failed.html')
 
 class ws_handler(tornado.websocket.WebSocketHandler):
     def open(self):
@@ -111,6 +125,7 @@ def run():
             (r'/sender',sender_handler),
             (r'/receiver',receiver_handler),
             (r'/new',new_handler),
+            (r'/auth_failed',auth_failed_handler),
         ],
         template_path='template',
         static_path='static',
