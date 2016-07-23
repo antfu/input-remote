@@ -23,19 +23,21 @@ body
 {% end %}
 
 {% block content %}
-<h3 class="ui header"><i class="icon desktop"></i> Receiver <div id="state" class="ui sub header">Offline</div></h3>
+{% include header.html %}
 <h4 class="ui header">Current</h4>
 <div class="ui labels" id="pressed"></div>
 <h4 class="ui header">History</h4>
-<div class="ui labels" id="history" style="direction: rtl"></div>
+<div class="ui labels" id="history"></div>
 {% end %}
 
 
 {% block scripts %}
 <script>
+init_header('receiver');
+
 var pressed = {};
 var last_time = 0;
-var client = new WSClient('ws://'+location.host+'/ws/r','hello',true,false);
+var client = new WSClient('ws://'+location.host+'/ws'+location.search+'&t=receiver',false);
 client.connect();
 client.onkey = function(key) {
   console.log(key);
@@ -68,7 +70,7 @@ client.onkey = function(key) {
     else
       new_label.css('margin-left',current_time - last_time - 4);
     last_time = current_time;
-    $('#history').prepend(new_label);
+    $('#history').append(new_label);
     new_label.transition('fade in');
     setTimeout(function(){fadeout(new_label);}, 3*60000);
   }

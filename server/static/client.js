@@ -1,12 +1,10 @@
 'use strict';
 
-var WSClient = function(url,channel_id,auth,debug)
+var WSClient = function(url,debug)
 {
   var wsc = this;
-  wsc.channel_id = channel_id;
   wsc.connected = false;
   wsc.online = false;
-  wsc.auth = false;
   wsc.url = url;
   wsc.debug = debug;
 
@@ -18,14 +16,14 @@ var WSClient = function(url,channel_id,auth,debug)
       if (wsc.onopen)
         wsc.onopen();
       if (wsc.debug)
-        console.log('[Sender] Connection established: ',wsc.channel_id);
+        console.log('[Sender] Connection established: ',wsc.url);
     };
     wsc.ws.onclose = function() {
       wsc.connected = false;
       if (wsc.onclose)
         wsc.onclose();
       if (wsc.debug)
-        console.log('[Sender] Connection lost: ',wsc.channel_id);
+        console.log('[Sender] Connection lost: ',wsc.url);
       wsc.ws = undefined;
       wsc.connected = false;
     };

@@ -1,7 +1,31 @@
 {% extends 'base.html' %}
 
-{% block title %}Index{% end %}
+{% block title %}Keyboard Remote{% end %}
+
+{% block style %}
+<style>
+body
+{
+  padding: 2em;
+}
+</style>
+{% end %}
 
 {% block content %}
-<h1> It Works! </h1>
+<div class="ui center aligned basic segment">
+  <h2 class="ui header">
+    <i class="huge icons">
+      <i class="keyboard icon"></i>
+      <i class="corner share alternate icon"></i>
+    </i><br>
+    Keyboard Remote
+    <div id="state" class="sub header">
+      A keyboard sharing tool through different devices, <br>
+      Github: <a href="https://github.com/AnthonyFu117/keyboard-remote" target="_blank">keyboard-remote</a>
+    </div>
+  </h2>
+  <br>
+  <a class="ui blue button" href="/new?type=sender">I am Sender</a>
+  <a class="ui teal button" href="/new?type=receiver">I am Receiver</a>
+</div>
 {% end %}
