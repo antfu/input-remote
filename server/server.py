@@ -13,7 +13,7 @@ import random
 import string
 from   configs.config   import configs
 
-channel_auth = {'test':'test'}
+channel_auth = {}
 senders = {}
 recivers = {}
 selector = {'sender':senders,'receiver':recivers}
@@ -24,7 +24,12 @@ msg = {
     'offline': '{"action":"system","subaction":"peerstate","data":{"state":false}}'
 }
 
+if configs.localmode:
+    channel_auth = {'local':'local'}
+
+
 letters = string.digits + string.ascii_letters
+
 def new_channel():
     channel_id = ''.join([random.choice(letters) for x in range(6)])
     auth_code = ''.join([random.choice(letters) for x in range(6)])
@@ -35,8 +40,10 @@ def new_channel():
 
 class BasicHandler(tornado.web.RequestHandler):
     def auth(self):
-        self.channel_id = self.get_argument('c','default')
-        self.auth = self.get_argument('a','default')
+        if configs.localmode:
+            return True
+        self.channel_id = self.get_argument('c','local')
+        self.auth = self.get_argument('a','local')
         if not self.channel_id in channel_auth.keys() or  channel_auth[self.channel_id] != self.auth:
             self.redirect('/auth_failed')
             return False
@@ -44,7 +51,7 @@ class BasicHandler(tornado.web.RequestHandler):
 
 class index_handler(BasicHandler):
     def get(self):
-        self.render('index.html')
+        self.render('index.html',localmode=configs.localmode)
 
 class new_handler(BasicHandler):
     def get(self):
@@ -70,19 +77,24 @@ class auth_failed_handler(BasicHandler):
     def get(self):
         self.render('auth_failed.html')
 
+class localmode_handler(BasicHandler):
+    def get(self):
+        self.write(str(configs.localmode))
+
 class ws_handler(tornado.websocket.WebSocketHandler):
     def open(self):
-        self.channel_id = self.get_argument('c','default')
-        self.auth = self.get_argument('a','default')
+        self.channel_id = self.get_argument('c','local')
+        self.auth = self.get_argument('a','local')
         self.type = self.get_argument('t','receiver')
 
         # Connection Verify
-        if not self.channel_id in channel_auth.keys():
-            self.try_close('channel_not_exist')
-            return
-        if channel_auth[self.channel_id] != self.auth:
-            self.try_close('auth_failed')
-            return
+        if not configs.localmode:
+            if not self.channel_id in channel_auth.keys():
+                self.try_close('channel_not_exist')
+                return
+            if channel_auth[self.channel_id] != self.auth:
+                self.try_close('auth_failed')
+                return
         if self.channel_id in selector[self.type].keys():
             self.try_close('already_connected')
             return
@@ -126,6 +138,7 @@ def run():
             (r'/receiver',receiver_handler),
             (r'/new',new_handler),
             (r'/auth_failed',auth_failed_handler),
+            (r'/localmode',localmode_handler),
         ],
         template_path='template',
         static_path='static',

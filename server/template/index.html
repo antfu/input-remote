@@ -25,7 +25,14 @@ body
     </div>
   </h2>
   <br>
-  <a class="ui blue button" href="/new?type=sender">I am Sender</a>
-  <a class="ui teal button" href="/new?type=receiver">I am Receiver</a>
+  {% if localmode %}
+    <p>Local Mode</p>
+    <a class="ui basic button" href="/sender">Sender</a>
+    <a class="ui basic button" href="/receiver">Receiver</a>
+  {% else %}
+    <a class="ui blue button" href="/new?type=sender">I am Sender</a>
+    <a class="ui teal button" href="/new?type=receiver">I am Receiver</a>
+  {% end %}
+
 </div>
 {% end %}
