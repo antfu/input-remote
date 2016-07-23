@@ -1,4 +1,4 @@
-﻿namespace Antnf.KeyboardRemote.Client
+﻿namespace Antnf.KeyboardRemote.Client.Receiver
 {
     partial class Main
     {
@@ -99,12 +99,12 @@
             this.TrayMenu.Name = "TrayMenu";
             this.TrayMenu.ShowCheckMargin = true;
             this.TrayMenu.ShowImageMargin = false;
-            this.TrayMenu.Size = new System.Drawing.Size(212, 193);
+            this.TrayMenu.Size = new System.Drawing.Size(211, 160);
             // 
             // connectToolStripMenuItem
             // 
             this.connectToolStripMenuItem.Name = "connectToolStripMenuItem";
-            this.connectToolStripMenuItem.Size = new System.Drawing.Size(211, 30);
+            this.connectToolStripMenuItem.Size = new System.Drawing.Size(210, 30);
             this.connectToolStripMenuItem.Text = "&Connect";
             this.connectToolStripMenuItem.Click += new System.EventHandler(this.connectToolStripMenuItem_Click);
             // 
@@ -112,7 +112,7 @@
             // 
             this.enableToolStripMenuItem.CheckOnClick = true;
             this.enableToolStripMenuItem.Name = "enableToolStripMenuItem";
-            this.enableToolStripMenuItem.Size = new System.Drawing.Size(211, 30);
+            this.enableToolStripMenuItem.Size = new System.Drawing.Size(210, 30);
             this.enableToolStripMenuItem.Text = "Enable";
             // 
             // notifyToolStripMenuItem
@@ -122,7 +122,7 @@
             this.NotifyKeyDown,
             this.NotifyKeyUp});
             this.notifyToolStripMenuItem.Name = "notifyToolStripMenuItem";
-            this.notifyToolStripMenuItem.Size = new System.Drawing.Size(211, 30);
+            this.notifyToolStripMenuItem.Size = new System.Drawing.Size(210, 30);
             this.notifyToolStripMenuItem.Text = "&Notify";
             // 
             // NotifyConnection
@@ -151,19 +151,19 @@
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(208, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(207, 6);
             // 
             // showConsoleToolStripMenuItem
             // 
             this.showConsoleToolStripMenuItem.Name = "showConsoleToolStripMenuItem";
-            this.showConsoleToolStripMenuItem.Size = new System.Drawing.Size(211, 30);
+            this.showConsoleToolStripMenuItem.Size = new System.Drawing.Size(210, 30);
             this.showConsoleToolStripMenuItem.Text = "Show Console";
             this.showConsoleToolStripMenuItem.Click += new System.EventHandler(this.showConsoleToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(211, 30);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(210, 30);
             this.exitToolStripMenuItem.Text = "&Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 

@@ -8,15 +8,15 @@ using WebSocketSharp;
 
 namespace Antnf.KeyboardRemote.Client
 {
-    enum PeerState
+    public enum PeerState
     {
         Offline,
         Online
     }
-    delegate void KeyActionEventHandler(Receiver receiver, KeyActionInfo info);
-    delegate void PeerStateChangeEventHandler(Receiver receiver, PeerState state);
-    delegate void JsonEventHandler(Receiver receiver, dynamic data);
-    class Receiver
+    public delegate void KeyActionEventHandler(WebsocketAgent agent, KeyActionInfo info);
+    public delegate void PeerStateChangeEventHandler(WebsocketAgent agent, PeerState state);
+    public delegate void JsonEventHandler(WebsocketAgent agent, dynamic data);
+    public class WebsocketAgent
     {
         public string URL {get;}
         public WebSocket Socket { get;}
@@ -26,7 +26,7 @@ namespace Antnf.KeyboardRemote.Client
         public event JsonEventHandler OnRawMessage;
         public event EventHandler OnPing;
 
-        public Receiver(string url)
+        public WebsocketAgent(string url)
         {
             this.URL = url;
             this.Socket = new WebSocket(this.URL);

@@ -5,14 +5,14 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using Newtonsoft.Json;
 using System.Windows.Forms;
+using Antnf.KeyboardRemote.Client;
 
-namespace Antnf.KeyboardRemote.Client
+namespace Antnf.KeyboardRemote.Client.Receiver
 {
     public partial class Main : Form
     {
-        private Receiver receiver;
+        private WebsocketAgent agent;
 
         public Main()
         {
@@ -23,15 +23,15 @@ namespace Antnf.KeyboardRemote.Client
         {
             this.Opacity = 0;
             Control.CheckForIllegalCrossThreadCalls = false;
-            receiver = new Receiver("ws://localhost/ws/r");
-            receiver.Socket.OnOpen += Socket_OnOpen;
-            receiver.Socket.OnClose += Socket_OnClose;
-            receiver.OnRawMessage += Receiver_OnRawMessage;
-            receiver.OnKeyDown += Receiver_OnKeyDown;
-            receiver.OnKeyUp += Receiver_OnKeyUp;
-            receiver.OnPeerStateChange += Receiver_OnPeerStateChange;
+            agent = new WebsocketAgent("ws://localhost/ws/r");
+            agent.Socket.OnOpen += Socket_OnOpen;
+            agent.Socket.OnClose += Socket_OnClose;
+            agent.OnRawMessage += Receiver_OnRawMessage;
+            agent.OnKeyDown += Receiver_OnKeyDown;
+            agent.OnKeyUp += Receiver_OnKeyUp;
+            agent.OnPeerStateChange += Receiver_OnPeerStateChange;
 
-            receiver.Connect();
+            agent.Connect();
         }
 
         private void Socket_OnClose(object sender, WebSocketSharp.CloseEventArgs e)
@@ -45,19 +45,19 @@ namespace Antnf.KeyboardRemote.Client
         }
 
 
-        private void Receiver_OnRawMessage(Receiver receiver, dynamic data)
+        private void Receiver_OnRawMessage(WebsocketAgent sender, dynamic data)
         {
             Log("Raw", data.ToString());
         }
 
-        private void Receiver_OnPeerStateChange(Receiver receiver, PeerState state)
+        private void Receiver_OnPeerStateChange(WebsocketAgent sender, PeerState state)
         {
             if(NotifyConnection.Checked)
                 Notify(state.ToString(), "State");
             Log("State", state.ToString());
         }
 
-        private void Receiver_OnKeyDown(Receiver receiver, KeyActionInfo info)
+        private void Receiver_OnKeyDown(WebsocketAgent sender, KeyActionInfo info)
         {
             if (NotifyKeyDown.Checked)
                 Notify(info.Key,"KeyDown");
@@ -66,7 +66,7 @@ namespace Antnf.KeyboardRemote.Client
                 Actor.KeyDown((byte)info.KeyCode);
         }
 
-        private void Receiver_OnKeyUp(Receiver receiver, KeyActionInfo info)
+        private void Receiver_OnKeyUp(WebsocketAgent sender, KeyActionInfo info)
         {
             if (NotifyKeyUp.Checked)
                 Notify(info.Key, "KeyUp");
@@ -89,17 +89,18 @@ namespace Antnf.KeyboardRemote.Client
 
         private void ConnectButton_Click(object sender, EventArgs e)
         {
-            receiver.Connect();
+            agent.Connect();
         }
 
         private void CloseButton_Click(object sender, EventArgs e)
         {
-            receiver.Close();
+            agent.Close();
         }
 
         private void showConsoleToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Opacity = 1;
+            this.Focus();
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -117,10 +118,9 @@ namespace Antnf.KeyboardRemote.Client
         private void connectToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (NotifyConnection.Checked)
-                receiver.Close();
+                agent.Close();
             else
-                receiver.Connect();
-                
+                agent.Connect();
         }
         
     }

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Antnf.KeyboardRemote.Client.Properties {
+namespace Antnf.KeyboardRemote.Client.Receiver.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

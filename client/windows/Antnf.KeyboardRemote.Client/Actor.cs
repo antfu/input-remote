@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 
 namespace Antnf.KeyboardRemote.Client
 {
-    class Actor
+    public class Actor
     {
         [DllImport("user32.dll")]
         private static extern void keybd_event(byte bVk, byte bScan, int dwFlags, IntPtr dwExtraInfo);

@@ -5,12 +5,12 @@ using System.Text;
 
 namespace Antnf.KeyboardRemote.Client
 {
-    enum KeyActionType
+    public enum KeyActionType
     {
         KeyDown,
         KeyUp
     }
-    class KeyActionInfo
+    public class KeyActionInfo
     {
         public int KeyCode { get; set; }
         public string Key { get; set; }

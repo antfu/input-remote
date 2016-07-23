@@ -1,0 +1,32 @@
+.keyboard key
+{
+  background: rgba(0,0,0,0.02);
+  line-height: 30px;
+  height: 32px;
+  width: 32px;
+  margin: 0.1em;
+  display: inline-block;
+  text-align: center;
+  vertical-align: middle;
+  cursor: default;
+}
+.keyboard key:hover
+{
+  background: rgba(0,0,0,0.07);
+}
+.keyboard span
+{
+  width: 16px;
+  height: 32px;
+  display: inline-block;
+  margin: 0.05em;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.keyboard.numpad key
+{
+}
+.keyboard.qwert key
+{
+}
