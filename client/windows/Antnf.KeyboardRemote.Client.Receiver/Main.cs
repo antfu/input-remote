@@ -59,7 +59,7 @@ namespace Antnf.KeyboardRemote.Client.Receiver
 
         private void AddressInput()
         {
-            var url_input = new AddressInput();
+            var url_input = new AddressInput_WinForm();
             url_input.url = this.http_url;
             url_input.ShowDialog();
             this.http_url = url_input.url;

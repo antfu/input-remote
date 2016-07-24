@@ -1,6 +1,6 @@
 ﻿namespace Antnf.KeyboardRemote.Client.Receiver
 {
-    partial class AddressInput
+    partial class AddressInput_WinForm
     {
         /// <summary>
         /// Required designer variable.

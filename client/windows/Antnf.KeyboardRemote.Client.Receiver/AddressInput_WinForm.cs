@@ -9,10 +9,10 @@ using System.Windows.Forms;
 
 namespace Antnf.KeyboardRemote.Client.Receiver
 {
-    public partial class AddressInput : Form
+    public partial class AddressInput_WinForm : Form
     {
         public string url = "";
-        public AddressInput()
+        public AddressInput_WinForm()
         {
             InitializeComponent();
         }
