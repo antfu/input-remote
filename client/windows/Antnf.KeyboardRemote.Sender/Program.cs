@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace Antnf.KeyboardRemote.Sender
+namespace Antnf.KeyboardRemote.Client.Sender
 {
     static class Program
     {

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using Newtonsoft.Json;
 
-namespace Antnf.KeyboardRemote.Client
+namespace Antnf.KeyboardRemote.Tools
 {
     public class SettingHelper
     {

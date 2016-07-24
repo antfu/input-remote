@@ -6,7 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using Antnf.KeyboardRemote.Client;
+using Antnf.KeyboardRemote.Tools;
 
 namespace Antnf.KeyboardRemote.Client.Receiver
 {
@@ -118,7 +118,7 @@ namespace Antnf.KeyboardRemote.Client.Receiver
                 Notify(info.Key,"KeyDown");
             Log("KeyDown", info.Key);
             if (enableToolStripMenuItem.Checked)
-                Actor.KeyDown((byte)info.KeyCode);
+                KeyboardSimulator.KeyDown((Keys)info.KeyCode);
         }
 
         private void Receiver_OnKeyUp(WebsocketAgent sender, KeyActionInfo info)
@@ -127,7 +127,7 @@ namespace Antnf.KeyboardRemote.Client.Receiver
                 Notify(info.Key, "KeyUp");
             Log("KeyUp", info.Key);
             if (enableToolStripMenuItem.Checked)
-                Actor.KeyUp((byte)info.KeyCode);
+                KeyboardSimulator.KeyUp((Keys)info.KeyCode);
 
         }
 

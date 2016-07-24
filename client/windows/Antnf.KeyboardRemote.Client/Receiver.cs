@@ -6,7 +6,7 @@ using System.Threading;
 using Newtonsoft.Json;
 using WebSocketSharp;
 
-namespace Antnf.KeyboardRemote.Client
+namespace Antnf.KeyboardRemote.Tools
 {
 	/// <summary>
 	/// 终端状态。

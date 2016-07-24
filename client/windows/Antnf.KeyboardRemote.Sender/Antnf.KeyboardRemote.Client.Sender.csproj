@@ -75,9 +75,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MouseKeyboardLibrary\MouseKeyboardLibrary.csproj">
-      <Project>{5bea469f-e28b-4916-8ca2-5c1b445f3ae0}</Project>
-      <Name>MouseKeyboardLibrary</Name>
+    <ProjectReference Include="..\Antnf.KeyboardRemote.Client\Antnf.KeyboardRemote.Tools.csproj">
+      <Project>{4dc1dabb-0ded-462f-ae01-538f449b42e3}</Project>
+      <Name>Antnf.KeyboardRemote.Tools</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

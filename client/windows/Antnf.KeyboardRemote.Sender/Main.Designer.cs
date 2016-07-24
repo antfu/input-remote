@@ -1,4 +1,4 @@
-﻿namespace Antnf.KeyboardRemote.Sender
+﻿namespace Antnf.KeyboardRemote.Client.Sender
 {
     partial class Main
     {
