@@ -1,24 +1,10 @@
 ﻿using System;
 using System.Text;
-using System.Runtime.InteropServices;
 using System.Windows.Forms;
-namespace MouseKeyboardLibrary
+using System.Runtime.InteropServices;
+
+namespace Antnf.KeyboardRemote.Tools
 {
-	/// <summary>
-	/// Standard Keyboard Shortcuts used by most applications
-	/// </summary>
-	public enum StandardShortcut
-	{
-		Copy,
-		Cut,
-		Paste,
-		SelectAll,
-		Save,
-		Open,
-		New,
-		Close,
-		Print
-	}
 	/// <summary>
 	/// Simulate keyboard key presses
 	/// </summary>

@@ -14,7 +14,7 @@ namespace Antnf.KeyboardRemote.Client.Receiver
     {
         private WebsocketAgent agent;
         private string ws_url = "";
-        private string http_url = "http://localhost/receiver/";
+        private string http_url = "http://localhost/receiver/"; //default url
         private SettingHelper settings = new SettingHelper("setting.json");
         private bool connected = false;
         private bool online = false;

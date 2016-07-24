@@ -5,11 +5,11 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Antnf.KeyboardRemote.Client.Receiver", "Antnf.KeyboardRemote.Client.Receiver\Antnf.KeyboardRemote.Client.Receiver.csproj", "{1790EA28-97E5-4783-AB92-80DC625C263F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Antnf.KeyboardRemote.Tools", "Antnf.KeyboardRemote.Client\Antnf.KeyboardRemote.Tools.csproj", "{4DC1DABB-0DED-462F-AE01-538F449B42E3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Antnf.KeyboardRemote.Tools", "Antnf.KeyboardRemote.Tools\Antnf.KeyboardRemote.Tools.csproj", "{4DC1DABB-0DED-462F-AE01-538F449B42E3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Antnf.KeyboardRemote.Client.Sender", "Antnf.KeyboardRemote.Sender\Antnf.KeyboardRemote.Client.Sender.csproj", "{4BA6E91D-F2C9-435F-983B-F6BF1934471F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Antnf.KeyboardRemote.Client.Sender", "Antnf.KeyboardRemote.CLient.Sender\Antnf.KeyboardRemote.Client.Sender.csproj", "{4BA6E91D-F2C9-435F-983B-F6BF1934471F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Antnf.KeyboardRemote.Client.Sender.WPF", "Antnf.KeyboardRemote.Client.Sender\Antnf.KeyboardRemote.Client.Sender.WPF.csproj", "{19E9B2DF-508D-489F-ACE3-677A6230A325}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Antnf.KeyboardRemote.Client.Sender.WPF", "Antnf.KeyboardRemote.Client.Sender.WPF\Antnf.KeyboardRemote.Client.Sender.WPF.csproj", "{19E9B2DF-508D-489F-ACE3-677A6230A325}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

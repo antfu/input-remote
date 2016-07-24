@@ -7,8 +7,8 @@
     <ProjectGuid>{4DC1DABB-0DED-462F-AE01-538F449B42E3}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Antnf.KeyboardRemote.Client</RootNamespace>
-    <AssemblyName>Antnf.KeyboardRemote.Client</AssemblyName>
+    <RootNamespace>Antnf.KeyboardRemote.Tools</RootNamespace>
+    <AssemblyName>Antnf.KeyboardRemote.Tools</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -47,14 +47,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enum.cs" />
     <Compile Include="Hooks\GlobalHook.cs" />
-    <Compile Include="Hooks\KeyActionInfo.cs" />
+    <Compile Include="KeyActionInfo.cs" />
     <Compile Include="Hooks\KeyboardHook.cs" />
     <Compile Include="Hooks\KeyboardSimulator.cs" />
     <Compile Include="Hooks\MouseHook.cs" />
     <Compile Include="Hooks\MouseSimulator.cs" />
+    <Compile Include="MouseActionInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Receiver.cs" />
+    <Compile Include="Agent.cs" />
     <Compile Include="Utils\SettingHelper.cs" />
   </ItemGroup>
   <ItemGroup />
