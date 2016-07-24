@@ -74,7 +74,7 @@ namespace Antnf.KeyboardRemote.Client.Receiver
             Control.CheckForIllegalCrossThreadCalls = false;
             this.http_url = settings["http_url"];
             this.ws_url = settings["ws_url"];
-            if (this.http_url == null || this.ws_url == null || this.http_url == "" || this.ws_url == "")
+            if (string.IsNullOrEmpty(this.http_url) || string.IsNullOrEmpty(this.ws_url))
                 AddressInput();
             Reconnect();
         }
@@ -137,8 +137,8 @@ namespace Antnf.KeyboardRemote.Client.Receiver
         }
         private void Notify(string text, string title = "")
         {
-            TrayNotifyIcon.BalloonTipTitle = title;
-            TrayNotifyIcon.BalloonTipText = text;
+            TrayNotifyIcon.BalloonTipTitle = string.IsNullOrEmpty(title) ? string.Empty : title;
+            TrayNotifyIcon.BalloonTipText = string.IsNullOrEmpty(text) ? string.Empty : text;
             TrayNotifyIcon.ShowBalloonTip(100);
         }
 
