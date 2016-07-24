@@ -12,7 +12,9 @@ namespace Antnf.KeyboardRemote.Client.Sender
 {
     public partial class Main : Form
     {
-		MouseHook mouseHook = new MouseHook();
+        WebsocketAgent agent;
+        private NotifyIconAgent notifyAgent;
+        MouseHook mouseHook = new MouseHook();
 		KeyboardHook keyboardHook = new KeyboardHook();
 
 		public Main()
@@ -22,7 +24,19 @@ namespace Antnf.KeyboardRemote.Client.Sender
 
 		private void Main_Load(object sender, EventArgs e)
 		{
-			mouseHook.MouseMove += new MouseEventHandler(mouseHook_MouseMove);
+            agent = new WebsocketAgent("ws://localhost/ws?t=sender");
+            notifyAgent = new NotifyIconAgent(TrayNotifyIcon, agent)
+            {
+                // Temporary Solution for Icon settings
+                DefaultIcon = TrayNotifyIcon.Icon,
+                DisconnectIcon = TrayNotifyIcon.Icon,
+                WaitingIcon = TrayNotifyIcon.Icon,
+                OnlineIcon = TrayNotifyIcon.Icon,
+                KeyDownIcon = TrayNotifyIcon.Icon
+            };
+            agent.Connect();
+
+            mouseHook.MouseMove += new MouseEventHandler(mouseHook_MouseMove);
 			mouseHook.MouseDown += new MouseEventHandler(mouseHook_MouseDown);
 			mouseHook.MouseUp += new MouseEventHandler(mouseHook_MouseUp);
 			mouseHook.MouseWheel += new MouseEventHandler(mouseHook_MouseWheel);
@@ -54,8 +68,11 @@ namespace Antnf.KeyboardRemote.Client.Sender
 			  e.Alt.ToString(),
 			  e.Control.ToString()
 			  );
-		}
-		void keyboardHook_KeyDown(object sender, KeyEventArgs e)
+            agent.SendKey(KeyActionInfo.ParseFromKeyEventArgs(KeyActionType.KeyUp, e));
+            // Block System Key Input
+            //e.Handled = true; 
+        }
+        void keyboardHook_KeyDown(object sender, KeyEventArgs e)
 		{
 			AddKeyboardEvent(
 			  "KeyDown",
@@ -65,8 +82,11 @@ namespace Antnf.KeyboardRemote.Client.Sender
 			  e.Alt.ToString(),
 			  e.Control.ToString()
 			  );
-		}
-		void mouseHook_MouseWheel(object sender, MouseEventArgs e)
+            agent.SendKey(KeyActionInfo.ParseFromKeyEventArgs(KeyActionType.KeyDown, e));
+            // Block System Key Input
+            //e.Handled = true;
+        }
+        void mouseHook_MouseWheel(object sender, MouseEventArgs e)
 		{
 			AddMouseEvent(
 			  "MouseWheel",

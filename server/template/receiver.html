@@ -39,7 +39,7 @@ var pressed = {};
 var last_time = 0;
 var ws_url = 'ws://'+location.host+'/ws'+location.search+'&t=receiver';
 if (ws_url.indexOf('?') == -1) ws_url = ws_url.replace('&','?');
-var client = new WSClient(ws_url,false);
+var client = new WSClient(ws_url,true);
 client.connect();
 client.onkey = function(key) {
   console.log(key);

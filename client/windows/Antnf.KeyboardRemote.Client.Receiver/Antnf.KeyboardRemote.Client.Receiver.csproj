@@ -129,13 +129,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="icon.ico" />
+    <None Include="Resources\orange.ico" />
+    <None Include="Resources\teal.ico" />
     <None Include="Resources\green.ico" />
     <None Include="Resources\grey.ico" />
     <None Include="Resources\normal.ico" />
     <None Include="Resources\red.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Antnf.KeyboardRemote.Client\Antnf.KeyboardRemote.Tools.csproj">
+    <ProjectReference Include="..\Antnf.KeyboardRemote.Tools\Antnf.KeyboardRemote.Tools.csproj">
       <Project>{4dc1dabb-0ded-462f-ae01-538f449b42e3}</Project>
       <Name>Antnf.KeyboardRemote.Tools</Name>
     </ProjectReference>

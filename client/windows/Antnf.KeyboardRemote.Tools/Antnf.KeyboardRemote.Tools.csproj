@@ -4,14 +4,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{5BEA469F-E28B-4916-8CA2-5C1B445F3AE0}</ProjectGuid>
+    <ProjectGuid>{4DC1DABB-0DED-462F-AE01-538F449B42E3}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MouseKeyboardLibrary</RootNamespace>
-    <AssemblyName>MouseKeyboardLibrary</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <RootNamespace>Antnf.KeyboardRemote.Tools</RootNamespace>
+    <AssemblyName>Antnf.KeyboardRemote.Tools</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -21,7 +20,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -30,26 +28,39 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\lib\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="websocket-sharp">
+      <HintPath>..\lib\websocket-sharp.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GlobalHook.cs" />
-    <Compile Include="KeyboardHook.cs" />
-    <Compile Include="MouseHook.cs" />
-    <Compile Include="MouseSimulator.cs" />
+    <Compile Include="NotifyIconAgent.cs" />
+    <Compile Include="Enum.cs" />
+    <Compile Include="Hooks\GlobalHook.cs" />
+    <Compile Include="KeyActionInfo.cs" />
+    <Compile Include="Hooks\KeyboardHook.cs" />
+    <Compile Include="Hooks\KeyboardSimulator.cs" />
+    <Compile Include="Hooks\MouseHook.cs" />
+    <Compile Include="Hooks\MouseSimulator.cs" />
+    <Compile Include="MouseActionInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="KeyboardSimulator.cs" />
+    <Compile Include="Agent.cs" />
+    <Compile Include="Utils\SettingHelper.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

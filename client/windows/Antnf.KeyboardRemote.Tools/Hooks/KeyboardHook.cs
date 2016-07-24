@@ -2,7 +2,8 @@
 using System.Text;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
-namespace MouseKeyboardLibrary
+
+namespace Antnf.KeyboardRemote.Tools
 {
 	/// <summary>
 	/// Captures global keyboard events
@@ -93,7 +94,8 @@ namespace MouseKeyboardLibrary
 			}
 			if (handled)
 			{
-				return 1;
+                // Block system input event
+				return -1;
 			}
 			else
 			{
