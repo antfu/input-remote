@@ -17,6 +17,18 @@ namespace Antnf.KeyboardRemote.Tools
 	/// </summary>
 	public class WebsocketAgent
 	{
+        public static string HttpToWsUrl(string http_url)
+        {
+            string type = "";
+            if (http_url.Contains("receiver"))
+                type = "receiver";
+            if (http_url.Contains("sender"))
+                type = "sender";
+            var ws_url = http_url.Replace("http", "ws").Replace("receiver", "ws").Replace("sender", "ws") + "&t=" + type;
+            if (ws_url.IndexOf('?') == -1)
+                ws_url = ws_url.Replace('&', '?');
+            return ws_url;
+        }
 		/// <summary>获取地址</summary>
 		/// <value>地址</value>
 		public string URL { get; private set; }

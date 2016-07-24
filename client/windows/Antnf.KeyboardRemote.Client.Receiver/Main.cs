@@ -22,14 +22,6 @@ namespace Antnf.KeyboardRemote.Client.Receiver
         {
             InitializeComponent();
         }
-
-        private string url_to_ws(string url)
-        {
-            url = url.Replace("https", "wss").Replace("http", "ws").Replace("receiver", "ws") + "&t=receiver";
-            if (url.IndexOf('?') == -1)
-                url = url.Replace('&', '?');
-            return url;
-        }
         
         private void Reconnect()
         {
@@ -42,7 +34,7 @@ namespace Antnf.KeyboardRemote.Client.Receiver
             url_input.url = this.http_url;
             url_input.ShowDialog();
             this.http_url = url_input.url;
-            this.ws_url = url_to_ws(this.http_url);
+            this.ws_url = WebsocketAgent.HttpToWsUrl(this.http_url);
             settings["http_url"] = this.http_url;
             settings["ws_url"] = this.ws_url;
         }

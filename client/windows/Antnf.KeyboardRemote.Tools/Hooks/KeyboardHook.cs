@@ -94,7 +94,8 @@ namespace Antnf.KeyboardRemote.Tools
 			}
 			if (handled)
 			{
-				return 1;
+                // Block system input event
+				return -1;
 			}
 			else
 			{
