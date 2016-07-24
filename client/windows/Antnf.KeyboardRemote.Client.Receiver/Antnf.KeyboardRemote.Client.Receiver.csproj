@@ -129,6 +129,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="icon.ico" />
+    <None Include="Resources\orange.ico" />
+    <None Include="Resources\teal.ico" />
     <None Include="Resources\green.ico" />
     <None Include="Resources\grey.ico" />
     <None Include="Resources\normal.ico" />
