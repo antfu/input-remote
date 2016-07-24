@@ -32,8 +32,11 @@ namespace Antnf.KeyboardRemote.Tools
 		public event PeerStateChangeEventHandler OnPeerStateChange;
 		public event JsonEventHandler OnRawMessage;
 		public event EventHandler OnPing;
+		public event EventHandler<EventArgs> OnConnect;
+		public event EventHandler<CloseEventArgs> OnClose;
+		public event EventHandler<ErrorEventArgs> OnError;
 
-		public WebsocketAgent(string url)
+        public WebsocketAgent(string url)
 		{
             Reconnect(url,false);
 		}
@@ -71,15 +74,20 @@ namespace Antnf.KeyboardRemote.Tools
 
         public void SendKey(KeyActionInfo info)
         {
-            string json_str = Convert.DumpKeyAction(info);
-            this.Socket.Send(json_str);
+            var obj = new {
+                action = "key",
+                subaction = info.ActionType == KeyActionType.KeyDown ? "keydown": "keyup",
+                data = KeyActionInfo.DumpToObject(info)
+            };
+            this.Socket.Send(JsonConvert.SerializeObject(obj));
         }
         
 		private void Socket_OnOpen(object sender, EventArgs e)
 		{
             this.IsConnected = true;
-			//throw new NotImplementedException();
-		}
+            if (this.OnConnect != null)
+                this.OnConnect(this, e);
+        }
 
 		private void Socket_OnMessage(object sender, MessageEventArgs e)
 		{
@@ -107,7 +115,7 @@ namespace Antnf.KeyboardRemote.Tools
 
 				else if (obj.action == "key")
 				{
-					KeyActionInfo info = Convert.ParseKeyAction(obj.data);
+					KeyActionInfo info = KeyActionInfo.ParseFromJsonObject(obj.data);
                     // KeyUp Event
                     if (info.ActionType == KeyActionType.KeyUp)
 					{
@@ -130,6 +138,8 @@ namespace Antnf.KeyboardRemote.Tools
 
 		private void Socket_OnError(object sender, ErrorEventArgs e)
 		{
+            if (this.OnError != null)
+                this.OnError(this, e);
             //e.Message
             //throw new NotImplementedException();
         }
@@ -137,6 +147,8 @@ namespace Antnf.KeyboardRemote.Tools
         private void Socket_OnClose(object sender, CloseEventArgs e)
 		{
             this.IsConnected = false;
+            if (this.OnClose != null)
+                this.OnClose(this, e);
             //e.Code
             //e.Reason
             //throw new NotImplementedException();

@@ -12,6 +12,7 @@ namespace Antnf.KeyboardRemote.Client.Sender
 {
     public partial class Main : Form
     {
+        WebsocketAgent agent;
 		MouseHook mouseHook = new MouseHook();
 		KeyboardHook keyboardHook = new KeyboardHook();
 
@@ -22,7 +23,10 @@ namespace Antnf.KeyboardRemote.Client.Sender
 
 		private void Main_Load(object sender, EventArgs e)
 		{
-			mouseHook.MouseMove += new MouseEventHandler(mouseHook_MouseMove);
+            agent = new WebsocketAgent("ws://localhost/ws?t=sender");
+            agent.Connect();
+
+            mouseHook.MouseMove += new MouseEventHandler(mouseHook_MouseMove);
 			mouseHook.MouseDown += new MouseEventHandler(mouseHook_MouseDown);
 			mouseHook.MouseUp += new MouseEventHandler(mouseHook_MouseUp);
 			mouseHook.MouseWheel += new MouseEventHandler(mouseHook_MouseWheel);
@@ -65,7 +69,9 @@ namespace Antnf.KeyboardRemote.Client.Sender
 			  e.Alt.ToString(),
 			  e.Control.ToString()
 			  );
-		}
+            //Test
+            //agent.SendKey(KeyActionInfo.ParseFromKeyEventArgs(KeyActionType.KeyDown, e));
+        }
 		void mouseHook_MouseWheel(object sender, MouseEventArgs e)
 		{
 			AddMouseEvent(

@@ -16,8 +16,6 @@ namespace Antnf.KeyboardRemote.Client.Receiver
         private string ws_url = "";
         private string http_url = "http://localhost/receiver/"; //default url
         private SettingHelper settings = new SettingHelper("setting.json");
-        private bool connected = false;
-        private bool online = false;
 
         public Main()
         {
@@ -25,9 +23,9 @@ namespace Antnf.KeyboardRemote.Client.Receiver
         }
         private void UpdateNotifyIcon()
         {
-            if (!this.connected)
+            if (!agent.IsConnected)
                 TrayNotifyIcon.Icon = Properties.Resources.red;
-            else if (!this.online)
+            else if (!agent.IsOnline)
                 TrayNotifyIcon.Icon = Properties.Resources.grey;
             else
                 TrayNotifyIcon.Icon = Properties.Resources.green;
@@ -43,18 +41,7 @@ namespace Antnf.KeyboardRemote.Client.Receiver
         
         private void Reconnect()
         {
-            if (agent != null)
-                agent.Close();
-
-            agent = new WebsocketAgent(ws_url);
-            agent.Socket.OnOpen += Socket_OnOpen;
-            agent.Socket.OnClose += Socket_OnClose;
-            agent.OnRawMessage += Receiver_OnRawMessage;
-            agent.OnKeyDown += Receiver_OnKeyDown;
-            agent.OnKeyUp += Receiver_OnKeyUp;
-            agent.OnPeerStateChange += Receiver_OnPeerStateChange;
-
-            agent.Connect();
+            agent.Reconnect(ws_url,true);
         }
 
         private void AddressInput()
@@ -76,24 +63,36 @@ namespace Antnf.KeyboardRemote.Client.Receiver
             this.ws_url = settings["ws_url"];
             if (string.IsNullOrEmpty(this.http_url) || string.IsNullOrEmpty(this.ws_url))
                 AddressInput();
-            Reconnect();
+
+            agent = new WebsocketAgent(ws_url);
+            agent.OnRawMessage += Receiver_OnRawMessage;
+            agent.OnKeyDown += Receiver_OnKeyDown;
+            agent.OnKeyUp += Receiver_OnKeyUp;
+            agent.OnConnect += Agent_OnConnect;
+            agent.OnError += Agent_OnError;
+            agent.OnClose += Agent_OnClose;
+            agent.OnPeerStateChange += Receiver_OnPeerStateChange;
+
+            agent.Connect();
         }
 
-        private void Socket_OnClose(object sender, WebSocketSharp.CloseEventArgs e)
+        private void Agent_OnClose(object sender, WebSocketSharp.CloseEventArgs e)
         {
             connectToolStripMenuItem.Checked = false;
-            this.connected = false;
             UpdateNotifyIcon();
             Notify("Reason: " + e.Reason, "Socket Closed");
         }
 
-        private void Socket_OnOpen(object sender, EventArgs e)
+        private void Agent_OnError(object sender, WebSocketSharp.ErrorEventArgs e)
         {
-            connectToolStripMenuItem.Checked = true;
-            this.connected = true;
-            UpdateNotifyIcon();
+            Notify("Message: " + e.Message, "Socket Error");
         }
 
+        private void Agent_OnConnect(object sender, EventArgs e)
+        {
+            connectToolStripMenuItem.Checked = true;
+            UpdateNotifyIcon();
+        }
 
         private void Receiver_OnRawMessage(WebsocketAgent sender, dynamic data)
         {
@@ -106,7 +105,6 @@ namespace Antnf.KeyboardRemote.Client.Receiver
 
             if (NotifyConnection.Checked)
                 Notify(state.ToString(), "State");
-            this.online = (state == PeerState.Online);
             UpdateNotifyIcon();
             Log("State", state.ToString());
 
@@ -128,7 +126,6 @@ namespace Antnf.KeyboardRemote.Client.Receiver
             Log("KeyUp", info.Key);
             if (enableToolStripMenuItem.Checked)
                 KeyboardSimulator.KeyUp((Keys)info.KeyCode);
-
         }
 
         private void Log(string action, string msg = "")
@@ -137,8 +134,8 @@ namespace Antnf.KeyboardRemote.Client.Receiver
         }
         private void Notify(string text, string title = "")
         {
-            TrayNotifyIcon.BalloonTipTitle = string.IsNullOrEmpty(title) ? string.Empty : title;
-            TrayNotifyIcon.BalloonTipText = string.IsNullOrEmpty(text) ? string.Empty : text;
+            TrayNotifyIcon.BalloonTipTitle = string.IsNullOrEmpty(title) ? " " : title;
+            TrayNotifyIcon.BalloonTipText = string.IsNullOrEmpty(text) ? " " : text;
             TrayNotifyIcon.ShowBalloonTip(100);
         }
 

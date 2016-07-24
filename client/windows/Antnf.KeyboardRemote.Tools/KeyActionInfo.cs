@@ -22,7 +22,7 @@ namespace Antnf.KeyboardRemote.Tools
         /// </summary>
         /// <param name="data">运行时决定的键盘行为数据。</param>
         /// <returns>键盘行为信息。</returns>
-        public static KeyActionInfo ParseJsonObject(dynamic data)
+        public static KeyActionInfo ParseFromJsonObject(dynamic data)
         {
             return new KeyActionInfo()
             {
@@ -35,13 +35,13 @@ namespace Antnf.KeyboardRemote.Tools
             };
         }
         /// <summary>
-        /// Dumps KeyActionInfo into json
+        /// Dumps KeyActionInfo into object
         /// </summary>
         /// <param name="info">KeyActionInfo object</param>
-        /// <returns>Json string</returns>
-        public static string DumpsJson(KeyActionInfo info)
+        /// <returns>Dynamic Object</returns>
+        public static dynamic DumpToObject(KeyActionInfo info)
         {
-            return JsonConvert.SerializeObject(new
+            return new
             {
                 keyaction = info.ActionType == KeyActionType.KeyDown ? "keydown" : "keyup",
                 key = info.Key,
@@ -49,10 +49,19 @@ namespace Antnf.KeyboardRemote.Tools
                 is_alt_down = info.IsAltDown,
                 is_shift_down = info.IsShiftDown,
                 is_ctrl_down = info.IsCtrlDown
-            });
+            };
+        }
+        /// <summary>
+        /// Dumps KeyActionInfo into json
+        /// </summary>
+        /// <param name="info">KeyActionInfo object</param>
+        /// <returns>Json string</returns>
+        public static string DumpToJson(KeyActionInfo info)
+        {
+            return JsonConvert.SerializeObject(DumpToObject(info));
         }
 
-        public static KeyActionInfo FromKeyEventArgs(KeyActionType action_type, KeyEventArgs args)
+        public static KeyActionInfo ParseFromKeyEventArgs(KeyActionType action_type, KeyEventArgs args)
         {
             return new KeyActionInfo()
             {
