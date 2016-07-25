@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Antnf.KeyboardRemote.Client
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Antnf.KeyboardRemote.Client.Sender.WPF", "Antnf.KeyboardRemote.Client.Sender.WPF\Antnf.KeyboardRemote.Client.Sender.WPF.csproj", "{19E9B2DF-508D-489F-ACE3-677A6230A325}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AddressInput", "AddressInput\AddressInput.csproj", "{D490C102-95E7-4FA5-8CB6-9B3846556FDC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Antnf.KeyboardRemote.Client.Components", "Antnf.KeyboardRemote.Client.Components\Antnf.KeyboardRemote.Client.Components.csproj", "{EFE1066F-D816-45F5-B04D-C27FFF614F9C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,10 +35,10 @@ Global
 		{19E9B2DF-508D-489F-ACE3-677A6230A325}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{19E9B2DF-508D-489F-ACE3-677A6230A325}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{19E9B2DF-508D-489F-ACE3-677A6230A325}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D490C102-95E7-4FA5-8CB6-9B3846556FDC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D490C102-95E7-4FA5-8CB6-9B3846556FDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D490C102-95E7-4FA5-8CB6-9B3846556FDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D490C102-95E7-4FA5-8CB6-9B3846556FDC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EFE1066F-D816-45F5-B04D-C27FFF614F9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EFE1066F-D816-45F5-B04D-C27FFF614F9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EFE1066F-D816-45F5-B04D-C27FFF614F9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EFE1066F-D816-45F5-B04D-C27FFF614F9C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

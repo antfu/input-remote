@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using Antnf.KeyboardRemote.Tools;
+using Antnf.KeyboardRemote.Client.Components;
 
 namespace Antnf.KeyboardRemote.Client.Receiver
 {
@@ -30,13 +31,17 @@ namespace Antnf.KeyboardRemote.Client.Receiver
 
         private void AddressInput()
         {
-            var url_input = new AddressInput_WinForm();
-            url_input.url = this.http_url;
-            url_input.ShowDialog();
-            this.http_url = url_input.url;
-            this.ws_url = WebsocketAgent.HttpToWsUrl(this.http_url);
-            settings["http_url"] = this.http_url;
-            settings["ws_url"] = this.ws_url;
+            var url_input = new AddressInput();
+            url_input.Url = this.http_url;
+
+			#warning 此处有可能有逻辑错误（当用户点击取消按钮时会导致http_url不更新，导致ws_url、settings都不更新）。  --  Sam Lu
+			if (url_input.ShowDialog() == true)
+			{
+				this.http_url = url_input.Url;
+				this.ws_url = WebsocketAgent.HttpToWsUrl(this.http_url);
+				settings["http_url"] = this.http_url;
+				settings["ws_url"] = this.ws_url;
+			}
         }
 
         private void Main_Load(object sender, EventArgs e)
