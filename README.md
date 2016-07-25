@@ -5,7 +5,7 @@ A keyboard sharing tool through different devices
 
 #### Server
 *Python3.5* with
-> Tornado
+> [Tornado](http://www.tornadoweb.org/en/stable/)
 
 #### Client/Windows
 C# with WinForm
@@ -14,81 +14,14 @@ C# with WinForm
 #### Communication
 Websocket with Json
 
-## URL Rules
-#### Sender
-> Page: http://localhost/sender?c=IhjehI&a=n95fh7
+## Doc
+[Communication](doc/communication.md)
 
-> Websocket: http://localhost/ws?c=IhjehI&a=n95fh7&t=sender
+[Server](doc/server.md)
 
-`c` for `channel`, `a` for `authenticate`, `t` for `type`
-
-#### Receiver
-> Page: http://localhost/receiver?c=IhjehI&a=n95fh7
-
-> Websocket: http://localhost/ws?c=IhjehI&a=n95fh7&t=receiver
+[Client](doc/client.md)
 
 
-## Websocket Json Rules
-### Rule
-#### Base
-```javascript
-{
-  action: [system|key|mouse|command],
-  subaction: [peerstate|keyaction|mouseaction|...]
-  data: [data]
-}
-```
-#### System Data
-```javascript
-{
-  state: bool
-  state_msg: string
-}
-```
+## License
 
-#### Key Data
-```javascript
-{
-  keyaction: [keyup|keydown],
-  key: "s",
-  keycode: 83,
-  is_shift_down: bool,
-  is_ctrl_down: bool,
-  is_alt_down: bool,
-}
-```
-
-### Example
-#### Online State
-```json
-{  
-   "action":"system",
-   "subaction":"peerstate",
-   "data":{  
-      "state":true
-   }
-}
-```
-#### Key H Up
-```json
-{  
-   "action":"key",
-   "subaction":"keyup",
-   "data":{  
-      "keyaction":"keyup",
-      "key":"H",
-      "keycode":"72",
-      "is_shift_down":false,
-      "is_ctrl_down":false,
-      "is_alt_down":false
-   }
-}
-```
-
-
-## State
-|WS Connection|Peer Online|State|
-|---|---|---|
-|false|false|Disconnect|
-|true|false|Waiting|
-|true|true|Online|
+MIT. Copyright (c) [Anthony Fu](http://antnf.com).
