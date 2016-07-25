@@ -8,5 +8,5 @@ Default configurations.
 configs = {
     'port' : 80,
     'debug': False,
-    'localmode': False
+    'localmode': True
 }
