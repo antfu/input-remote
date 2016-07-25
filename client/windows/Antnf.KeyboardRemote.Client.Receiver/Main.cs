@@ -15,57 +15,37 @@ namespace Antnf.KeyboardRemote.Client.Receiver
     {
         private WebsocketAgent agent;
         private NotifyIconAgent notifyAgent;
-        private string ws_url = "";
-        private string http_url = "http://localhost/receiver/"; //default url
-        private SettingHelper settings = new SettingHelper("setting.json");
 
         public Main()
         {
             InitializeComponent();
         }
+
+        private void Reconnect(bool renew = false)
+        {
+            agent.Reconnect(InputHelper.GetWsAddress(renew),true);
+        }
         
-        private void Reconnect()
-        {
-            agent.Reconnect(ws_url,true);
-        }
-
-        private void AddressInput()
-        {
-            var url_input = new AddressInput();
-            url_input.Url = this.http_url;
-
-			#warning 此处有可能有逻辑错误（当用户点击取消按钮时会导致http_url不更新，导致ws_url、settings都不更新）。  --  Sam Lu
-			if (url_input.ShowDialog() == true)
-			{
-				this.http_url = url_input.Url;
-				this.ws_url = WebsocketAgent.HttpToWsUrl(this.http_url);
-				settings["http_url"] = this.http_url;
-				settings["ws_url"] = this.ws_url;
-			}
-        }
 
         private void Main_Load(object sender, EventArgs e)
         {
             this.Opacity = 0;
             Control.CheckForIllegalCrossThreadCalls = false;
-            this.http_url = settings["http_url"];
-            this.ws_url = settings["ws_url"];
-            if (string.IsNullOrEmpty(this.http_url) || string.IsNullOrEmpty(this.ws_url))
-                AddressInput();
-
-            agent = new WebsocketAgent(ws_url);
+            
+            agent = new WebsocketAgent(InputHelper.GetWsAddress());
             agent.OnKeyDown += Receiver_OnKeyDown;
             agent.OnKeyUp += Receiver_OnKeyUp;
             agent.OnConnect += Agent_OnConnect;
             agent.OnClose += Agent_OnClose;
             agent.OnPeerStateChange += Receiver_OnPeerStateChange;
 
-            notifyAgent = new NotifyIconAgent(TrayNotifyIcon, agent)
+            TrayNotifyIcon.Icon = Properties.Resources.r_red;
+             notifyAgent = new NotifyIconAgent(TrayNotifyIcon, agent)
             {
-                DisconnectIcon = Properties.Resources.red,
-                WaitingIcon = Properties.Resources.grey,
-                OnlineIcon = Properties.Resources.green,
-                KeyDownIcon = Properties.Resources.orange
+                DisconnectIcon = Properties.Resources.r_red,
+                WaitingIcon = Properties.Resources.r_grey,
+                OnlineIcon = Properties.Resources.r_green,
+                KeyDownIcon = Properties.Resources.r_orange
             };
 
             agent.Connect();
@@ -127,8 +107,7 @@ namespace Antnf.KeyboardRemote.Client.Receiver
 
         private void changeAddrToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            AddressInput();
-            Reconnect();
+            Reconnect(true);
         }
     }
 }

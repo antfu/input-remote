@@ -15,7 +15,7 @@
                 <EventTrigger RoutedEvent="Loaded">
                     <BeginStoryboard>
                         <Storyboard>
-                            <ColorAnimation From="#00000000" To="#7F000000" Duration="0:0:1"
+                            <ColorAnimation From="#00000000" To="#7F000000" Duration="0:0:05"
                                     Storyboard.TargetProperty="Background.(SolidColorBrush.Color)">
                             </ColorAnimation>
                         </Storyboard>

@@ -63,9 +63,9 @@ namespace Antnf.KeyboardRemote.Client.Receiver.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
-        internal static System.Drawing.Icon green {
+        internal static System.Drawing.Icon r_blue {
             get {
-                object obj = ResourceManager.GetObject("green", resourceCulture);
+                object obj = ResourceManager.GetObject("r_blue", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
             }
         }
@@ -73,9 +73,9 @@ namespace Antnf.KeyboardRemote.Client.Receiver.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
-        internal static System.Drawing.Icon grey {
+        internal static System.Drawing.Icon r_green {
             get {
-                object obj = ResourceManager.GetObject("grey", resourceCulture);
+                object obj = ResourceManager.GetObject("r_green", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
             }
         }
@@ -83,9 +83,9 @@ namespace Antnf.KeyboardRemote.Client.Receiver.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
-        internal static System.Drawing.Icon normal {
+        internal static System.Drawing.Icon r_grey {
             get {
-                object obj = ResourceManager.GetObject("normal", resourceCulture);
+                object obj = ResourceManager.GetObject("r_grey", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
             }
         }
@@ -93,9 +93,9 @@ namespace Antnf.KeyboardRemote.Client.Receiver.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
-        internal static System.Drawing.Icon orange {
+        internal static System.Drawing.Icon r_orange {
             get {
-                object obj = ResourceManager.GetObject("orange", resourceCulture);
+                object obj = ResourceManager.GetObject("r_orange", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
             }
         }
@@ -103,9 +103,9 @@ namespace Antnf.KeyboardRemote.Client.Receiver.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
-        internal static System.Drawing.Icon red {
+        internal static System.Drawing.Icon r_red {
             get {
-                object obj = ResourceManager.GetObject("red", resourceCulture);
+                object obj = ResourceManager.GetObject("r_red", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
             }
         }
@@ -113,9 +113,9 @@ namespace Antnf.KeyboardRemote.Client.Receiver.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
-        internal static System.Drawing.Icon teal {
+        internal static System.Drawing.Icon r_yellow {
             get {
-                object obj = ResourceManager.GetObject("teal", resourceCulture);
+                object obj = ResourceManager.GetObject("r_yellow", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
             }
         }
