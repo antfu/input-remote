@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Antnf.KeyboardRemote.Client.Receiver", "Antnf.KeyboardRemote.Client.Receiver\Antnf.KeyboardRemote.Client.Receiver.csproj", "{1790EA28-97E5-4783-AB92-80DC625C263F}"
 EndProject
@@ -12,6 +12,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Antnf.KeyboardRemote.Client.Sender.WPF", "Antnf.KeyboardRemote.Client.Sender.WPF\Antnf.KeyboardRemote.Client.Sender.WPF.csproj", "{19E9B2DF-508D-489F-ACE3-677A6230A325}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AddressInput", "AddressInput\AddressInput.csproj", "{D490C102-95E7-4FA5-8CB6-9B3846556FDC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Antnf.KeyboardRemote.Server", "Antnf.KeyboardRemote.Server\Antnf.KeyboardRemote.Server.csproj", "{5B4EFBD5-EBF8-4B8D-ABD5-6E8A4FC5FD8B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Antnf.KeyboardRemote.Server.Console", "Antnf.KeyboardRemote.Server.Console\Antnf.KeyboardRemote.Server.Console.csproj", "{D075628F-554F-42F8-8C88-C13B38A12EFE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +43,14 @@ Global
 		{D490C102-95E7-4FA5-8CB6-9B3846556FDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D490C102-95E7-4FA5-8CB6-9B3846556FDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D490C102-95E7-4FA5-8CB6-9B3846556FDC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5B4EFBD5-EBF8-4B8D-ABD5-6E8A4FC5FD8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B4EFBD5-EBF8-4B8D-ABD5-6E8A4FC5FD8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B4EFBD5-EBF8-4B8D-ABD5-6E8A4FC5FD8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B4EFBD5-EBF8-4B8D-ABD5-6E8A4FC5FD8B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D075628F-554F-42F8-8C88-C13B38A12EFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D075628F-554F-42F8-8C88-C13B38A12EFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D075628F-554F-42F8-8C88-C13B38A12EFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D075628F-554F-42F8-8C88-C13B38A12EFE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
