@@ -47,8 +47,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DemoServer.cs" />
+    <Compile Include="EmbeddedServer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Antnf.KeyboardRemote.Tools\Antnf.KeyboardRemote.Tools.csproj">
+      <Project>{4dc1dabb-0ded-462f-ae01-538f449b42e3}</Project>
+      <Name>Antnf.KeyboardRemote.Tools</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

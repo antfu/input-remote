@@ -16,8 +16,8 @@ from   configs.config   import configs
 channel_auth = {}
 senders = {}
 recivers = {}
-selector = {'sender':senders,'receiver':recivers}
-invertor = {'receiver':senders,'sender':recivers}
+selector = {'s':senders,'r':recivers}
+invertor = {'r':senders,'s':recivers}
 
 msg = {
     'online': '{"action":"system","subaction":"peerstate","data":{"state":true}}',
@@ -82,10 +82,10 @@ class localmode_handler(BasicHandler):
         self.write(str(configs.localmode))
 
 class ws_handler(tornado.websocket.WebSocketHandler):
-    def open(self):
+    def open(self,_type):
         self.channel_id = self.get_argument('c','local')
         self.auth = self.get_argument('a','local')
-        self.type = self.get_argument('t','receiver')
+        self.type = _type
 
         # Connection Verify
         if not configs.localmode:
@@ -133,7 +133,8 @@ def run():
     app = tornado.web.Application(
         handlers=[
             (r'/?',index_handler),
-            (r'/ws',ws_handler),
+            (r'/ws/(r)',ws_handler),
+            (r'/ws/(s)',ws_handler),
             (r'/sender',sender_handler),
             (r'/receiver',receiver_handler),
             (r'/s',sender_handler),

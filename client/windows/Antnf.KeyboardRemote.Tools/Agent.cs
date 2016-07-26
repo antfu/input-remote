@@ -19,15 +19,10 @@ namespace Antnf.KeyboardRemote.Tools
 	{
         public static string HttpToWsUrl(string http_url)
         {
-            string type = "";
-            if (http_url.Contains("receiver"))
-                type = "receiver";
-            if (http_url.Contains("sender"))
-                type = "sender";
-            var ws_url = http_url.Replace("http", "ws").Replace("receiver", "ws").Replace("sender", "ws") + "&t=" + type;
-            if (ws_url.IndexOf('?') == -1)
-                ws_url = ws_url.Replace('&', '?');
-            return ws_url;
+            if (http_url.StartsWith("ws"))
+                return http_url;
+
+            return http_url.Replace("http", "ws").Replace("receiver", "ws/r").Replace("sender", "ws/s");
         }
 		/// <summary>获取地址</summary>
 		/// <value>地址</value>

@@ -17,7 +17,7 @@ namespace Antnf.KeyboardRemote.Tools
         public Icon WaitingIcon { get; set; }
         public Icon OnlineIcon { get; set; }
         public Icon KeyDownIcon { get; set; }
-        public bool NotifyEnabled { get; set; }
+        public bool NotifyEnabled { get; set; } = true;
 
         private bool _DisplayMessageIcon = false;
         private Icon _StateIcon;

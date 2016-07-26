@@ -37,7 +37,7 @@ init_header('receiver');
 
 var pressed = {};
 var last_time = 0;
-var ws_url = 'ws://'+location.host+'/ws'+location.search+'&t=receiver';
+var ws_url = 'ws://'+location.host+'/ws/r'+location.search;
 if (ws_url.indexOf('?') == -1) ws_url = ws_url.replace('&','?');
 var client = new WSClient(ws_url,true);
 client.connect();

@@ -76,7 +76,7 @@
             this.TrayMenu.Name = "TrayMenu";
             this.TrayMenu.ShowCheckMargin = true;
             this.TrayMenu.ShowImageMargin = false;
-            this.TrayMenu.Size = new System.Drawing.Size(228, 190);
+            this.TrayMenu.Size = new System.Drawing.Size(228, 223);
             // 
             // connectToolStripMenuItem
             // 

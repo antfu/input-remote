@@ -78,7 +78,7 @@ keyboard.make(keyboard.func);
 keyboard.register_key_event($('.keyboard key'));
 
 var pressed = {};
-var ws_url = 'ws://'+location.host+'/ws'+location.search+'&t=sender';
+var ws_url = 'ws://'+location.host+'/ws/s'+location.search;
 if (ws_url.indexOf('?') == -1) ws_url = ws_url.replace('&','?');
 var client = new WSClient(ws_url,true);
 client.connect();

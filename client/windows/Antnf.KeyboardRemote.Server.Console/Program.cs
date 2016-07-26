@@ -11,7 +11,7 @@ namespace Antnf.KeyboardRemote.Server.Console
     {
         static void Main(string[] args)
         {
-            var server = new DemoServer();
+            var server = new EmbeddedServer();
             server.Run(233);
         }
     }
