@@ -8,7 +8,7 @@ using WebSocketSharp;
 
 namespace Antnf.KeyboardRemote.Server
 {
-    public class Echo : WebSocketBehavior
+    public class Behavior : WebSocketBehavior
     {
         private string _name;
         protected override void OnOpen()
@@ -22,12 +22,12 @@ namespace Antnf.KeyboardRemote.Server
         }
     }
 
-    public class DemoServer
+    public class EmbeddedServer
     {
         public void Run(int port = 80)
         {
             var wssv = new WebSocketServer(port);
-            wssv.AddWebSocketService<Echo>("/echo");
+            wssv.AddWebSocketService<Behavior>("/ws");
             wssv.Start();
             Console.WriteLine("WebSocket server started on " + wssv.Address.ToString() + ":" + wssv.Port);
             Console.ReadKey(true);

@@ -56,16 +56,18 @@ namespace Antnf.KeyboardRemote.Client.Receiver
         private void Agent_OnClose(object sender, WebSocketSharp.CloseEventArgs e)
         {
             connectToolStripMenuItem.Checked = false;
+            TrayNotifyIcon.Text = "Receiver [Disconnect]";
         }
-        
+
         private void Agent_OnConnect(object sender, EventArgs e)
         {
             connectToolStripMenuItem.Checked = true;
+            TrayNotifyIcon.Text = "Receiver [Offline]";
         }
-        
+
         private void Receiver_OnPeerStateChange(WebsocketAgent sender, PeerState state)
         {
-            stateToolStripMenuItem.Text = state.ToString();
+            TrayNotifyIcon.Text = "Receiver [" + state.ToString() + "]";
             Log("State", state.ToString());
         }
 
@@ -110,6 +112,11 @@ namespace Antnf.KeyboardRemote.Client.Receiver
         private void changeAddrToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Reconnect(true);
+        }
+
+        private void notifyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

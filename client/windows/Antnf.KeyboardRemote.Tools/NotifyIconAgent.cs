@@ -17,10 +17,12 @@ namespace Antnf.KeyboardRemote.Tools
         public Icon WaitingIcon { get; set; }
         public Icon OnlineIcon { get; set; }
         public Icon KeyDownIcon { get; set; }
+        public bool NotifyEnabled { get; set; }
 
         private bool _DisplayMessageIcon = false;
         private Icon _StateIcon;
         private Icon _MessageIcon;
+        
         
         /// <summary>
         /// State icon
@@ -87,9 +89,12 @@ namespace Antnf.KeyboardRemote.Tools
     
         public void Notify(string text, string title = "")
         {
-            Instance.BalloonTipTitle = string.IsNullOrEmpty(title) ? " " : title;
-            Instance.BalloonTipText = string.IsNullOrEmpty(text) ? " " : text;
-            Instance.ShowBalloonTip(100);
+            if (NotifyEnabled)
+            {
+                Instance.BalloonTipTitle = string.IsNullOrEmpty(title) ? " " : title;
+                Instance.BalloonTipText = string.IsNullOrEmpty(text) ? " " : text;
+                Instance.ShowBalloonTip(100);
+            }
         }
 
         private void Agent_OnConnect(object sender, EventArgs e)
