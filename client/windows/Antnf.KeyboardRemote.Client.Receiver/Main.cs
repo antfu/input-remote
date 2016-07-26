@@ -116,7 +116,7 @@ namespace Antnf.KeyboardRemote.Client.Receiver
 
         private void notifyToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            notifyAgent.NotifyEnabled = notifyToolStripMenuItem.Selected;
         }
     }
 }
