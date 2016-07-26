@@ -15,20 +15,13 @@ namespace Antnf.KeyboardRemote.Client.Receiver
     {
         private WebsocketAgent agent;
         private NotifyIconAgent notifyAgent;
-        private string ws_url = "";
-        private string http_url = "http://localhost/receiver/"; //default url
-        private SettingHelper settings = new SettingHelper("setting.json");
 
         public Main()
         {
             InitializeComponent();
         }
-        
-        private void Reconnect()
-        {
-            agent.Reconnect(ws_url,true);
-        }
 
+<<<<<<< HEAD
 		#warning 修改了一下这个方法以及调用这个方法的其他方法的代码逻辑。整理起来差不多是这样的——当TryInputAddress方法返回true，意味着url发生了改变，此时必定要做出相应的动作；当返回false，则url没有发生改变，或者改变没有被认可或提交，此时不需要响应。 -> Sam Lu
 		/// <summary>
 		/// 通过弹出 <see cref="AddressInput"/> 对话框，试图让用户输入一个URL。
@@ -51,30 +44,42 @@ namespace Antnf.KeyboardRemote.Client.Receiver
 				return true;
 			}
 			else return false;
+=======
+        private void Reconnect(bool renew = false)
+        {
+            agent.Reconnect(InputHelper.GetWsAddress(renew),true);
+>>>>>>> edaf398c47f4b8a2bb4e7041d251b8560a62defb
         }
+        
 
         private void Main_Load(object sender, EventArgs e)
         {
             this.Opacity = 0;
             Control.CheckForIllegalCrossThreadCalls = false;
+<<<<<<< HEAD
             this.http_url = settings["http_url"];
             this.ws_url = settings["ws_url"];
             if (string.IsNullOrEmpty(this.http_url) || string.IsNullOrEmpty(this.ws_url))
                 TryInputAddress();
 
             agent = new WebsocketAgent(ws_url);
+=======
+            
+            agent = new WebsocketAgent(InputHelper.GetWsAddress());
+>>>>>>> edaf398c47f4b8a2bb4e7041d251b8560a62defb
             agent.OnKeyDown += Receiver_OnKeyDown;
             agent.OnKeyUp += Receiver_OnKeyUp;
             agent.OnConnect += Agent_OnConnect;
             agent.OnClose += Agent_OnClose;
             agent.OnPeerStateChange += Receiver_OnPeerStateChange;
 
-            notifyAgent = new NotifyIconAgent(TrayNotifyIcon, agent)
+            TrayNotifyIcon.Icon = Properties.Resources.r_red;
+             notifyAgent = new NotifyIconAgent(TrayNotifyIcon, agent)
             {
-                DisconnectIcon = Properties.Resources.red,
-                WaitingIcon = Properties.Resources.grey,
-                OnlineIcon = Properties.Resources.green,
-                KeyDownIcon = Properties.Resources.orange
+                DisconnectIcon = Properties.Resources.r_red,
+                WaitingIcon = Properties.Resources.r_grey,
+                OnlineIcon = Properties.Resources.r_green,
+                KeyDownIcon = Properties.Resources.r_orange
             };
 
             agent.Connect();
@@ -137,11 +142,15 @@ namespace Antnf.KeyboardRemote.Client.Receiver
 		#warning 这里就是关键的位置，我发现，如果按照原先的代码逻辑，不管url有没有改变，都会重新连接一次，错误就发生在（本来已经处于“Connected”状态，再次尝试连接将导致“Socket Closed”）。
         private void changeAddrToolStripMenuItem_Click(object sender, EventArgs e)
         {
+<<<<<<< HEAD
 			#warning	我建议这里再添加是否已经处于“Connected”状态的判断。
             if (TryInputAddress(true))
 			{
 				Reconnect();
 			}
+=======
+            Reconnect(true);
+>>>>>>> edaf398c47f4b8a2bb4e7041d251b8560a62defb
         }
     }
 }

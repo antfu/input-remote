@@ -73,12 +73,6 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AddressInput_WinForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="AddressInput_WinForm.Designer.cs">
-      <DependentUpon>AddressInput_WinForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Main.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -87,9 +81,6 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="AddressInput_WinForm.resx">
-      <DependentUpon>AddressInput_WinForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
     </EmbeddedResource>
@@ -132,6 +123,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="icon.ico" />
+    <None Include="Resources\r_green.ico" />
+    <None Include="Resources\r_blue.ico" />
+    <None Include="Resources\r_yellow.ico" />
+    <None Include="Resources\r_red.ico" />
+    <None Include="Resources\r_orange.ico" />
+    <None Include="Resources\r_grey.ico" />
     <None Include="Resources\orange.ico" />
     <None Include="Resources\teal.ico" />
     <None Include="Resources\green.ico" />

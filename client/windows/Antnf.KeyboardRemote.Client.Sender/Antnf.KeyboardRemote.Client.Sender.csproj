@@ -32,6 +32,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -42,6 +44,7 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Main.cs">
@@ -76,10 +79,32 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Antnf.KeyboardRemote.Client.Components\Antnf.KeyboardRemote.Client.Components.csproj">
+      <Project>{efe1066f-d816-45f5-b04d-c27fff614f9c}</Project>
+      <Name>Antnf.KeyboardRemote.Client.Components</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Antnf.KeyboardRemote.Tools\Antnf.KeyboardRemote.Tools.csproj">
       <Project>{4dc1dabb-0ded-462f-ae01-538f449b42e3}</Project>
       <Name>Antnf.KeyboardRemote.Tools</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\s_orange.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\s_red.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\s_yellow.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\s_blue.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\s_green.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\s_grey.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

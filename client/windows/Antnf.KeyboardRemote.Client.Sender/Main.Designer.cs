@@ -46,10 +46,18 @@
             this.columnHeader11 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.TrayNotifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
+            this.TrayMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.connectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.stateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.changeAddrToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.showConsoleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            this.TrayMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // curXYLabel
@@ -173,9 +181,63 @@
             // 
             // TrayNotifyIcon
             // 
+            this.TrayNotifyIcon.ContextMenuStrip = this.TrayMenu;
             this.TrayNotifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("TrayNotifyIcon.Icon")));
-            this.TrayNotifyIcon.Text = "Keyboard Remote";
+            this.TrayNotifyIcon.Text = "KeyboardRemote Sender";
             this.TrayNotifyIcon.Visible = true;
+            // 
+            // TrayMenu
+            // 
+            this.TrayMenu.ImageScalingSize = new System.Drawing.Size(24, 24);
+            this.TrayMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.connectToolStripMenuItem,
+            this.stateToolStripMenuItem,
+            this.toolStripSeparator1,
+            this.changeAddrToolStripMenuItem1,
+            this.showConsoleToolStripMenuItem,
+            this.exitToolStripMenuItem});
+            this.TrayMenu.Name = "TrayMenu";
+            this.TrayMenu.ShowCheckMargin = true;
+            this.TrayMenu.ShowImageMargin = false;
+            this.TrayMenu.Size = new System.Drawing.Size(228, 193);
+            // 
+            // connectToolStripMenuItem
+            // 
+            this.connectToolStripMenuItem.Name = "connectToolStripMenuItem";
+            this.connectToolStripMenuItem.Size = new System.Drawing.Size(227, 30);
+            this.connectToolStripMenuItem.Text = "&Connect";
+            this.connectToolStripMenuItem.Click += new System.EventHandler(this.connectToolStripMenuItem_Click);
+            // 
+            // stateToolStripMenuItem
+            // 
+            this.stateToolStripMenuItem.Enabled = false;
+            this.stateToolStripMenuItem.Name = "stateToolStripMenuItem";
+            this.stateToolStripMenuItem.Size = new System.Drawing.Size(227, 30);
+            this.stateToolStripMenuItem.Text = "Offline";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(224, 6);
+            // 
+            // changeAddrToolStripMenuItem1
+            // 
+            this.changeAddrToolStripMenuItem1.Name = "changeAddrToolStripMenuItem1";
+            this.changeAddrToolStripMenuItem1.Size = new System.Drawing.Size(227, 30);
+            this.changeAddrToolStripMenuItem1.Text = "Change &Address";
+            this.changeAddrToolStripMenuItem1.Click += new System.EventHandler(this.changeAddrToolStripMenuItem1_Click);
+            // 
+            // showConsoleToolStripMenuItem
+            // 
+            this.showConsoleToolStripMenuItem.Name = "showConsoleToolStripMenuItem";
+            this.showConsoleToolStripMenuItem.Size = new System.Drawing.Size(227, 30);
+            this.showConsoleToolStripMenuItem.Text = "&Show Console";
+            // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(227, 30);
+            this.exitToolStripMenuItem.Text = "&Exit";
             // 
             // Main
             // 
@@ -194,6 +256,7 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            this.TrayMenu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -217,6 +280,13 @@
 		private System.Windows.Forms.ColumnHeader columnHeader11;
 		private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.NotifyIcon TrayNotifyIcon;
+        private System.Windows.Forms.ContextMenuStrip TrayMenu;
+        private System.Windows.Forms.ToolStripMenuItem connectToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem stateToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem changeAddrToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem showConsoleToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
     }
 }
 
