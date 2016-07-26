@@ -23,7 +23,9 @@ namespace Antnf.KeyboardRemote.Client.Receiver
 
         private void Reconnect(bool renew = false)
         {
-            agent.Reconnect(InputHelper.GetWsAddress(renew), true);
+            string new_ws_address = InputHelper.GetWsAddress(renew);
+            if (!string.IsNullOrEmpty(new_ws_address))
+                agent.Reconnect(new_ws_address, true);
         }
         
 
