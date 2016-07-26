@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Antnf.KeyboardRemote.Client.Components"
         mc:Ignorable="d"
-        Title="MainWindow" Height="800" Width="1000">
+        Title="MainWindow" Height="400" Width="1000">
     <Window.Style>
         <Style TargetType="Window">
             <Setter Property="WindowStyle" Value="None"></Setter>
@@ -15,58 +15,39 @@
                 <EventTrigger RoutedEvent="Loaded">
                     <BeginStoryboard>
                         <Storyboard>
-                            <ColorAnimation From="#00000000" To="#7F000000" Duration="0:0:1"
+                            <ColorAnimation From="#00000000" To="#7F000000" Duration="0:0:0.75"
                                     Storyboard.TargetProperty="Background.(SolidColorBrush.Color)">
                             </ColorAnimation>
                         </Storyboard>
                     </BeginStoryboard>
                 </EventTrigger>
-                <!--
-                <EventTrigger RoutedEvent="Unloaded">
-                    <BeginStoryboard>
-                        <Storyboard>
-                            <ColorAnimation From="#7F000000" To="#00000000" Duration="0:0:1"
-                                    Storyboard.TargetProperty="Background.(SolidColorBrush.Color)">
-                            </ColorAnimation>
-                        </Storyboard>
-                    </BeginStoryboard>
-                </EventTrigger>
-                -->
             </Style.Triggers>
         </Style>
     </Window.Style>
     <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="103*"/>
-            <ColumnDefinition Width="97*"/>
-        </Grid.ColumnDefinitions>
         <Grid Name="dialogGrid" Width="800" Height="200" Opacity="0" Grid.ColumnSpan="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto" MinHeight="25"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <Grid.Style>
-                <Style TargetType="Grid">
-                    <Style.Triggers>
-                        <EventTrigger RoutedEvent="Loaded">
-                            <BeginStoryboard>
-                                <Storyboard>
-                                    <DoubleAnimation From="0" To="800" Duration="0:0:0.75" BeginTime="0:0:0"
+            <Grid.Triggers>
+                <EventTrigger RoutedEvent="Loaded">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation From="0" To="800" Duration="0:0:0.5" BeginTime="0:0:0.25"
                                                      Storyboard.TargetProperty="Width">
-                                    </DoubleAnimation>
-                                    <DoubleAnimation From="0" To="1" Duration="0:0:0.75" BeginTime="0:0:0.25"
+                            </DoubleAnimation>
+                            <DoubleAnimation From="0" To="1" Duration="0:0:0.5" BeginTime="0:0:0.25"
                                                      Storyboard.TargetProperty="Opacity">
-                                    </DoubleAnimation>
-                                    <DoubleAnimation From="200" To="250" Duration="0:0:0.25" BeginTime="0:0:1"
+                            </DoubleAnimation>
+                            <DoubleAnimation From="200" To="250" Duration="0:0:0.25" BeginTime="0:0:1"
                                                      Storyboard.TargetProperty="Height">
-                                    </DoubleAnimation>
-                                </Storyboard>
-                            </BeginStoryboard>
-                        </EventTrigger>
-                    </Style.Triggers>
-                </Style>
-            </Grid.Style>
+                            </DoubleAnimation>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Grid.Triggers>
 
             <Rectangle Grid.RowSpan="3" Fill="#7FFFFFFF">
                 <Rectangle.Effect>
@@ -78,25 +59,33 @@
                 <Grid.Effect>
                     <DropShadowEffect Color="Black" Direction="270" ShadowDepth="10" Opacity="0.1"></DropShadowEffect>
                 </Grid.Effect>
-                <Label Grid.Row="0" HorizontalAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF404040" FontSize="36" FontFamily="/Antnf.KeyboardRemote.Client.Components;component/fonts/#SAO UI">Receiver URL</Label>
+                <Label Name="lblTitle" Grid.Row="0" HorizontalAlignment="Center" VerticalContentAlignment="Center" Foreground="#FF404040" FontSize="36" FontFamily="/Antnf.KeyboardRemote.Client.Components;component/fonts/#SAO UI" Content="Receiver URL">
+                    <Label.Triggers>
+                        <EventTrigger RoutedEvent="Loaded">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation From="0" To="1" Duration="0:0:0.25" BeginTime="0:0:0.25"
+                                                 Storyboard.TargetProperty="Opacity">
+                                    </DoubleAnimation>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </Label.Triggers>
+                </Label>
             </Grid>
 
             <Grid x:Name="urlGrid" Grid.Row="1" Height="25" Background="#C0FFFFFF">
-                <Grid.Style>
-                    <Style TargetType="Grid">
-                        <Style.Triggers>
-                            <EventTrigger RoutedEvent="Loaded">
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation From="25" To="75" Duration="0:0:0.25" BeginTime="0:0:1"
+                <Grid.Triggers>
+                    <EventTrigger RoutedEvent="Loaded">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation From="25" To="75" Duration="0:0:0.25" BeginTime="0:0:1"
                                                      Storyboard.TargetProperty="Height">
-                                        </DoubleAnimation>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </EventTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Grid.Style>
+                                </DoubleAnimation>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Grid.Triggers>
 
                 <TextBox x:Name="txtUrl" Background="Transparent" FontSize="24" FontFamily="/Antnf.KeyboardRemote.Client.Components;component/fonts/#SAO UI" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Opacity="0"
                          Loaded="txtUrl_Loaded">
@@ -131,19 +120,23 @@
                                          Storyboard.TargetName="cancelButton"
                                          Storyboard.TargetProperty="Opacity">
                         </DoubleAnimation>
-                        <DoubleAnimation From="75" To="25" Duration="0:0:0.25" BeginTime="0:0:0.5"
+                        <DoubleAnimation From="75" To="25" Duration="0:0:0.25" BeginTime="0:0:0.25"
                                          Storyboard.TargetName="urlGrid"
                                          Storyboard.TargetProperty="Height">
                         </DoubleAnimation>
-                        <DoubleAnimation From="250" To="200" Duration="0:0:0.25" BeginTime="0:0:0.5"
+                        <DoubleAnimation From="250" To="200" Duration="0:0:0.25" BeginTime="0:0:0.25"
                                          Storyboard.TargetName="dialogGrid"
                                          Storyboard.TargetProperty="Height">
                         </DoubleAnimation>
-                        <DoubleAnimation From="800" To="0" Duration="0:0:1" BeginTime="0:0:1"
+                        <DoubleAnimation From="1" To="0" Duration="0:0:0.25" BeginTime="0:0:0.5"
+                                         Storyboard.TargetName="lblTitle"
+                                         Storyboard.TargetProperty="Opacity">
+                        </DoubleAnimation>
+                        <DoubleAnimation From="800" To="0" Duration="0:0:0.5" BeginTime="0:0:0.5"
                                          Storyboard.TargetName="dialogGrid"
                                          Storyboard.TargetProperty="Width">
                         </DoubleAnimation>
-                        <DoubleAnimation From="1" To="0" Duration="0:0:0.75" BeginTime="0:0:1"
+                        <DoubleAnimation From="1" To="0" Duration="0:0:0.5" BeginTime="0:0:0.5"
                                          Storyboard.TargetName="MainWin"
                                          Storyboard.TargetProperty="Opacity">
                         </DoubleAnimation>
@@ -163,6 +156,9 @@
                                 <Style.Triggers>
                                     <Trigger Property="IsMouseOver" Value="True">
                                         <Setter Property="Source" Value="images/ok_hover.png"></Setter>
+                                    </Trigger>
+                                    <Trigger Property="IsEnabled" Value="False">
+                                        <Setter Property="Source" Value="images/ok_disable.png"></Setter>
                                     </Trigger>
                                     <EventTrigger RoutedEvent="Loaded">
                                         <BeginStoryboard>
@@ -189,6 +185,9 @@
                                 <Style.Triggers>
                                     <Trigger Property="IsMouseOver" Value="True">
                                         <Setter Property="Source" Value="images/cancel_hover.png"></Setter>
+                                    </Trigger>
+                                    <Trigger Property="IsEnabled" Value="False">
+                                        <Setter Property="Source" Value="images/cancel_disable.png"></Setter>
                                     </Trigger>
                                     <EventTrigger RoutedEvent="Loaded">
                                         <BeginStoryboard>

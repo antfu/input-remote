@@ -41,7 +41,7 @@
 			this.NotifyKeyDown = new System.Windows.Forms.ToolStripMenuItem();
 			this.NotifyKeyUp = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-			this.changeAddrToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+			this.changeAddrToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.showConsoleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.TrayMenu.SuspendLayout();
@@ -75,7 +75,7 @@
             this.enableToolStripMenuItem,
             this.notifyToolStripMenuItem,
             this.toolStripSeparator1,
-            this.changeAddrToolStripMenuItem1,
+            this.changeAddrToolStripMenuItem,
             this.showConsoleToolStripMenuItem,
             this.exitToolStripMenuItem});
 			this.TrayMenu.Name = "TrayMenu";
@@ -142,12 +142,12 @@
 			this.toolStripSeparator1.Name = "toolStripSeparator1";
 			this.toolStripSeparator1.Size = new System.Drawing.Size(169, 6);
 			// 
-			// changeAddrToolStripMenuItem1
+			// changeAddrToolStripMenuItem
 			// 
-			this.changeAddrToolStripMenuItem1.Name = "changeAddrToolStripMenuItem1";
-			this.changeAddrToolStripMenuItem1.Size = new System.Drawing.Size(172, 22);
-			this.changeAddrToolStripMenuItem1.Text = "Change &Address";
-			this.changeAddrToolStripMenuItem1.Click += new System.EventHandler(this.changeAddrToolStripMenuItem1_Click);
+			this.changeAddrToolStripMenuItem.Name = "changeAddrToolStripMenuItem";
+			this.changeAddrToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
+			this.changeAddrToolStripMenuItem.Text = "Change &Address";
+			this.changeAddrToolStripMenuItem.Click += new System.EventHandler(this.changeAddrToolStripMenuItem_Click);
 			// 
 			// showConsoleToolStripMenuItem
 			// 
@@ -198,7 +198,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem notifyToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem stateToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem changeAddrToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem changeAddrToolStripMenuItem;
     }
 }
 

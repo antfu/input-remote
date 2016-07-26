@@ -18,7 +18,21 @@ namespace Antnf.KeyboardRemote.Client.Components
 	/// </summary>
 	public partial class AddressInput : Window
 	{
+		/// <summary>
+		/// 获取或设置对话框接受的Url字符串。
+		/// </summary>
 		public string Url { get; set; }
+
+		/// <summary>
+		/// 获取或设置一个值，指示是否允许对话框的取消功能。
+		/// </summary>
+		public bool AllowCancel { internal get; set; }
+
+		private void txtUrl_Loaded(object sender, RoutedEventArgs e)
+		{
+			this.txtUrl.Text = this.Url ?? string.Empty;
+			this.cancelButton.IsEnabled = this.AllowCancel;
+		}
 
 		public AddressInput()
 		{
@@ -29,39 +43,35 @@ namespace Antnf.KeyboardRemote.Client.Components
 		{
 			this.Url = this.txtUrl.Text;
 
-			new System.Threading.Thread(() =>
-			{
-				System.Threading.Thread.Sleep(2000);
-
-				this.Dispatcher.BeginInvoke(
-					new Action(() =>
-					{
-						this.DialogResult = true;
-					}), null
-				);
-			}
-			).Start();
+			this.CloseDialog(true);
 		}
 
 		private void cancelButton_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
 		{
+			this.CloseDialog(false);
+		}
+
+		/// <summary>
+		/// 关闭 <see cref="AddressInput"/> 对话框。
+		/// </summary>
+		/// <param name="dialogResult">关闭 <see cref="AddressInput"/> 对话框时应返回的对话框结果。</param>
+		/// <remarks>
+		/// 在调用此方法后，将会为 <see cref="AddressInput"/> 对话框的结束动画等待1秒，然后关闭对话框并返回对话框结果。
+		/// </remarks>
+		private void CloseDialog(bool? dialogResult)
+		{
 			new System.Threading.Thread(() =>
 			{
-				System.Threading.Thread.Sleep(2000);
+				System.Threading.Thread.Sleep(1000);
 
 				this.Dispatcher.BeginInvoke(
 					new Action(() =>
 					{
-						this.DialogResult = false;
+						this.DialogResult = dialogResult;
 					}), null
 				);
 			}
-			).Start();
-		}
-
-		private void txtUrl_Loaded(object sender, RoutedEventArgs e)
-		{
-			this.txtUrl.Text = this.Url ?? string.Empty;
+				).Start();
 		}
 	}
 }
