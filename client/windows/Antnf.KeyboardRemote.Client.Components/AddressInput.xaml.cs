@@ -24,15 +24,9 @@ namespace Antnf.KeyboardRemote.Client.Components
 		/// </summary>
 		public string Url { get; set; }
 
-		/// <summary>
-		/// 获取或设置一个值，指示是否允许对话框的取消功能。
-		/// </summary>
-		public bool AllowCancel { internal get; set; }
-
 		private void txtUrl_Loaded(object sender, RoutedEventArgs e)
 		{
 			this.txtUrl.Text = this.Url ?? string.Empty;
-			this.cancelButton.IsEnabled = this.AllowCancel;
 		}
 
 		public AddressInput()
