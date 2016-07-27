@@ -5,6 +5,12 @@ using System.Text;
 
 namespace Antnf.KeyboardRemote.Tools
 {
+    public enum ClientType
+    {
+        Unknown,
+        Sender,
+        Receiver
+    }
     /// <summary>
 	/// 终端状态。
 	/// </summary>

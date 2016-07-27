@@ -47,6 +47,17 @@ namespace Antnf.KeyboardRemote.Server
                 return null;
             }
         }
+        public ClientType Type
+        {
+            get
+            {
+                if (this is SenderService)
+                    return ClientType.Sender;
+                else if (this is RecevierService)
+                    return ClientType.Receiver;
+                return ClientType.Unknown;
+            }
+        }
         public BaseBehavior Self
         {
             get
@@ -75,7 +86,7 @@ namespace Antnf.KeyboardRemote.Server
         {
             if (this.Other != null)
                 this.Other.SendPeerState(PeerState.Offline);
-            
+            Console.WriteLine("Client "+Type.ToString()+" lost.");
         }
         protected override void OnOpen()
         {
@@ -92,27 +103,53 @@ namespace Antnf.KeyboardRemote.Server
                     this.SendPeerState(PeerState.Online);
                     this.Other.SendPeerState(PeerState.Online);
                 }
+                Console.WriteLine("Client " + Type.ToString() + " connected.");
             }
         }
     }
-    public class SenderService : BaseBehavior
-    {
-    }
-    public class RecevierService : BaseBehavior
-    {
-    }
+    public class SenderService : BaseBehavior { }
+    public class RecevierService : BaseBehavior { }
 
     public class EmbeddedServer
     {
-        public void Run(int port = 80)
+        public string SenderWsAddress { get; private set; }
+        public string RecevierWsAddress { get; private set; }
+        public int Port { get; private set; }
+        public string Address
         {
-            var wssv = new WebSocketServer(port);
-            wssv.AddWebSocketService<SenderService>("/ws/s");
-            wssv.AddWebSocketService<RecevierService>("/ws/r");
-            wssv.Start();
-            Console.WriteLine("WebSocket server started on " + wssv.Address.ToString() + ":" + wssv.Port);
-            Console.ReadKey(true);
-            wssv.Stop();
+            get
+            {
+                return server.Address.ToString() + ":" + server.Port;
+            }
+        }
+
+        private WebSocketServer server;
+
+        public EmbeddedServer(int port = 80)
+        {
+            Port = port;
+            server = new WebSocketServer(Port);
+            server.AddWebSocketService<SenderService>("/ws/s");
+            server.AddWebSocketService<RecevierService>("/ws/r");
+            SenderWsAddress = Address + "/ws/s";
+            RecevierWsAddress = Address + "/ws/r";
+        }
+        public void Start()
+        {
+            try
+            {
+                server.Start();
+                Console.WriteLine("WebSocket server started on " + Address);
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine("Error " + ex.Message);
+            }
+        }
+        public void Stop()
+        {
+            server.Stop();
+            Console.WriteLine("WebSocket server stopped");
         }
     }
 }
