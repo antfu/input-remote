@@ -5,6 +5,8 @@
 {% block meta %}
 <link rel="stylesheet" href="/static/keyboard.css">
 <script src="/static/keyboard.js"></script>
+<link rel="stylesheet" href="/static/touchpad.css">
+<script src="/static/touchpad.js"></script>
 {% end %}
 
 
@@ -65,18 +67,21 @@ body
   </div>
 </div>
 
+<canvas class="touchpad"></canvas>
 
 <div class="dock" style="position:absolute;left:0;right:0;bottom:0;">
-  <div class="ui breadcrumb" style="margin:0.5em 1em;text-align:center;">
-    <div class="active section" id="none_keyboad" onclick="switch_keyboards(null,this)">None</div>
-    <div class="divider"> / </div>
-    <div class="section" onclick="switch_keyboards('qwert',this)">QWERT</div>
-    <div class="divider"> / </div>
-    <div class="section" onclick="switch_keyboards('qwert-full',this)">FULL</div>
-    <div class="divider"> / </div>
-    <div class="section" onclick="switch_keyboards('numpad',this)">NUMPAD</div>
-    <div class="divider"> / </div>
-    <div class="section" onclick="switch_keyboards('functional',this)">FUNC</div>
+  <div style="padding:1em 1em;text-align:center;background:rgba(0,0,0,0.04)">
+    <div class="ui breadcrumb">
+      <div class="section" onclick="switch_keyboards('qwert',this)">QWERT</div>
+      <div class="divider"> / </div>
+      <div class="section" onclick="switch_keyboards('qwert-full',this)">FULL</div>
+      <div class="divider"> / </div>
+      <div class="section" onclick="switch_keyboards('numpad',this)">NUMPAD</div>
+      <div class="divider"> / </div>
+      <div class="section" onclick="switch_keyboards('functional',this)">FUNC</div>
+      <div class="divider"> / </div>
+      <div class="active section" id="none_keyboad" onclick="switch_keyboards(null,this)">None</div>
+    </div>
   </div>
   <div class="keyboards">
     <div class="keyboard qwert"></div>
@@ -89,6 +94,11 @@ body
 
 {% block scripts %}
 <script>
+// Disable scroll
+document.body.addEventListener('touchmove', function(event) {
+  event.preventDefault();
+}, false);
+
 function switch_keyboards(key,bread) {
   $('.keyboard').hide();
   $('.breadcrumb .section').removeClass('active');
@@ -100,12 +110,17 @@ switch_keyboards(null,$('#none_keyboad'));
 
 init_header('sender');
 
-var keyboard = new Keyboard(sendkey);
-keyboard.make(keyboard.qwert);
-keyboard.make(keyboard.qwert_full);
-keyboard.make(keyboard.numpad);
-keyboard.make(keyboard.func);
-keyboard.register_key_event($('.keyboard key'));
+$(function(){
+  var keyboard = new Keyboard(sendkey,40);
+  keyboard.make(keyboard.qwert);
+  keyboard.make(keyboard.qwert_full);
+  keyboard.make(keyboard.numpad);
+  keyboard.make(keyboard.func);
+  keyboard.register_key_event($('.keyboard key'));
+  var touchpad = new Touchpad($('.touchpad'),40);
+});
+
+
 
 var pressed = {};
 var ws_url = 'ws://'+location.host+'/ws/s'+location.search;

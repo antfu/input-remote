@@ -1,9 +1,10 @@
 'use strict';
 
-var Keyboard = function(sendkeyfunc)
+var Keyboard = function(sendkeyfunc,vibrate)
 {
   var kb = this;
   kb.sendkey = sendkeyfunc;
+  kb.vibrate = vibrate || 0;
 
   var is_shift_down = false;
   var is_ctrl_down = false;
@@ -99,6 +100,7 @@ var Keyboard = function(sendkeyfunc)
       if (!e.attr('code'))
         return;
       e.mousedown(function(){
+        navigator.vibrate(kb.vibrate);
         var event = {};
         event.type = "keydown";
         event.key = e.text();
