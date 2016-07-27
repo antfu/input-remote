@@ -25,6 +25,14 @@ body
   margin: 0.5em 0;
   font-size: 0.7em;
 }
+.breadcrumb .section
+{
+  color: rgba(0,0,0,0.5);
+}
+.breadcrumb .section.active
+{
+  color: rgba(0,0,0,1);
+}
 </style>
 {% end %}
 
@@ -57,22 +65,44 @@ body
   </div>
 </div>
 
-<div class="keyboard qwert"></div>
-<br>
-<div class="keyboard functional"></div>
-<br>
-<div class="keyboard numpad"></div>
 
-<input id="input" style="backgound:none;border:none;display:none;">
+<div class="dock" style="position:absolute;left:0;right:0;bottom:0;">
+  <div class="ui breadcrumb" style="margin:0.5em 1em;text-align:center;">
+    <div class="active section" id="none_keyboad" onclick="switch_keyboards(null,this)">None</div>
+    <div class="divider"> / </div>
+    <div class="section" onclick="switch_keyboards('qwert',this)">QWERT</div>
+    <div class="divider"> / </div>
+    <div class="section" onclick="switch_keyboards('qwert-full',this)">FULL</div>
+    <div class="divider"> / </div>
+    <div class="section" onclick="switch_keyboards('numpad',this)">NUMPAD</div>
+    <div class="divider"> / </div>
+    <div class="section" onclick="switch_keyboards('functional',this)">FUNC</div>
+  </div>
+  <div class="keyboards">
+    <div class="keyboard qwert"></div>
+    <div class="keyboard qwert-full"></div>
+    <div class="keyboard functional"></div>
+    <div class="keyboard numpad"></div>
+  </div>
+</div>
 {% end %}
-
 
 {% block scripts %}
 <script>
+function switch_keyboards(key,bread) {
+  $('.keyboard').hide();
+  $('.breadcrumb .section').removeClass('active');
+  $(bread).addClass('active');
+  if(key)
+      $('.keyboard.'+key).show();
+}
+switch_keyboards(null,$('#none_keyboad'));
+
 init_header('sender');
 
 var keyboard = new Keyboard(sendkey);
 keyboard.make(keyboard.qwert);
+keyboard.make(keyboard.qwert_full);
 keyboard.make(keyboard.numpad);
 keyboard.make(keyboard.func);
 keyboard.register_key_event($('.keyboard key'));

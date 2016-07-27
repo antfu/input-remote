@@ -1,27 +1,63 @@
-.keyboard key
+.keyboards
 {
   background: rgba(0,0,0,0.02);
-  line-height: 30px;
-  height: 32px;
-  width: 32px;
-  margin: 0.1em;
+  padding: 0.2em 0.6em 0.6em 0.6em;
+}
+.keyboard key
+{
+  line-height: 3em;
+  height: 3em;
+  width: 10%;
+  margin: 0;
+  padding: 0.1em;
   display: inline-block;
   text-align: center;
   vertical-align: middle;
   cursor: default;
 }
-.keyboard key:hover
+.keyboard key:active:not(.noactive)
 {
   background: rgba(0,0,0,0.07);
 }
-.keyboard span
+.keyboard .span
 {
-  width: 16px;
-  height: 32px;
+  width: 5%;
+  height: 3em;
   display: inline-block;
-  margin: 0.05em;
+  margin: 0em;
   text-align: center;
   vertical-align: middle;
+}
+.special-key
+{
+  color: rgba(0,0,0,0.5);
+}
+.space-key
+{
+  vertical-align: middle;
+  margin: 0.6em 1em;
+  background: rgba(0,0,0,0.04);
+  border-radius: 0.4em;
+  line-height: 1.8em;
+  color: rgba(0,0,0,0.3);
+}
+@media screen and (min-width: 500px) {
+    .dock
+    {
+      display: none;
+    }
+    .keyboard key, .keyboard .span
+    {
+      height: 5em;
+      line-height: 5em;
+      font-size: 1.5em;
+    }
+    .space-key
+    {
+      line-height: 2.8em;
+      border-radius: 0.7em;
+      margin: auto 2em;
+    }
 }
 
 .keyboard.numpad key
