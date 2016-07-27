@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using Antnf.KeyboardRemote.Tools;
+using Antnf.KeyboardRemote.Server;
 using Antnf.KeyboardRemote.Client.Components;
 
 namespace Antnf.KeyboardRemote.Client.Receiver
@@ -15,31 +16,76 @@ namespace Antnf.KeyboardRemote.Client.Receiver
     {
         private WebsocketAgent agent;
         private NotifyIconAgent notifyAgent;
+        private SettingHelper setting = SettingHelper.GetSetting("setting.json");
+        private EmbeddedServer server;
+        private bool _EmbeddedServerEnabled = false;
+
+        public bool EmbeddedServerEnabled
+        {
+            get
+            {
+                return _EmbeddedServerEnabled;
+            }
+            private set
+            {
+                _EmbeddedServerEnabled = value;
+                setting["embeddedserver"] = value;
+                useEmbeddedServerToolStripMenuItem.Checked = value;
+                changeAddrToolStripMenuItem.Enabled = !value;
+            }
+        }
 
         public Main()
         {
             InitializeComponent();
         }
 
-        private void Reconnect(bool renew = false)
+        private void Reconnect(bool input = false)
         {
-            string new_ws_address = InputHelper.GetWsAddress(renew);
+            string new_ws_address = AddressHelper.GetWsAddress(input);
             if (!string.IsNullOrEmpty(new_ws_address))
                 agent.Reconnect(new_ws_address, true);
         }
-        
+
+        private void EnableEmbeddedServer(int port = 2333)
+        {
+            if (agent != null
+                || agent.IsConnected != true
+                || MessageBox.Show("Enabling embedded server will cause you lost existing connection. Are you sure?","Are you sure?",MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                EmbeddedServerEnabled = true;
+                server = new EmbeddedServer(port);
+                setting["ws_url"] = server.RecevierWsAddress;
+                server.Start();
+                Reconnect(false);
+            }
+        }
+        private void DisableEmbeddedServer()
+        {
+            if (MessageBox.Show("Are you sure to close embedded server?", "Are you sure?", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                EmbeddedServerEnabled = false;
+                if (server != null)
+                    server.Stop();
+                server = null;
+            }
+        }
+
 
         private void Main_Load(object sender, EventArgs e)
         {
             this.Opacity = 0;
             Control.CheckForIllegalCrossThreadCalls = false;
-
-            agent = new WebsocketAgent(InputHelper.GetWsAddress());
+            
+            agent = new WebsocketAgent(AddressHelper.GetWsAddress());
             agent.OnKeyDown += Receiver_OnKeyDown;
             agent.OnKeyUp += Receiver_OnKeyUp;
             agent.OnConnect += Agent_OnConnect;
             agent.OnClose += Agent_OnClose;
             agent.OnPeerStateChange += Receiver_OnPeerStateChange;
+
+            if (setting["embeddedserver"] == true)
+                EnableEmbeddedServer();
 
             TrayNotifyIcon.Icon = Properties.Resources.r_red;
              notifyAgent = new NotifyIconAgent(TrayNotifyIcon, agent)
@@ -117,6 +163,14 @@ namespace Antnf.KeyboardRemote.Client.Receiver
         private void notifyToolStripMenuItem_Click(object sender, EventArgs e)
         {
             notifyAgent.NotifyEnabled = notifyToolStripMenuItem.Selected;
+        }
+
+        private void useEmbeddedServerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (useEmbeddedServerToolStripMenuItem.Checked)
+                DisableEmbeddedServer();
+            else
+                EnableEmbeddedServer();
         }
     }
 }

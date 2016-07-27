@@ -6,13 +6,13 @@ using System.Text;
 
 namespace Antnf.KeyboardRemote.Client.Components
 {
-    public class InputHelper
+    public class AddressHelper
     {
-        public static string GetWsAddress(bool renew = false)
+        public static string GetWsAddress(bool input = false)
         {
             var settings = SettingHelper.GetSetting("setting.json");
 
-            if (!renew)
+            if (!input)
             {
                 if (settings["ws_url"] != null)
                 {

@@ -25,12 +25,12 @@ namespace Antnf.KeyboardRemote.Client.Sender
 
         private void Reconnect(bool renew = false)
         {
-            agent.Reconnect(InputHelper.GetWsAddress(renew), true);
+            agent.Reconnect(AddressHelper.GetWsAddress(renew), true);
         }
 
         private void Main_Load(object sender, EventArgs e)
         {
-            agent = new WebsocketAgent(InputHelper.GetWsAddress());
+            agent = new WebsocketAgent(AddressHelper.GetWsAddress());
             TrayNotifyIcon.Icon = Properties.Resources.s_red;
             notifyAgent = new NotifyIconAgent(TrayNotifyIcon, agent)
             {

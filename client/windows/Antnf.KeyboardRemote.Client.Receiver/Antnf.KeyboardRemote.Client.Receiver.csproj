@@ -141,6 +141,10 @@
       <Project>{efe1066f-d816-45f5-b04d-c27fff614f9c}</Project>
       <Name>Antnf.KeyboardRemote.Client.Components</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Antnf.KeyboardRemote.Server\Antnf.KeyboardRemote.Server.csproj">
+      <Project>{5b4efbd5-ebf8-4b8d-abd5-6e8a4fc5fd8b}</Project>
+      <Name>Antnf.KeyboardRemote.Server</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Antnf.KeyboardRemote.Tools\Antnf.KeyboardRemote.Tools.csproj">
       <Project>{4dc1dabb-0ded-462f-ae01-538f449b42e3}</Project>
       <Name>Antnf.KeyboardRemote.Tools</Name>

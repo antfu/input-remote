@@ -49,7 +49,7 @@
     <Compile Include="AddressInput.xaml.cs">
       <DependentUpon>AddressInput.xaml</DependentUpon>
     </Compile>
-    <Compile Include="InputHelper.cs" />
+    <Compile Include="AddressHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

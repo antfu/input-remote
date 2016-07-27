@@ -15,6 +15,12 @@ namespace Antnf.KeyboardRemote.Server
         private static SenderService _sender;
         private static RecevierService _receiver;
 
+        public static void Clear()
+        {
+            _sender = null;
+            _receiver = null;
+        }
+
         public void SendObject(dynamic obj)
         {
             this.Send(JsonConvert.SerializeObject(obj));
@@ -119,7 +125,7 @@ namespace Antnf.KeyboardRemote.Server
         {
             get
             {
-                return server.Address.ToString() + ":" + server.Port;
+                return "ws://localhost:" + server.Port;
             }
         }
 
@@ -149,6 +155,7 @@ namespace Antnf.KeyboardRemote.Server
         public void Stop()
         {
             server.Stop();
+            BaseBehavior.Clear();
             Console.WriteLine("WebSocket server stopped");
         }
     }

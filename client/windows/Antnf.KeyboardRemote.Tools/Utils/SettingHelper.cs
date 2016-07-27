@@ -64,8 +64,11 @@ namespace Antnf.KeyboardRemote.Tools
             }
             set
             {
-                this.settings_obj[key] = value;
-                File.WriteAllText(this.FilePath, this.Json);
+                if (this.settings_obj[key] != value)
+                {
+                    this.settings_obj[key] = value;
+                    File.WriteAllText(this.FilePath, this.Json);
+                }
             }
         }
     }
