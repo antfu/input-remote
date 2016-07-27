@@ -10,7 +10,7 @@ namespace Antnf.KeyboardRemote.Client.Components
     {
         public static string GetWsAddress(bool renew = false)
         {
-            var settings = new SettingHelper("setting.json");
+            var settings = SettingHelper.GetSetting("setting.json");
 
             if (!renew)
             {
