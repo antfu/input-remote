@@ -75,21 +75,40 @@ var Keyboard = function(sendkeyfunc,vibrate)
   }
   kb.func = {
     keys:[[
+      {code:27,key:"Esc"},
       {code:112,key:"F1"},
       {code:113,key:"F2"},
       {code:114,key:"F3"},
       {code:115,key:"F4"},
       {code:116,key:"F5"},
-      {code:117,key:"F6"},
+      {code:117,key:"F6"}
+    ],[
+      {code:9,key:"Tab"},
       {code:118,key:"F7"},
       {code:119,key:"F8"},
       {code:120,key:"F9"},
       {code:121,key:"F10"},
       {code:122,key:"F11"},
       {code:123,key:"F12"}
+    ],[
+      {code:91,key:"LWin", display:'L<i class="icon windows"></i>'},
+      {code:92,key:"RWin", display:'R<i class="icon windows"></i>'},
+      {code:17,key:'Ctrl'},
+      {code:16,key:'Shift'},
+      {code:18,key:'Alt'},
+      {code:32,key:"Space"},
+      {code:8,key:'Backspace',display:'<i class="icon arrow circle left"></i>'}
+    ],[
+      {code:45,key:"Ins"},
+      {code:36,key:"Home"},
+      {code:33,key:"PgUp"},
+      {code:34,key:"PgDn"},
+      {code:35,key:"End"},
+      {code:18,key:"Menu"},
+      {code:46,key:"Delete"}
     ]],
-    row:1,
-    width:100/12,
+    row:4,
+    width:100/7,
     width_unit: "%",
     target:'.keyboard.functional'
   }
@@ -99,7 +118,7 @@ var Keyboard = function(sendkeyfunc,vibrate)
       e = $(e);
       if (!e.attr('code'))
         return;
-      e.mousedown(function(){
+      e.on('mousedown',function(){
         navigator.vibrate(kb.vibrate);
         var event = {};
         event.type = "keydown";
@@ -111,7 +130,7 @@ var Keyboard = function(sendkeyfunc,vibrate)
         e.down = true;
         kb.sendkey(event);
       });
-      e.mouseup(function(){
+      e.on('mouseup',function(){
         var event = {};
         event.type = "keyup";
         event.key = e.text();
@@ -122,7 +141,7 @@ var Keyboard = function(sendkeyfunc,vibrate)
         e.down = false;
         kb.sendkey(event);
       });
-      e.mouseleave(function(){
+      e.on('mouseleave',function(){
         if (e.down)
         {
           var event = {};
