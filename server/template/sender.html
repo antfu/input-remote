@@ -72,19 +72,22 @@ body
 <div class="dock" style="position:absolute;left:0;right:0;bottom:0;">
   <div style="padding:1em 1em;text-align:center;background:rgba(0,0,0,0.04)">
     <div class="ui breadcrumb">
-      <div class="section" onclick="switch_keyboards('qwert',this)">QWERT</div>
-      <div class="divider"> / </div>
-      <div class="section" onclick="switch_keyboards('qwert-full',this)">FULL</div>
-      <div class="divider"> / </div>
-      <div class="section" onclick="switch_keyboards('numpad',this)">NUMPAD</div>
-      <div class="divider"> / </div>
-      <div class="section" onclick="switch_keyboards('functional',this)">FUNC</div>
-      <div class="divider"> / </div>
+      <div class="section" onclick="switch_keyboards('qwert',this)">Qwert</div>
+      <div class="divider"> | </div>
+      <div class="section" onclick="switch_keyboards('symbol',this)">Symbol</div>
+      <div class="divider"> | </div>
+      <div class="section" onclick="switch_keyboards('qwert-full',this)">Full</div>
+      <div class="divider"> | </div>
+      <div class="section" onclick="switch_keyboards('numpad',this)">Numpad</div>
+      <div class="divider"> | </div>
+      <div class="section" onclick="switch_keyboards('functional',this)">Function</div>
+      <div class="divider"> | </div>
       <div class="active section" id="none_keyboad" onclick="switch_keyboards(null,this)">None</div>
     </div>
   </div>
   <div class="keyboards">
     <div class="keyboard qwert"></div>
+    <div class="keyboard symbol"></div>
     <div class="keyboard qwert-full"></div>
     <div class="keyboard functional"></div>
     <div class="keyboard numpad"></div>
@@ -116,6 +119,7 @@ $(function(){
   keyboard.make(keyboard.qwert_full);
   keyboard.make(keyboard.numpad);
   keyboard.make(keyboard.func);
+  keyboard.make(keyboard.symbol);
   keyboard.register_key_event($('.keyboard key'));
   //var touchpad = new Touchpad($('.touchpad'),40);
 });

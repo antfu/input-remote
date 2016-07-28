@@ -112,6 +112,17 @@ var Keyboard = function(sendkeyfunc,vibrate)
     width_unit: "%",
     target:'.keyboard.functional'
   }
+  kb.symbol = {
+    keys:[
+      "~!@#$%^&*()",
+      ["[]{}|\\_+-=",{code:8,key:'Backspace',display:'<i class="icon arrow circle left"></i>'}],
+      [";:'\",.<>?/",{code:10,key:'Enter',display:'Enter',width:1}]
+    ],
+    row:3,
+    width:100/11,
+    width_unit: "%",
+    target:'.keyboard.symbol'
+  }
 
   kb.register_key_event = function(keys) {
     keys.each(function(i,e) {
@@ -141,7 +152,7 @@ var Keyboard = function(sendkeyfunc,vibrate)
         e.down = false;
         kb.sendkey(event);
       });
-      e.on('mouseleave',function(){
+      e.on('mouseleave',  function(){
         if (e.down)
         {
           var event = {};
