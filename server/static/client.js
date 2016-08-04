@@ -15,7 +15,7 @@ var WSClient = function(url,debug)
       return 'Disconnect';
     } else if (!wsc.online) {
       change_favicon('/static/icons/black_grey.png');
-      return 'Waiting';
+      return '<div class="ui active mini inline loader"></div> Waiting';
     } else {
       change_favicon('/static/icons/black_green.png');
       return 'Online';

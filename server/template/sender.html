@@ -135,8 +135,8 @@ client.onkey = function(key) {
   alert(key);
 }
 client.onstatechange = function(state) {
-  if (state == "Online") $('#state').addClass('teal').text(state);
-  else $('#state').removeClass('teal').text(state);
+  if (state == "Online") $('#state').addClass('teal').html(state);
+  else $('#state').removeClass('teal').html(state);
 }
 function sendkey(event) {
   var keycode = event.keyCode;
