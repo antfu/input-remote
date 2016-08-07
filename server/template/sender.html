@@ -25,8 +25,7 @@
 
 {% block content %}
 {% include header.html %}
-<canvas class="touchpad"></canvas>
-
+<canvas class="touchpad hidden" id="touchpad"></canvas>
 <div class="bottom dock hidden" id="keyboard-dock">
   <div style="padding:0.7em 0.3em;text-align:center;background:rgba(0,0,0,0.04)">
     <div class="breadcrumb">
@@ -53,6 +52,8 @@
 
 {% block scripts %}
 <script>
+var keyboard;
+var touchpad;
 // Disable scroll
 document.body.addEventListener('touchmove', function(event) {
   event.preventDefault();
@@ -69,7 +70,19 @@ $('#toggle-keyboard').click(function() {
     $('#keyboard-dock').addClass('hidden');
     switch_keyboards(null,'')
   }
-})
+});
+$('#toggle-touchpad').click(function() {
+  if ($(this).hasClass('active'))
+  {
+    $('#touchpad').removeClass('hidden');
+    touchpad.start();
+  }
+  else
+  {
+    $('#touchpad').addClass('hidden');
+    touchpad.stop();
+  }
+});
 
 function switch_keyboards(key,bread) {
   $('.keyboard').hide();
@@ -83,7 +96,7 @@ switch_keyboards(null,$('#none_keyboad'));
 init_header('sender');
 
 $(function(){
-  var keyboard = new Keyboard(sendkey,40);
+  keyboard = new Keyboard(sendkey,40);
   keyboard.make(keyboard.qwert);
   keyboard.make(keyboard.qwert_full);
   keyboard.make(keyboard.numpad);
@@ -94,7 +107,7 @@ $(function(){
     if ($('#toggle-vibration').hasClass('active'))
       navigator.vibrate(100);
   }
-  //var touchpad = new Touchpad($('.touchpad'),40);
+  touchpad = new Touchpad($('#touchpad'));
 });
 
 var pressed = {};

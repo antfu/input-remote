@@ -66,6 +66,7 @@ a:hover
   top: 0;
   left: 0;
   right: 0;
+  z-index: 100;
   background: #f3f3f3;
   padding: 0.5em 0.5em 0.5em 1em;
 }
