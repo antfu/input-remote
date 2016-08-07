@@ -2,37 +2,25 @@
 
 {% block title %}Keyboard Remote{% end %}
 
-{% block style %}
-<style>
-body
-{
-  padding: 2em;
-}
-</style>
-{% end %}
+{% block style %}{% end %}
 
 {% block content %}
 <div class="ui center aligned basic segment">
   <h2 class="ui header">
-    <i class="huge icons">
-      <i class="keyboard icon"></i>
-      <i class="corner share alternate icon"></i>
-    </i><br>
     Keyboard Remote
-    <div id="state" class="sub header">
-      A keyboard sharing tool through different devices, <br>
-      Github: <a href="https://github.com/AnthonyFu117/keyboard-remote" target="_blank">keyboard-remote</a>
-    </div>
   </h2>
+  </h4>
+    A keyboard sharing tool through different devices, <br>
+    Github: <a href="https://github.com/AnthonyFu117/keyboard-remote" target="_blank">keyboard-remote</a>
+  </h4>
   <br>
   {% if localmode %}
-    <p>Local Mode</p>
-    <a class="ui basic button" href="/sender">Sender</a>
-    <a class="ui basic button" href="/receiver">Receiver</a>
+    <p>*Local Mode*</p>
+    <a class="button" href="/sender">Sender</a>
+    <a class="button" href="/receiver">Receiver</a>
   {% else %}
-    <a class="ui blue button" href="/new?type=sender">I am Sender</a>
-    <a class="ui teal button" href="/new?type=receiver">I am Receiver</a>
+    <a class="button" href="/new?type=sender">I am Sender</a>
+    <a class="button" href="/new?type=receiver">I am Receiver</a>
   {% end %}
-
 </div>
 {% end %}

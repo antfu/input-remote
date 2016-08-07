@@ -24,10 +24,15 @@ body
 
 {% block content %}
 {% include header.html %}
+<br>
+<p>Receiver webview not available currently.</p>
+
+<div style="display:none">
 <h4 class="ui header">Current</h4>
 <div class="ui labels" id="pressed"></div>
 <h4 class="ui header">History</h4>
 <div class="ui labels" id="history"></div>
+</div>
 {% end %}
 
 
@@ -78,8 +83,8 @@ client.onkey = function(key) {
   }
 }
 client.onstatechange = function(state) {
-  if (state == "Online") $('#state').addClass('teal').html(state);
-  else $('#state').removeClass('teal').html(state);
+  if (state == "Online") $('.nav .state').html(state);
+  else $('.nav .state').html(state);
 }
 function fadeout(target, time)
 {

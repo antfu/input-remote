@@ -1,0 +1,97 @@
+/* =============== Commons =============== */
+html, body, div
+{
+  font-family: sans-serif;
+  cursor: default;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+body
+{
+  margin: 0;
+  padding: 2em;
+  background: #fff;
+}
+
+a
+{
+  color: #222;
+  opacity: 0.7;
+  text-decoration: none;
+  transition: opacity 0.3s ease-in;
+}
+a:hover
+{
+  opacity: 1;
+}
+.hidden
+{
+  opacity: 0 !important;
+  pointer-events: none;
+}
+
+.breadcrumb *
+{
+  display: inline-block;
+}
+
+.center.aligned
+{
+  text-align: center;
+}
+.right.aligned
+{
+  float: right;
+}
+
+.button
+{
+  border: 1px solid #444;
+  border-radius: 3px;
+  padding: 0.3em 1em;
+}
+.toggle-button.active
+{
+  border-bottom: 2px solid #222;
+  margin-bottom: -2px;
+}
+
+.nav
+{
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: #f3f3f3;
+  padding: 0.5em 0.5em 0.5em 1em;
+}
+.nav *
+{
+  display: inline-block;
+  vertical-align: middle;
+}
+.nav .type
+{
+  font-weight: bold;
+}
+.nav .state
+{
+  opacity: 0.6;
+}
+.nav a
+{
+  margin-left: 0.5em;
+}
+
+.dock.bottom
+{
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
+  transition: all 0.3s ease-in-out;
+}

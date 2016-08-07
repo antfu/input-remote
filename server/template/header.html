@@ -1,18 +1,11 @@
-<div class="ui grid">
-  <div class="ui row">
-    <div class="eight wide column">
-      <h3 class="ui header">
-        <i class="icon keyboard"></i>
-        <span name="type">Sender</span>
-        <div class="sub header">
-          <span id="state">Disconnect</span><br>
-          <i class="gery icon qrcode" id="qrcode_display" style="font-size:1.2em;margin-top:0.7em"></i>
-          <i class="gery icon linkify" id="link_copy" style="font-size:1.2em;margin-top:0.7em" data-content="Copy URL"></i>
-        </div>
-      </h3>
-      <div class="ui popup" id="qrcode_popup">
-        <div id="qrcode"></div>
-      </div>
-    </div>
+<div class="nav">
+  <span class="type">Sender</span>
+  <span class="state">Disconnect</span>
+  <div class="right aligned">
+    <!--<a><i class="material-icons" id="qrcode_display">fullscreen</i></a>-->
+    <a class="toggle-button" id="toggle-vibration"><i class="material-icons">vibration</i><a>
+    <a class="toggle-button" id="toggle-touchpad"><i class="material-icons">gesture</i><a>
+    <a class="toggle-button" id="toggle-keyboard"><i class="material-icons">keyboard</i><a>
+    <a><i class="material-icons" id="link_copy" data-content="Copy URL">link</i><a>
   </div>
 </div>

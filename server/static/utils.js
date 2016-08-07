@@ -26,24 +26,22 @@ function make_qrcode(target_id,data) {
 function init_header(type) {
   if (type=="sender")
   {
-    $('[name="type"]').text('Sender');
+    $('.nav .type').text('Sender');
     var link = location.href.replace('sender','receiver');
   } else {
-    $('[name="type"]').text('Receiver');
+    $('.nav .type').text('Receiver');
     var link = location.href.replace('receiver','sender');
   }
   $('#link').val(link);
-  make_qrcode('qrcode',link);
+  //make_qrcode('qrcode',link);
   var link_copy = $('#link_copy');
   link_copy.attr('data-clipboard-text',link);
   (new Clipboard('#link_copy')).on('success', function(e){
-    link_copy.removeClass('linkify').addClass('checkmark');
+    link_copy.text('check');
     setTimeout(function(){
-      link_copy.removeClass('checkmark').addClass('linkify');
+      link_copy.text('link');
     },2000);
   });
-  $('#qrcode_display').popup({popup: '#qrcode_popup'});
-  $('#link_copy').popup();
 }
 
 function change_favicon(src) {

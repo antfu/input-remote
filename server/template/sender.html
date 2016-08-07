@@ -12,21 +12,6 @@
 
 {% block style %}
 <style>
-body
-{
-  padding: 2em;
-}
-#pressed
-{
-  padding: 1em 0 !important;
-  height: 70px;
-}
-.options .checkbox
-{
-  display: block;
-  margin: 0.5em 0;
-  font-size: 0.7em;
-}
 .breadcrumb .section
 {
   color: rgba(0,0,0,0.5);
@@ -40,49 +25,20 @@ body
 
 {% block content %}
 {% include header.html %}
-
-<div class="ui labels" id="pressed"></div>
-<div class="options" style="display:none">
-  <h5 class="ui header">Options</h5>
-  <div class="ui slider checkbox checked">
-    <input type="checkbox" checked="checked">
-    <label>Key Catch</label>
-  </div>
-  <h5 class="ui header">Keyboards</h5>
-  <div class="ui slider checkbox checked">
-    <input type="checkbox" checked="checked">
-    <label>QWERT Keyboard</label>
-  </div>
-  <div class="ui slider checkbox">
-    <input type="checkbox">
-    <label>Function Keyboard</label>
-  </div>
-  <div class="ui slider checkbox">
-    <input type="checkbox">
-    <label>Numpad</label>
-  </div>
-  <div class="ui slider checkbox">
-    <input type="checkbox">
-    <label>Touchpad</label>
-  </div>
-</div>
-
 <canvas class="touchpad"></canvas>
 
-<div class="dock" style="position:absolute;left:0;right:0;bottom:0;">
-  <div style="padding:1em 1em;text-align:center;background:rgba(0,0,0,0.04)">
-    <div class="ui breadcrumb">
+<div class="bottom dock hidden" id="keyboard-dock">
+  <div style="padding:0.7em 0.3em;text-align:center;background:rgba(0,0,0,0.04)">
+    <div class="breadcrumb">
       <div class="section" onclick="switch_keyboards('qwert',this)">Qwert</div>
       <div class="divider"> | </div>
       <div class="section" onclick="switch_keyboards('symbol',this)">Symbol</div>
       <div class="divider"> | </div>
       <div class="section" onclick="switch_keyboards('qwert-full',this)">Full</div>
       <div class="divider"> | </div>
-      <div class="section" onclick="switch_keyboards('numpad',this)">Numpad</div>
+      <div class="section" onclick="switch_keyboards('numpad',this)">Num</div>
       <div class="divider"> | </div>
-      <div class="section" onclick="switch_keyboards('functional',this)">Function</div>
-      <div class="divider"> | </div>
-      <div class="active section" id="none_keyboad" onclick="switch_keyboards(null,this)">None</div>
+      <div class="section" onclick="switch_keyboards('functional',this)">Func</div>
     </div>
   </div>
   <div class="keyboards">
@@ -101,6 +57,19 @@ body
 document.body.addEventListener('touchmove', function(event) {
   event.preventDefault();
 }, false);
+
+$('#toggle-keyboard').click(function() {
+  if ($(this).hasClass('active'))
+  {
+    $('#keyboard-dock').removeClass('hidden');
+    switch_keyboards('qwert',$('.breadcrumb .section:first'))
+  }
+  else
+  {
+    $('#keyboard-dock').addClass('hidden');
+    switch_keyboards(null,'')
+  }
+})
 
 function switch_keyboards(key,bread) {
   $('.keyboard').hide();
@@ -121,10 +90,12 @@ $(function(){
   keyboard.make(keyboard.func);
   keyboard.make(keyboard.symbol);
   keyboard.register_key_event($('.keyboard key'));
+  keyboard.vibrate = function() {
+    if ($('#toggle-vibration').hasClass('active'))
+      navigator.vibrate(100);
+  }
   //var touchpad = new Touchpad($('.touchpad'),40);
 });
-
-
 
 var pressed = {};
 var ws_url = 'ws://'+location.host+'/ws/s'+location.search;
@@ -135,8 +106,8 @@ client.onkey = function(key) {
   alert(key);
 }
 client.onstatechange = function(state) {
-  if (state == "Online") $('#state').addClass('teal').html(state);
-  else $('#state').removeClass('teal').html(state);
+  if (state == "Online") $('.nav .state').html(state);
+  else $('.nav .state').html(state);
 }
 function sendkey(event) {
   var keycode = event.keyCode;
@@ -150,21 +121,6 @@ function sendkey(event) {
   obj.data.is_shift_down = event.shiftKey;
   obj.data.is_ctrl_down = event.ctrlKey;
   obj.data.is_alt_down = event.altKey;
-
-  if (event.type == 'keydown')
-    if (pressed[keycode] == undefined)
-    {
-        pressed[keycode] = obj;
-        var new_label = $('<div class="ui teal label" code="'+keycode+'">' + event.key + '</div>')
-        $('#pressed').append(new_label);
-    }
-    else
-      return;
-  else
-  {
-    delete pressed[keycode];
-    $('#pressed [code="'+keycode+'"]').remove();
-  }
   console.log(event,obj);
   client.sendkey(obj);
 }
