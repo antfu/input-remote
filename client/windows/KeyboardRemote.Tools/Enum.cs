@@ -28,6 +28,18 @@ namespace KeyboardRemote.Tools
         KeyUp
     }
 
+    public enum MouseActionType
+    {
+        None,
+        MoveStart,
+        MoveEnd,
+        Move,
+        LeftMouseDown,
+        LeftMouseUp,
+        RightMouseDown,
+        RightMouseUp
+    }
+
     /// <summary>
 	/// Standard Keyboard Shortcuts used by most applications
 	/// </summary>

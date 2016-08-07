@@ -54,6 +54,8 @@
 <script>
 var keyboard;
 var touchpad;
+
+var mouse_speed = 3;
 // Disable scroll
 document.body.addEventListener('touchmove', function(event) {
   event.preventDefault();
@@ -107,7 +109,7 @@ $(function(){
     if ($('#toggle-vibration').hasClass('active'))
       navigator.vibrate(100);
   }
-  touchpad = new Touchpad($('#touchpad'));
+  touchpad = new Touchpad($('#touchpad'), sendmouse);
 });
 
 var pressed = {};
@@ -134,18 +136,32 @@ function sendkey(event) {
   obj.data.is_shift_down = event.shiftKey;
   obj.data.is_ctrl_down = event.ctrlKey;
   obj.data.is_alt_down = event.altKey;
-  console.log(event,obj);
   client.sendkey(obj);
+  console.log(event.type + ': ' + obj.data.key);
+}
+function sendmouse(type,touch_obj) {
+  var obj = {};
+  touch_obj = touch_obj || {x:0,y:0};
+  touch_obj.action = type;
+  touch_obj.x *= mouse_speed;
+  touch_obj.y *= mouse_speed;
+  obj.action = 'mouse';
+  obj.subaction = type;
+  obj.data = touch_obj;
+  client.sendkey(obj);
+  console.log(type + ': ', obj.data);
 }
 document.addEventListener('keydown', function(event) {
-    sendkey(event);
-    event.preventDefault();
-    return false;
+  if (!$('#toggle-physical').hasClass('active')) return;
+  sendkey(event);
+  event.preventDefault();
+  return false;
 });
 document.addEventListener('keyup', function(event) {
-    sendkey(event);
-    event.preventDefault();
-    return false;
+  if (!$('#toggle-physical').hasClass('active')) return;
+  sendkey(event);
+  event.preventDefault();
+  return false;
 });
 </script>
 {% end %}

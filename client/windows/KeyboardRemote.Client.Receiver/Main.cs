@@ -80,6 +80,7 @@ namespace KeyboardRemote.Client.Receiver
             agent = new WebsocketAgent(AddressHelper.GetWsAddress());
             agent.OnKeyDown += Receiver_OnKeyDown;
             agent.OnKeyUp += Receiver_OnKeyUp;
+            agent.OnMouseMove += Agent_OnMouseMove;
             agent.OnConnect += Agent_OnConnect;
             agent.OnClose += Agent_OnClose;
             agent.OnPeerStateChange += Receiver_OnPeerStateChange;
@@ -97,6 +98,23 @@ namespace KeyboardRemote.Client.Receiver
             };
 
             agent.Connect();
+        }
+
+        private Point? CusorStartPoint = null;
+        private void Agent_OnMouseMove(WebsocketAgent agent, MouseActionInfo info)
+        {
+            if (info.ActionType == MouseActionType.MoveStart)
+                CusorStartPoint = MouseSimulator.Position;
+            else if (info.ActionType == MouseActionType.MoveEnd)
+                CusorStartPoint = null;
+            else if (info.ActionType == MouseActionType.Move)
+            {
+                if (CusorStartPoint != null)
+                {
+                    MouseSimulator.X = CusorStartPoint.Value.X + (int)info.X;
+                    MouseSimulator.Y = CusorStartPoint.Value.Y + (int)info.Y;
+                }
+            }
         }
 
         private void Agent_OnClose(object sender, WebSocketSharp.CloseEventArgs e)

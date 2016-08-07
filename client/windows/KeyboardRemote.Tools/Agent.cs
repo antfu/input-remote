@@ -9,7 +9,8 @@ using WebSocketSharp;
 namespace KeyboardRemote.Tools
 {
 	public delegate void KeyActionEventHandler(WebsocketAgent agent, KeyActionInfo info);
-	public delegate void PeerStateChangeEventHandler(WebsocketAgent agent, PeerState state);
+	public delegate void MouseActionEventHandler(WebsocketAgent agent, MouseActionInfo info);
+    public delegate void PeerStateChangeEventHandler(WebsocketAgent agent, PeerState state);
 	public delegate void JsonEventHandler(WebsocketAgent agent, dynamic data);
 
 	/// <summary>
@@ -36,7 +37,9 @@ namespace KeyboardRemote.Tools
 
         public event KeyActionEventHandler OnKeyDown;
 		public event KeyActionEventHandler OnKeyUp;
-		public event PeerStateChangeEventHandler OnPeerStateChange;
+		public event MouseActionEventHandler OnMouseMove;
+		public event MouseActionEventHandler OnMouseButton;
+        public event PeerStateChangeEventHandler OnPeerStateChange;
 		public event JsonEventHandler OnRawMessage;
 		public event EventHandler OnPing;
 		public event EventHandler<EventArgs> OnConnect;
@@ -136,7 +139,24 @@ namespace KeyboardRemote.Tools
 							this.OnKeyDown(this, info);
 					}
 				}
-			}
+
+                else if (obj.action == "mouse")
+                {
+                    MouseActionInfo info = MouseActionInfo.ParseFromJsonObject(obj.data);
+                    // Mouse Move Event
+                    if (info.ActionType == MouseActionType.MoveStart || info.ActionType == MouseActionType.MoveEnd || info.ActionType == MouseActionType.Move)
+                    {
+                        if (OnMouseMove != null)
+                            this.OnMouseMove(this, info);
+                    }
+                    // Mouse Button Event
+                    else
+                    {
+                        if (OnMouseButton != null)
+                            this.OnMouseButton(this, info);
+                    }
+                }
+            }
 			else
 			{
 				//TODO: IsBinary

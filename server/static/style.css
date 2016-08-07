@@ -68,20 +68,24 @@ a:hover
   right: 0;
   z-index: 100;
   background: #f3f3f3;
-  padding: 0.5em 0.5em 0.5em 1em;
+  padding: 0.2em 0.5em 0.2em 0.7em;
 }
 .nav *
 {
+  font-size: 0.9em;
   display: inline-block;
   vertical-align: middle;
 }
 .nav .type
 {
   font-weight: bold;
+  margin-right: 0;
 }
 .nav .state
 {
   opacity: 0.6;
+  margin-left: -0.3em;
+  text-align: left;
 }
 .nav a
 {
