@@ -1,17 +1,15 @@
 # ToDo
 
-### Windows/Client
+### Client/Windows
 - [Input] Url verification
-- [Sender] Context menu
-- [Sender] Add embedded server
 - [Input] Key binding ( Enter to accept, Esc to cancel, etc )
-- [Receiver] Mouse support
 
-### Python/Server
-- [Sender] Screen Keyboard
-- [Sender] Touch pad
-- [Sender] Responsible for moblie view
-- [Sender] Keyboard Options
+### Server/Python
+- [Sender] Touchpad MouseButtons
+- [Sender] Touchpad Speed Option
+- [Sender] Vibrate Slider
+- [Sender] Emojis
+- [Sender] Disconnect/Reconnect Option
 
-### Android/Client
+### Client/Android
 - To be developed...
