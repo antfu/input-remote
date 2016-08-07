@@ -1,5 +1,9 @@
 'use strict';
 
+var tap_theshold = 0.3;
+var right_theshold = 1;
+var move_theshold = 2;
+
 var Touchpad = function(target, sendtouchfunc)
 {
   var tp = this;
@@ -18,6 +22,9 @@ var Touchpad = function(target, sendtouchfunc)
   var y = tp.target.position().top;
   var updateStarted = false;
 
+  var start_time;
+  var moved = false;
+
   tp.start = function() {
     tp.state = true;
   };
@@ -31,6 +38,19 @@ var Touchpad = function(target, sendtouchfunc)
     offsets = [];
     if (event.touches.length == 0)
       sendtouchfunc('end');
+    var end_time = Date.now() / 1000;
+    if (!moved && end_time - start_time < tap_theshold)
+    {
+      sendtouchfunc('buttondown',{button:'left'});
+      sendtouchfunc('buttonup',{button:'left'});
+    }
+    if (!moved && end_time - start_time > right_theshold)
+    {
+      sendtouchfunc('buttondown',{button:'right'});
+      sendtouchfunc('buttonup',{button:'right'});
+    }
+    moved = false;
+
     //console.log('Touchend:',event.touches.length);
   });
 
@@ -43,6 +63,8 @@ var Touchpad = function(target, sendtouchfunc)
       var x = e.pageX - start_touches[i].pageX;
       var y = e.pageY - start_touches[i].pageY;
       offsets.push({x:x,y:y});
+      if (Math.abs(x) > move_theshold || Math.abs(y) > move_theshold)
+        moved = true;
     });
     update();
   });
@@ -50,6 +72,8 @@ var Touchpad = function(target, sendtouchfunc)
   tp.target[0].addEventListener('touchstart', function(event) {
     if (!tp.state) return;
     start_touches = event.touches;
+    start_time = Date.now() / 1000;
+    moved = false;
     sendtouchfunc('start');
     //console.log('Touchstart:',event.touches.length);
   });

@@ -81,6 +81,7 @@ namespace KeyboardRemote.Client.Receiver
             agent.OnKeyDown += Receiver_OnKeyDown;
             agent.OnKeyUp += Receiver_OnKeyUp;
             agent.OnMouseMove += Agent_OnMouseMove;
+            agent.OnMouseButton += Agent_OnMouseButton;
             agent.OnConnect += Agent_OnConnect;
             agent.OnClose += Agent_OnClose;
             agent.OnPeerStateChange += Receiver_OnPeerStateChange;
@@ -100,9 +101,28 @@ namespace KeyboardRemote.Client.Receiver
             agent.Connect();
         }
 
+        private void Agent_OnMouseButton(WebsocketAgent agent, MouseActionInfo info)
+        {
+            if (!enableToolStripMenuItem.Checked) return;
+            
+            switch(info.ActionType)
+            {
+                case MouseActionType.ButtonDown:
+                    if (info.Button.HasValue)
+                    MouseSimulator.MouseDown(info.Button.Value);
+                    break;
+                case MouseActionType.ButtonUp:
+                    if (info.Button.HasValue)
+                        MouseSimulator.MouseUp(info.Button.Value);
+                    break;
+            }
+        }
+
         private Point? CusorStartPoint = null;
         private void Agent_OnMouseMove(WebsocketAgent agent, MouseActionInfo info)
         {
+            if (!enableToolStripMenuItem.Checked) return;
+
             if (info.ActionType == MouseActionType.MoveStart)
                 CusorStartPoint = MouseSimulator.Position;
             else if (info.ActionType == MouseActionType.MoveEnd)
@@ -111,8 +131,7 @@ namespace KeyboardRemote.Client.Receiver
             {
                 if (CusorStartPoint != null)
                 {
-                    MouseSimulator.X = CusorStartPoint.Value.X + (int)info.X;
-                    MouseSimulator.Y = CusorStartPoint.Value.Y + (int)info.Y;
+                    MouseSimulator.Position = new MousePoint(new Point(CusorStartPoint.Value.X + (int)info.X, CusorStartPoint.Value.Y + (int)info.Y));
                 }
             }
         }

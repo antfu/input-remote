@@ -34,10 +34,8 @@ namespace KeyboardRemote.Tools
         MoveStart,
         MoveEnd,
         Move,
-        LeftMouseDown,
-        LeftMouseUp,
-        RightMouseDown,
-        RightMouseUp
+        ButtonDown,
+        ButtonUp
     }
 
     /// <summary>
