@@ -107,7 +107,7 @@ $(function(){
   keyboard.register_key_event($('.keyboard key'));
   keyboard.vibrate = function() {
     if ($('#toggle-vibration').hasClass('active'))
-      navigator.vibrate(100);
+      navigator.vibrate(20);
   }
   touchpad = new Touchpad($('#touchpad'), sendmouse);
 });
