@@ -27,8 +27,11 @@
 {% include header.html %}
 <canvas class="touchpad hidden" id="touchpad"></canvas>
 <div class="bottom dock hidden" id="keyboard-dock">
-  <div style="padding:0.7em 0.3em;text-align:center;background:rgba(0,0,0,0.04)">
+  <div style="padding:0.4em 0.3em;text-align:center;background:rgba(0,0,0,0.02)">
     <div class="breadcrumb">
+      <div class="right aligned">
+        <a class="toggle-button" id="toggle-vibration" style="margin-right:0.6em"><i class="material-icons">vibration</i></a>
+      </div>
       <div class="section" onclick="switch_keyboards('qwert',this)">Qwert</div>
       <div class="divider"> | </div>
       <div class="section" onclick="switch_keyboards('symbol',this)">Symbol</div>
