@@ -4,7 +4,7 @@ var Touchpad = function(target, sendtouchfunc)
 {
   /* Constants */
   var tap_theshold = 0.3;
-  var right_theshold = 1;
+  var right_theshold = 0.8;
   var move_theshold = 2;
   var dragmove_theshold = 0.3;
   var crosshair_length = 20;
@@ -37,6 +37,7 @@ var Touchpad = function(target, sendtouchfunc)
   tp.stop = function() {
     tp.state = false;
   };
+  tp.on_state_change = function(icon,text){};
   tp.target[0].addEventListener('touchend', function(event) {
     if (!tp.state) return;
   	ctx.clearRect(0, 0, w, h);
@@ -49,19 +50,25 @@ var Touchpad = function(target, sendtouchfunc)
     {
       sendtouchfunc('buttonup',{button:'left'});
       draging = false;
+      tp.on_state_change('gesture','Touchpad');
     }
-    if (!moved && end_time - start_time < tap_theshold)
+    else if (!moved && end_time - start_time < tap_theshold)
     {
       dragmove_timer = setTimeout(function () {
         dragmove_timer = undefined;
         sendtouchfunc('buttondown',{button:'left'});
         sendtouchfunc('buttonup',{button:'left'});
+        tp.on_state_change('touch_app','Tap');
       }, dragmove_theshold * 1000);
     }
-    if (!moved && end_time - start_time > right_theshold)
+    else if (!moved && end_time - start_time > right_theshold)
     {
       sendtouchfunc('buttondown',{button:'right'});
       sendtouchfunc('buttonup',{button:'right'});
+      tp.on_state_change('mouse','Right Click');
+    }
+    else {
+      tp.on_state_change('gesture','Touchpad');
     }
     moved = false;
     //console.log('Touchend:',event.touches.length);
@@ -77,7 +84,11 @@ var Touchpad = function(target, sendtouchfunc)
       var y = e.pageY - start_touches[i].pageY;
       offsets.push({x:x,y:y});
       if (Math.abs(x) > move_theshold || Math.abs(y) > move_theshold)
+      {
         moved = true;
+        if (!draging)
+          tp.on_state_change('swap_calls','Moving');
+      }
     });
     canvas_update();
   });
@@ -85,6 +96,7 @@ var Touchpad = function(target, sendtouchfunc)
   tp.target[0].addEventListener('touchstart', function(event) {
     if (!tp.state) return;
     start_touches = event.touches;
+    touches = event.touches;
     start_time = Date.now() / 1000;
     moved = false;
     sendtouchfunc('start');
@@ -94,7 +106,13 @@ var Touchpad = function(target, sendtouchfunc)
       dragmove_timer = undefined;
       draging = true;
       sendtouchfunc('buttondown',{button:'left'});
+      tp.on_state_change('pan_tool','Draging');
     }
+    else
+    {
+      tp.on_state_change('fingerprint','Pressed');
+    }
+    canvas_update();
     //console.log('Touchstart:',event.touches.length);
   });
 

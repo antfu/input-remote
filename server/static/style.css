@@ -53,6 +53,12 @@ a:hover
 {
   float: right;
 }
+.vertical.aligned
+{
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
 
 .button
 {
@@ -73,8 +79,8 @@ a:hover
   left: 0;
   right: 0;
   z-index: 100;
-  background: rgba(0,0,0,0.06);
-  padding: 0.2em 0.5em 0.2em 0.7em;
+  background: rgba(0,0,0,0.04);
+  padding: 0.5em 1em;
 }
 .nav *
 {

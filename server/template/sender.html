@@ -25,25 +25,30 @@
 
 {% block content %}
 {% include header.html %}
-<canvas class="touchpad hidden" id="touchpad"></canvas>
-<div class="bottom dock hidden" id="keyboard-dock">
-  <div style="padding:0.4em 0.3em;text-align:center;background:rgba(0,0,0,0.02)">
-    <div class="breadcrumb">
-      <div class="right aligned">
-        <a class="toggle-button" id="toggle-vibration" style="margin-right:0.6em"><i class="material-icons">vibration</i></a>
-      </div>
-      <div class="section" onclick="switch_keyboards('qwert',this)">Qwert</div>
-      <div class="divider"> | </div>
-      <div class="section" onclick="switch_keyboards('symbol',this)">Symbol</div>
-      <div class="divider"> | </div>
-      <div class="section" onclick="switch_keyboards('qwert-full',this)">Full</div>
-      <div class="divider"> | </div>
-      <div class="section" onclick="switch_keyboards('numpad',this)">Num</div>
-      <div class="divider"> | </div>
-      <div class="section" onclick="switch_keyboards('functional',this)">Func</div>
-    </div>
+<div class="touchpad hidden">
+  <div class="background vertical center aligned">
+    <i class="material-icons">gesture</i> <span>Touchpad<span>
   </div>
+  <canvas id="touchpad"></canvas>
+</div>
+<div class="bottom dock hidden" id="keyboard-dock">
   <div class="keyboards">
+    <div style="padding:0.4em 0.3em;text-align:center;">
+      <div class="breadcrumb">
+        <div class="right aligned">
+          <a class="toggle-button" id="toggle-vibration" style="margin-right:0.4em;margin-top:-0.3em;"><i class="material-icons">vibration</i></a>
+        </div>
+        <div class="section" onclick="switch_keyboards('qwert',this)">Qwert</div>
+        <div class="divider"> | </div>
+        <div class="section" onclick="switch_keyboards('symbol',this)">Symbol</div>
+        <div class="divider"> | </div>
+        <div class="section" onclick="switch_keyboards('qwert-full',this)">Full</div>
+        <div class="divider"> | </div>
+        <div class="section" onclick="switch_keyboards('numpad',this)">Num</div>
+        <div class="divider"> | </div>
+        <div class="section" onclick="switch_keyboards('functional',this)">Func</div>
+      </div>
+    </div>
     <div class="keyboard qwert"></div>
     <div class="keyboard symbol"></div>
     <div class="keyboard qwert-full"></div>
@@ -79,12 +84,12 @@ $('#toggle-keyboard').click(function() {
 $('#toggle-touchpad').click(function() {
   if ($(this).hasClass('active'))
   {
-    $('#touchpad').removeClass('hidden');
+    $('.touchpad').removeClass('hidden');
     touchpad.start();
   }
   else
   {
-    $('#touchpad').addClass('hidden');
+    $('.touchpad').addClass('hidden');
     touchpad.stop();
   }
 });
@@ -113,6 +118,10 @@ $(function(){
       navigator.vibrate(40);
   }
   touchpad = new Touchpad($('#touchpad'), sendmouse);
+  touchpad.on_state_change = function (icon,text) {
+    $('.touchpad .background i').text(icon);
+    $('.touchpad .background span').text(text);
+  }
 });
 
 var pressed = {};
