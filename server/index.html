@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sender - InputRemote</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <link rel='shortcut icon' id="favion" href='static/favicon.ico'/>
+  <script src="ws_link.js"></script>
+  <link rel="stylesheet" href="static/style.css">
+  <link rel="stylesheet" href="static/material-icons.css">
+  <link rel="stylesheet" href="static/keyboard.css">
+  <link rel="stylesheet" href="static/touchpad.css">
+  <script src="static/jquery-3.1.0.min.js"></script>
+  <script src="static/utils.js"></script>
+  <script src="static/client.js"></script>
+  <script src="static/keyboard.js"></script>
+  <script src="static/touchpad.js"></script>
+</head>
+<body>
+  <div class="nav">
+    <span class="type">Sender</span>
+    <span class="state">Disconnect</span>
+    <div class="right aligned">
+      <a class="toggle-button" id="toggle-physical"><i class="material-icons">cast</i></a>
+      <a class="toggle-button" id="toggle-touchpad"><i class="material-icons">gesture</i></a>
+      <a class="toggle-button" id="toggle-keyboard"><i class="material-icons">keyboard</i></a>
+    </div>
+  </div>
+  <div class="touchpad hidden">
+    <div class="background vertical center aligned">
+      <i class="material-icons">gesture</i> <span>Touchpad<span>
+    </div>
+    <canvas id="touchpad"></canvas>
+  </div>
+  <div class="bottom dock hidden" id="keyboard-dock">
+    <div class="keyboards">
+      <div style="padding:0.4em 0.3em;text-align:center;">
+        <div class="breadcrumb">
+          <div class="section" onclick="switch_keyboards('qwert',this)"><i class="mi">keyboard</i></div>
+          <div class="section" onclick="switch_keyboards('symbol',this)"><i class="mi">format_quote</i></div>
+          <div class="section" onclick="switch_keyboards('numpad',this)"><i class="mi">dialpad</i></div>
+          <div class="section" onclick="switch_keyboards('functional',this)"><i class="mi">developer_board</i></div>
+          <div class="section" onclick="switch_keyboards('media',this)"><i class="mi">audiotrack</i></div>
+          <div class="section" onclick="switch_keyboards('navi',this)"><i class="mi">open_with</i></div>
+          <a class="toggle-button" id="toggle-vibration"><i class="material-icons">vibration</i></a>
+        </div>
+      </div>
+      <div class="keyboard qwert"></div>
+      <div class="keyboard symbol"></div>
+      <div class="keyboard qwert-full"></div>
+      <div class="keyboard functional"></div>
+      <div class="keyboard numpad"></div>
+      <div class="keyboard media"></div>
+      <div class="keyboard navi"></div>
+    </div>
+  </div>
+</body>
+<script src="static/index.js"></script>
+</html>

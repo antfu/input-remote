@@ -4,13 +4,16 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Web;
+using System.Threading;
 
 namespace InputRemote.Server.Http
 {
     public class StaticHttpServer : HttpServer
     {
-        public string Root {get; private set;} 
+        private Thread thread;
 
+        public string Root {get; private set;} 
+        
         public StaticHttpServer(string root_path, int port) : base(port)
         {
             this.Root = root_path;
@@ -22,11 +25,13 @@ namespace InputRemote.Server.Http
             {
                 if (p.http_url == "/" || p.http_url == "")
                     p.http_url = "/index.html";
-                fs = File.Open(this.Root + HttpUtility.UrlDecode(p.http_url), FileMode.Open);
-                //p.writeSuccess();
-                //p.writeSuccess(GetMimeType(Path.GetExtension(p.http_url)));
-                fs.CopyTo(p.outputStream.BaseStream);
-                p.outputStream.BaseStream.Flush();
+                using (fs = File.Open(this.Root + HttpUtility.UrlDecode(p.http_url), FileMode.Open))
+                {
+                    //p.writeSuccess();
+                    //p.writeSuccess(GetMimeType(Path.GetExtension(p.http_url)));
+                    fs.CopyTo(p.outputStream.BaseStream);
+                    p.outputStream.BaseStream.Flush();
+                }
             }
             catch (Exception e)
             {
@@ -624,6 +629,21 @@ namespace InputRemote.Server.Http
             string mime;
 
             return _mappings.TryGetValue(extension, out mime) ? mime : "application/octet-stream";
+        }
+
+        public void Start()
+        {
+            if (thread != null)
+                return;
+            thread = new Thread(new ThreadStart(this.listen));
+            thread.Start();
+        }
+
+        public void Stop()
+        {
+            if (thread != null)
+                thread.Abort();
+            thread = null;
         }
     }
 }

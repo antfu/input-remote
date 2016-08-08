@@ -1,52 +1,6 @@
-{% extends 'base.html' %}
+'use strict';
 
-{% block title %}Sender{% end %}
-
-{% block meta %}
-<link rel="stylesheet" href="/static/keyboard.css">
-<script src="/static/keyboard.js"></script>
-<link rel="stylesheet" href="/static/touchpad.css">
-<script src="/static/touchpad.js"></script>
-{% end %}
-
-{% block content %}
-{% include header.html %}
-<div class="touchpad hidden">
-  <div class="background vertical center aligned">
-    <i class="material-icons">gesture</i> <span>Touchpad<span>
-  </div>
-  <canvas id="touchpad"></canvas>
-</div>
-<div class="bottom dock hidden" id="keyboard-dock">
-  <div class="keyboards">
-    <div style="padding:0.4em 0.3em;text-align:center;">
-      <div class="breadcrumb">
-        <div class="section" onclick="switch_keyboards('qwert',this)"><i class="mi">keyboard</i></div>
-        <div class="section" onclick="switch_keyboards('symbol',this)"><i class="mi">format_quote</i></div>
-        <!--
-        <div class="section" onclick="switch_keyboards('qwert-full',this)">Full</div>
-        <div class="divider"> | </div>
-        -->
-        <div class="section" onclick="switch_keyboards('numpad',this)"><i class="mi">dialpad</i></div>
-        <div class="section" onclick="switch_keyboards('functional',this)"><i class="mi">developer_board</i></div>
-        <div class="section" onclick="switch_keyboards('media',this)"><i class="mi">audiotrack</i></div>
-        <div class="section" onclick="switch_keyboards('navi',this)"><i class="mi">open_with</i></div>
-        <a class="toggle-button" id="toggle-vibration"><i class="material-icons">vibration</i></a>
-      </div>
-    </div>
-    <div class="keyboard qwert"></div>
-    <div class="keyboard symbol"></div>
-    <div class="keyboard qwert-full"></div>
-    <div class="keyboard functional"></div>
-    <div class="keyboard numpad"></div>
-    <div class="keyboard media"></div>
-    <div class="keyboard navi"></div>
-  </div>
-</div>
-{% end %}
-
-{% block scripts %}
-<script>
+init();
 var keyboard;
 var touchpad;
 
@@ -90,11 +44,8 @@ function switch_keyboards(key,bread) {
 }
 switch_keyboards(null,$('#none_keyboad'));
 
-init_header('sender');
-
 var pressed = {};
-var ws_url = 'ws://'+location.host+'/ws/s'+location.search;
-if (ws_url.indexOf('?') == -1) ws_url = ws_url.replace('&','?');
+var ws_url = 'ws://'+location.host+':81/ws/s';
 var client = new WSClient(ws_url,true);
 client.connect();
 client.onstatechange = function(state) {
@@ -181,5 +132,3 @@ $(function(){
     $('#toggle-physical').click();
   }
 });
-</script>
-{% end %}

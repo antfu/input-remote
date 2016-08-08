@@ -137,10 +137,6 @@
     <None Include="Resources\red.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\InputRemote.Client.Components\InputRemote.Client.Components.csproj">
-      <Project>{efe1066f-d816-45f5-b04d-c27fff614f9c}</Project>
-      <Name>InputRemote.Client.Components</Name>
-    </ProjectReference>
     <ProjectReference Include="..\InputRemote.Server\InputRemote.Server.csproj">
       <Project>{5b4efbd5-ebf8-4b8d-abd5-6e8a4fc5fd8b}</Project>
       <Name>InputRemote.Server</Name>

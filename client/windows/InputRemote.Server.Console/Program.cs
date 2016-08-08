@@ -18,8 +18,7 @@ namespace InputRemote.Server.Console
         }
         static void HttpServer() {
             var httpServer = new StaticHttpServer("web", 8080);
-            Thread thread = new Thread(new ThreadStart(httpServer.listen));
-            thread.Start();
+            httpServer.Start();
         }
         static void WsServer()
         {
