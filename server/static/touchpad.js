@@ -1,18 +1,19 @@
 'use strict';
 
-var tap_theshold = 0.3;
-var right_theshold = 1;
-var move_theshold = 2;
-var dragmove_theshold = 0.3;
-
 var Touchpad = function(target, sendtouchfunc)
 {
+  /* Constants */
+  var tap_theshold = 0.3;
+  var right_theshold = 1;
+  var move_theshold = 2;
+  var dragmove_theshold = 0.3;
+  var crosshair_length = 20;
+  var crosshair_padding = 30;
+
+
   var tp = this;
   tp.state = false;
   tp.target = target;
-	var touches = [];
-  var start_touches = [];
-  var offsets = [];
   var w = target.width();
   var h = target.height();
   tp.target.attr('width',w+'px');
@@ -20,6 +21,9 @@ var Touchpad = function(target, sendtouchfunc)
   var ctx = tp.target[0].getContext('2d');
   var x = tp.target.position().left;
   var y = tp.target.position().top;
+  var touches = [];
+  var start_touches = [];
+  var offsets = [];
 
   var canvas_updating = false;
   var start_time;
@@ -107,6 +111,7 @@ var Touchpad = function(target, sendtouchfunc)
       var px = touch.pageX - x;
       var py = touch.pageY - y;
 
+      // Drawing touch dots
   		ctx.beginPath();
   		ctx.arc(px, py, draging?10:5, 0, 2*Math.PI, true);
 
@@ -115,6 +120,16 @@ var Touchpad = function(target, sendtouchfunc)
 
   		ctx.strokeStyle = "rgba(0, 0, 0, 0.6)";
   		ctx.stroke();
+
+      // Drawing cross hair
+      var directions = [[0,1],[0,-1],[1,0],[-1,0]];
+      $.each(directions,function(i,e) {
+        ctx.beginPath();
+        ctx.moveTo(px + crosshair_padding * e[0],py + crosshair_padding * e[1]);
+        ctx.lineTo(px + (crosshair_padding + crosshair_length) * e[0],py + (crosshair_padding + crosshair_length) * e[1]);
+        ctx.strokeStyle = "rgba(0, 0, 0, 0.3)";
+        ctx.stroke();
+      });
   	}
   	canvas_updating = false;
   }
