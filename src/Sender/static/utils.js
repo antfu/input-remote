@@ -23,24 +23,13 @@ function make_qrcode(target_id,data) {
   })).makeCode(data);
 }
 
-function init_header(type) {
-  if (type=="sender")
-  {
-    $('.nav .type').text('Sender');
-    var link = location.href.replace('sender','receiver');
-  } else {
-    $('.nav .type').text('Receiver');
-    var link = location.href.replace('receiver','sender');
-  }
-  $('#link').val(link);
-  //make_qrcode('qrcode',link);
-  var link_copy = $('#link_copy');
-  link_copy.attr('data-clipboard-text',link);
-  (new Clipboard('#link_copy')).on('success', function(e){
-    link_copy.text('check');
-    setTimeout(function(){
-      link_copy.text('link');
-    },2000);
+function init() {
+  $('.toggle-button').click(function() {
+    var el = $(this);
+    if (el.hasClass('active'))
+      el.removeClass('active')
+    else
+      el.addClass('active')
   });
 }
 

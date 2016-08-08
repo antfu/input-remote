@@ -8,7 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using InputRemote.Tools;
 using InputRemote.Server;
-using InputRemote.Client.Components;
+using InputRemote.Server.Http;
 
 namespace InputRemote.Client.Receiver
 {
@@ -16,25 +16,16 @@ namespace InputRemote.Client.Receiver
     {
         private WebsocketAgent agent;
         private NotifyIconAgent notifyAgent;
-        private SettingHelper setting = SettingHelper.GetSetting("setting.json");
-        private EmbeddedServer server;
-        private bool _EmbeddedServerEnabled = false;
+        private EmbeddedServer ws_server;
+        private StaticHttpServer http_server;
+        private string ws_url = "ws://localhost:81/ws/r";
+#if DEBUG
+        private string http_dir = "../../../Sender";
+#else
+        private string http_dir = "sender";
+#endif
 
-        public bool EmbeddedServerEnabled
-        {
-            get
-            {
-                return _EmbeddedServerEnabled;
-            }
-            private set
-            {
-                _EmbeddedServerEnabled = value;
-                setting["embeddedserver"] = value;
-                useEmbeddedServerToolStripMenuItem.Checked = value;
-                changeAddrToolStripMenuItem.Enabled = !value;
-            }
-        }
-
+        public bool EmbeddedServerEnabled { get; set; } = false;
         public Main()
         {
             InitializeComponent();
@@ -42,21 +33,21 @@ namespace InputRemote.Client.Receiver
 
         private void Reconnect(bool input = false)
         {
-            string new_ws_address = AddressHelper.GetWsAddress(input);
-            if (!string.IsNullOrEmpty(new_ws_address))
-                agent.Reconnect(new_ws_address, true);
+            agent.Reconnect(ws_url, true);
         }
 
-        private void EnableEmbeddedServer(int port = 2333)
+        private void EnableEmbeddedServer(int ws_port = 81, int http_port = 80)
         {
             if (agent != null
                 || agent.IsConnected != true
                 || MessageBox.Show("Enabling embedded server will cause you lost existing connection. Are you sure?","Are you sure?",MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 EmbeddedServerEnabled = true;
-                server = new EmbeddedServer(port);
-                setting["ws_url"] = server.RecevierWsAddress;
-                server.Start();
+                ws_server = new EmbeddedServer(ws_port);
+                http_server = new StaticHttpServer(http_dir, http_port);
+                ws_server.Start();
+                http_server.Start();
+                useEmbeddedServerToolStripMenuItem.Checked = true;
                 Reconnect(false);
             }
         }
@@ -65,9 +56,13 @@ namespace InputRemote.Client.Receiver
             if (MessageBox.Show("Are you sure to close embedded server?", "Are you sure?", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 EmbeddedServerEnabled = false;
-                if (server != null)
-                    server.Stop();
-                server = null;
+                if (ws_server != null)
+                    ws_server.Stop();
+                if (http_server != null)
+                    http_server.Stop();
+                ws_server = null;
+                http_server = null;
+                useEmbeddedServerToolStripMenuItem.Checked = false;
             }
         }
 
@@ -75,9 +70,9 @@ namespace InputRemote.Client.Receiver
         private void Main_Load(object sender, EventArgs e)
         {
             this.Opacity = 0;
-            Control.CheckForIllegalCrossThreadCalls = false;
-            
-            agent = new WebsocketAgent(AddressHelper.GetWsAddress());
+            //Control.CheckForIllegalCrossThreadCalls = false;
+
+            agent = new WebsocketAgent(ws_url);
             agent.OnKeyDown += Receiver_OnKeyDown;
             agent.OnKeyUp += Receiver_OnKeyUp;
             agent.OnMouseMove += Agent_OnMouseMove;
@@ -85,10 +80,7 @@ namespace InputRemote.Client.Receiver
             agent.OnConnect += Agent_OnConnect;
             agent.OnClose += Agent_OnClose;
             agent.OnPeerStateChange += Receiver_OnPeerStateChange;
-
-            if (setting["embeddedserver"] == true)
-                EnableEmbeddedServer();
-
+            
             TrayNotifyIcon.Icon = Properties.Resources.r_red;
              notifyAgent = new NotifyIconAgent(TrayNotifyIcon, agent)
             {
@@ -98,7 +90,7 @@ namespace InputRemote.Client.Receiver
                 KeyDownIcon = Properties.Resources.r_orange
             };
 
-            agent.Connect();
+            EnableEmbeddedServer();
         }
 
         private void Agent_OnMouseButton(WebsocketAgent agent, MouseActionInfo info)
@@ -170,7 +162,7 @@ namespace InputRemote.Client.Receiver
 
         private void Log(string action, string msg = "")
         {
-            OutputTextBox.Text += string.Format("[{0}]{1}", action, msg) + Environment.NewLine;
+            return;
         }
 
         private void showConsoleToolStripMenuItem_Click(object sender, EventArgs e)
@@ -181,6 +173,7 @@ namespace InputRemote.Client.Receiver
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            TrayNotifyIcon.Visible = false;
             Environment.Exit(0);
         }
 
@@ -195,11 +188,6 @@ namespace InputRemote.Client.Receiver
         private void changeAddrToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Reconnect(true);
-        }
-
-        private void notifyToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            notifyAgent.NotifyEnabled = notifyToolStripMenuItem.Selected;
         }
 
         private void useEmbeddedServerToolStripMenuItem_Click(object sender, EventArgs e)
