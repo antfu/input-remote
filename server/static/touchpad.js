@@ -87,6 +87,7 @@ var Touchpad = function(target, sendtouchfunc)
     if (dragmove_timer !== undefined)
     {
       clearTimeout(dragmove_timer);
+      dragmove_timer = undefined;
       draging = true;
       sendtouchfunc('buttondown',{button:'left'});
     }
