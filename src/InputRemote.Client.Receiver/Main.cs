@@ -19,7 +19,11 @@ namespace InputRemote.Client.Receiver
         private EmbeddedServer ws_server;
         private StaticHttpServer http_server;
         private string ws_url = "ws://localhost:81/ws/r";
-        private string http_dir = "../../../../../server";
+#if DEBUG
+        private string http_dir = "../../../Sender";
+#else
+        private string http_dir = "sender";
+#endif
 
         public bool EmbeddedServerEnabled { get; set; } = false;
         public Main()

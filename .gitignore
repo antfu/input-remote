@@ -1,4 +1,5 @@
 config_override.py
+bin/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

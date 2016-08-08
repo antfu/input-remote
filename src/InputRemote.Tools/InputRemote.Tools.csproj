@@ -47,8 +47,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="NotifyIconAgent.cs" />
     <Compile Include="Enum.cs" />
+    <Compile Include="NotifyIconAgent.cs" />
     <Compile Include="Hooks\GlobalHook.cs" />
     <Compile Include="KeyActionInfo.cs" />
     <Compile Include="Hooks\KeyboardHook.cs" />
