@@ -1,14 +1,11 @@
 # Server
 
-## URL
-#### Sender
-> Page: http://localhost/sender?c=IhjehI&a=n95fh7
+## Ports
+Sender HTTP Server: `80`
 
-> Websocket: http://localhost/ws/s?c=IhjehI&a=n95fh7
+Websocket Server:   `81`
 
-`c` for `channel`, `a` for `authenticate`, `t` for `type`
+## Websocket URL
+Sender: `ws://localhost:81/ws/s`
 
-#### Receiver
-> Page: http://localhost/receiver?c=IhjehI&a=n95fh7
-
-> Websocket: http://localhost/ws/r?c=IhjehI&a=n95fh7
+Receiver: `ws://localhost:81/ws/r`

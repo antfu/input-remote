@@ -1,15 +1,12 @@
 # ToDo
 
 ### Client/Windows
-- [Input] Url verification
-- [Input] Key binding ( Enter to accept, Esc to cancel, etc )
+- *None for Now*
 
-### Server/Python
-- [Sender] Touchpad MouseButtons
-- [Sender] Touchpad Speed Option
-- [Sender] Vibrate Slider
-- [Sender] Emojis
-- [Sender] Disconnect/Reconnect Option
-
-### Client/Android
-- To be developed...
+### Sender
+- Touchpad MouseButtons
+- Touchpad speed option
+- Vibrate slider
+- Emojis
+- Disconnect/Reconnect option
+- Warning on connect failed
