@@ -9,6 +9,10 @@
   -ms-user-select: none;
   user-select: none;
 }
+.keyboard
+{
+  padding-top: 0.3em;
+}
 .keyboard key
 {
   line-height: 3em;

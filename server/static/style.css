@@ -39,10 +39,23 @@ a:hover
   display: inline-block;
   vertical-align: center;
 }
-.breadcrumb .divider
+.breadcrumb .section
 {
-  opacity: 0.05;
-  margin: 0 0.5em;
+  color: rgba(0,0,0,0.3);
+  margin: 0 0.7em;
+}
+.breadcrumb .section.active
+{
+  color: rgba(0,0,0,0.8);
+}
+.breadcrumb #toggle-vibration
+{
+  margin: 0 0.7em;
+  opacity: 0.3;
+}
+.breadcrumb #toggle-vibration.active
+{
+  opacity: 0.7;
 }
 
 .center.aligned
@@ -80,7 +93,6 @@ a:hover
   left: 0;
   right: 0;
   z-index: 100;
-  background: rgba(0,0,0,0.04);
   padding: 0.5em 1em;
 }
 .nav *

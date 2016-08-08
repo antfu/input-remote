@@ -9,20 +9,6 @@
 <script src="/static/touchpad.js"></script>
 {% end %}
 
-
-{% block style %}
-<style>
-.breadcrumb .section
-{
-  color: rgba(0,0,0,0.5);
-}
-.breadcrumb .section.active
-{
-  color: rgba(0,0,0,1);
-}
-</style>
-{% end %}
-
 {% block content %}
 {% include header.html %}
 <div class="touchpad hidden">
@@ -35,18 +21,17 @@
   <div class="keyboards">
     <div style="padding:0.4em 0.3em;text-align:center;">
       <div class="breadcrumb">
-        <div class="right aligned">
-          <a class="toggle-button" id="toggle-vibration" style="margin-right:0.4em;margin-top:-0.3em;"><i class="material-icons">vibration</i></a>
-        </div>
-        <div class="section" onclick="switch_keyboards('qwert',this)">Qwert</div>
-        <div class="divider"> | </div>
-        <div class="section" onclick="switch_keyboards('symbol',this)">Symbol</div>
-        <div class="divider"> | </div>
+        <div class="section" onclick="switch_keyboards('qwert',this)"><i class="mi">keyboard</i></div>
+        <div class="section" onclick="switch_keyboards('symbol',this)"><i class="mi">format_quote</i></div>
+        <!--
         <div class="section" onclick="switch_keyboards('qwert-full',this)">Full</div>
         <div class="divider"> | </div>
-        <div class="section" onclick="switch_keyboards('numpad',this)">Num</div>
-        <div class="divider"> | </div>
-        <div class="section" onclick="switch_keyboards('functional',this)">Func</div>
+        -->
+        <div class="section" onclick="switch_keyboards('numpad',this)"><i class="mi">dialpad</i></div>
+        <div class="section" onclick="switch_keyboards('functional',this)"><i class="mi">developer_board</i></div>
+        <div class="section" onclick="switch_keyboards('media',this)"><i class="mi">audiotrack</i></div>
+        <div class="section" onclick="switch_keyboards('navi',this)"><i class="mi">open_with</i></div>
+        <a class="toggle-button" id="toggle-vibration"><i class="material-icons">vibration</i></a>
       </div>
     </div>
     <div class="keyboard qwert"></div>
@@ -54,6 +39,8 @@
     <div class="keyboard qwert-full"></div>
     <div class="keyboard functional"></div>
     <div class="keyboard numpad"></div>
+    <div class="keyboard media"></div>
+    <div class="keyboard navi"></div>
   </div>
 </div>
 {% end %}
@@ -105,36 +92,13 @@ switch_keyboards(null,$('#none_keyboad'));
 
 init_header('sender');
 
-$(function(){
-  keyboard = new Keyboard(sendkey,40);
-  keyboard.make(keyboard.qwert);
-  keyboard.make(keyboard.qwert_full);
-  keyboard.make(keyboard.numpad);
-  keyboard.make(keyboard.func);
-  keyboard.make(keyboard.symbol);
-  keyboard.register_key_event($('.keyboard key'));
-  keyboard.vibrate = function() {
-    if ($('#toggle-vibration').hasClass('active'))
-      navigator.vibrate(40);
-  }
-  touchpad = new Touchpad($('#touchpad'), sendmouse);
-  touchpad.on_state_change = function (icon,text) {
-    $('.touchpad .background i').text(icon);
-    $('.touchpad .background span').text(text);
-  }
-});
-
 var pressed = {};
 var ws_url = 'ws://'+location.host+'/ws/s'+location.search;
 if (ws_url.indexOf('?') == -1) ws_url = ws_url.replace('&','?');
 var client = new WSClient(ws_url,true);
 client.connect();
-client.onkey = function(key) {
-  alert(key);
-}
 client.onstatechange = function(state) {
-  if (state == "Online") $('.nav .state').html(state);
-  else $('.nav .state').html(state);
+  $('.nav .state').html(state);
 }
 function sendkey(event) {
   var keycode = event.keyCode;
@@ -187,6 +151,35 @@ document.addEventListener('keyup', function(event) {
   sendkey(event);
   event.preventDefault();
   return false;
+});
+
+$(function(){
+  keyboard = new Keyboard(sendkey,40);
+  keyboard.make(keyboard.qwert);
+  //keyboard.make(keyboard.qwert_full);
+  keyboard.make(keyboard.numpad);
+  keyboard.make(keyboard.func);
+  keyboard.make(keyboard.symbol);
+  keyboard.make(keyboard.media);
+  keyboard.make(keyboard.navi);
+  keyboard.register_key_event($('.keyboard key'));
+  keyboard.vibrate = function() {
+    if ($('#toggle-vibration').hasClass('active'))
+      navigator.vibrate(40);
+  };
+  touchpad = new Touchpad($('#touchpad'), sendmouse);
+  touchpad.on_state_change = function (icon,text) {
+    $('.touchpad .background i').text(icon);
+    $('.touchpad .background span').text(text);
+  };
+
+  if ($(window).width() <= 500)
+  {
+    $('#toggle-keyboard, #toggle-touchpad').click();
+  }
+  else {
+    $('#toggle-physical').click();
+  }
 });
 </script>
 {% end %}

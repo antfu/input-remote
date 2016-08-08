@@ -6,12 +6,19 @@ var Keyboard = function(sendkeyfunc)
     backspace: '<i class="mi">backspace</i>',
     enter: '<i class="mi">keyboard_return</i>',
     shift: '<i class="mi">arrow_upward</i>',
+    caps: '<i class="mi">keyboard_capslock</i>',
     option: '<i class="mi">settings</i>',
     face: '<i class="mi">face</i>',
-    up: '<i class="mi">arrow_upward</i>',
-    down: '<i class="mi">arrow_downward</i>',
-    left: '<i class="mi">arrow_back</i>',
-    right: '<i class="mi">arrow_forward</i>',
+    up: '<i class="mi">keyboard_arrow_up</i>',
+    down: '<i class="mi">keyboard_arrow_down</i>',
+    left: '<i class="mi">keyboard_arrow_left</i>',
+    right: '<i class="mi">keyboard_arrow_right</i>',
+    volume_up: '<i class="mi">volume_up</i>',
+    volume_down: '<i class="mi">volume_down</i>',
+    volume_mute: '<i class="mi">volume_off</i>',
+    media_next: '<i class="mi">skip_next</i>',
+    media_prev: '<i class="mi">skip_previous</i>',
+    media_pause: '<i class="mi">pause</i>',
   }
 
   var kb = this;
@@ -37,18 +44,20 @@ var Keyboard = function(sendkeyfunc)
   kb.qwert = {
     keys:[
       "QWERTYUIOP",
-      "ASDFGHJKL",
       [
-        {code:16,key:'Shift',display:icons.shift,width:1},
-        "ZXCVBNM",
-        {code:8,key:'Backspace',display:icons.backspace,width:1.5}
+        "ASDFGHJKL",
+        {code:8,key:'Backspace',display:icons.backspace,width:0.75}
       ],[
-        {display:icons.face,width:1},
-        {code:32,key:'Space',display:'<div class="space-key">Space<div>',width:7.5,noactive:true},
-        {code:10,key:'Enter',display:icons.enter,width:1.5},
+        {code:0x14,key:'Caps Lock',display:icons.caps,width:1},
+        "ZXCVBNM.",
+        {code:10,key:'Enter',display:icons.enter,width:1},
+      ],[
+        {code:0x25,key:'Left',display:icons.left,width:1.5},
+        {code:32,key:'Space',display:'<div class="space-key">Space<div>',width:7,noactive:true},
+        {code:0x27,key:'Right',display:icons.right,width:1.5},
       ]
     ],
-    span:[0,0.5,0,0],
+    span:[0,0.25,0,0],
     row:4,
     width:10,
     width_unit: "%",
@@ -56,30 +65,29 @@ var Keyboard = function(sendkeyfunc)
   }
   kb.qwert_full = {
     keys:[[
-        "`1234567890-=",
-        {code:8,key:'Backspace',display:icons.backspace,width:1.5}
+        "1234567890",
+        {code:8,key:'Backspace',display:icons.backspace,width:1}
       ],[
-        "QWERTYUIOP[]\\"
+        "QWERTYUIOP"
       ],[
-        "ASDFGHJKL;''",
+        "ASDFGHJKL",
         {code:10,key:'Enter',display:icons.enter,width:1}
       ],[
         {code:16,key:'Shift',display:icons.shift,width:1.5},
-        "ZXCVBNM,./",
+        "ZXCVBNM",
         {code:38,key:'ArrowUp',display:icons.up,width:1.5},
       ],[
-        {code:17,key:'Ctrl',width:1.5},
-        {code:91,key:'Win',display:'Win',width:1.5},
+        {code:17,key:'Ctrl',width:1},
         {code:18,key:'Alt',width:1},
         {code:32,key:'Space',display:'<div class="space-key">Space<div>',width:6,noactive:true},
-        {code:37,key:'ArrowLeft',display:icons.left,width:1.5},
-        {code:40,key:'ArrowDown',display:icons.down,width:1.5},
-        {code:39,key:'ArrowRight',display:icons.right,width:1.5},
+        {code:37,key:'ArrowLeft',display:icons.left,width:1},
+        {code:40,key:'ArrowDown',display:icons.down,width:1},
+        {code:39,key:'ArrowRight',display:icons.right,width:1},
       ]
     ],
     span:[0,0.5,1,0,0],
     row:5,
-    width:100/15,
+    width:100/11,
     width_unit: "%",
     target:'.keyboard.qwert-full'
   }
@@ -108,19 +116,49 @@ var Keyboard = function(sendkeyfunc)
       {code:18,key:'Alt'},
       {code:32,key:"Space"},
       {code:8,key:'Backspace',display:icons.backspace}
-    ],[
-      {code:45,key:"Ins"},
-      {code:36,key:"Home"},
+    ]],
+    row:3,
+    width:100/7,
+    width_unit: "%",
+    target:'.keyboard.functional'
+  }
+  kb.media = {
+    keys:[[
+      {code:0xAD,key:"VolumeMute",display:icons.volume_mute},
+      {code:0xAE,key:"VolumeDown",display:icons.volume_down},
+      {code:0xAF,key:"VolumeUp",display:icons.volume_up},
+      {code:0xB1,key:"MediaPrev",display:icons.media_prev},
+      {code:0xB0,key:"MediaNext",display:icons.media_next},
+      {code:0xB2,key:"MediaPause",display:icons.media_pause},
+    ]],
+    row:1,
+    width:100/6,
+    width_unit: "%",
+    target:'.keyboard.media'
+  }
+  kb.navi = {
+    keys:[[
+      {code:0x26,key:'Up',display:icons.up,width:1},
+      {width: 2},
       {code:33,key:"PgUp"},
+      {code:36,key:"Home"},
+      {code:45,key:"Ins"},
+      {code:8,key:'Backspace',display:icons.backspace}
+    ],[
+      {code:0x25,key:'Left',display:icons.left,width:1},
+      {code:0x28,key:'Down',display:icons.down,width:1},
+      {code:0x27,key:'Right',display:icons.right,width:1},
+      {width: 1},
       {code:34,key:"PgDn"},
       {code:35,key:"End"},
       {code:18,key:"Menu"},
       {code:46,key:"Del"}
     ]],
-    row:4,
-    width:100/7,
+    span:[1,0],
+    row:2,
+    width:100/8,
     width_unit: "%",
-    target:'.keyboard.functional'
+    target:'.keyboard.navi'
   }
   kb.symbol = {
     keys:[
