@@ -1,6 +1,7 @@
-# Keyboard Remote
-A keyboard sharing tool through different devices
+# Input Remote
+Control your PC with your smartphone,
 
+A HID input sharing tool through different devices
 
 ## ToDo
 [Todo](doc/todo.md)
@@ -27,5 +28,4 @@ Websocket with Json
 
 
 ## License
-
-MIT. Copyright (c) [Anthony Fu](http://antnf.com).
+MIT
