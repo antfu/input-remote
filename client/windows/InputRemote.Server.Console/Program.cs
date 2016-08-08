@@ -4,12 +4,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using InputRemote.Server;
+using InputRemote.Server.Http;
+using System.Threading;
 
 namespace InputRemote.Server.Console
 {
     class Program
     {
-        static void Main(string[] args)
+        static int Main()
+        {
+            HttpServer();
+            return 0;
+        }
+        static void HttpServer() {
+            var httpServer = new StaticHttpServer("web", 8080);
+            Thread thread = new Thread(new ThreadStart(httpServer.listen));
+            thread.Start();
+        }
+        static void WsServer()
         {
             var server = new EmbeddedServer(233);
             server.Start();
