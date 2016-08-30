@@ -12,8 +12,9 @@ namespace InputRemote.Server.Http
     {
         private Thread thread;
 
-        public string Root {get; private set;} 
-        
+        public string Root {get; private set;}
+        public bool AllowParentDirectory { get; set; } = false;
+
         public StaticHttpServer(string root_path, int port) : base(port)
         {
             this.Root = root_path;
@@ -25,6 +26,11 @@ namespace InputRemote.Server.Http
             {
                 if (p.http_url == "/" || p.http_url == "")
                     p.http_url = "/index.html";
+                if (!AllowParentDirectory && p.http_url.Contains("../"))
+                {
+                    p.writeFailure();
+                    return;
+                }
                 using (fs = File.Open(this.Root + HttpUtility.UrlDecode(p.http_url), FileMode.Open))
                 {
                     //p.writeSuccess();
