@@ -46,11 +46,11 @@ switch_keyboards(null,$('#none_keyboad'));
 
 var pressed = {};
 var ws_url = 'ws://'+location.host+':81/ws/s';
-var client = new WSClient(ws_url,true);
-client.connect();
+var client = new WSClient(ws_url, true, window.location.protocol == 'file:');
 client.onstatechange = function(state) {
   $('.nav .state').html(state);
 }
+client.connect();
 function sendkey(event) {
   var keycode = event.keyCode;
   var obj = {};

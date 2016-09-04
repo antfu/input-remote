@@ -1,15 +1,20 @@
 'use strict';
 
-var WSClient = function(url,debug)
+var WSClient = function(url, debug, fake)
 {
   var wsc = this;
   wsc.connected = false;
   wsc.online = false;
   wsc.url = url;
   wsc.debug = debug;
+  wsc.fake = fake || false;
   wsc.get_state = function()
   {
-    if (!wsc.connected)
+    if (wsc.fake)
+    {
+      return 'Fake';
+    }
+    else if (!wsc.connected)
     {
       change_favicon('/static/icons/black_red.png');
       return 'Disconnect';
@@ -23,6 +28,13 @@ var WSClient = function(url,debug)
   }
   wsc.connect = function()
   {
+    if (wsc.fake)
+    {
+      console.log('[Controller] Started in fake mode');
+      if (wsc.onstatechange)
+        wsc.onstatechange(wsc.get_state());
+      return;
+    }
     wsc.ws = new WebSocket(wsc.url);
     wsc.ws.onopen = function() {
       wsc.connected = true;
@@ -31,14 +43,14 @@ var WSClient = function(url,debug)
       if (wsc.onstatechange)
         wsc.onstatechange(wsc.get_state());
       if (wsc.debug)
-        console.log('[Sender] Connection established: ',wsc.url);
+        console.log('[Controller] Connection established: ',wsc.url);
     };
     wsc.ws.onclose = function() {
       wsc.connected = false;
       if (wsc.onclose)
         wsc.onclose();
       if (wsc.debug)
-        console.log('[Sender] Connection lost: ',wsc.url);
+        console.log('[Controller] Connection lost: ',wsc.url);
       wsc.ws = undefined;
       wsc.connected = false;
       wsc.online = false;
@@ -48,7 +60,7 @@ var WSClient = function(url,debug)
     wsc.ws.onmessage = function (evt) {
       var data = JSON.parse(evt.data);
       if (wsc.debug)
-        console.log('[Sender] Received: ', data);
+        console.log('[Controller] Received: ', data);
 
       if (data.action == "system")
       {
@@ -67,6 +79,7 @@ var WSClient = function(url,debug)
   }
   wsc.disconnect = function()
   {
+    if (wsc.fake) return;
     if (wsc.ws == undefined) return;
     wsc.ws.close();
     wsc.ws = undefined;
@@ -75,6 +88,7 @@ var WSClient = function(url,debug)
   }
   wsc.sendkey = function(obj)
   {
+    if (wsc.fake) return;
     if (wsc.ws == undefined) return;
     wsc.ws.send(JSON.stringify(obj));
   }

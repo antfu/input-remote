@@ -34,15 +34,15 @@ a:hover
   pointer-events: none;
 }
 
-.breadcrumb *
+.breadcrumb>*
 {
   display: inline-block;
   vertical-align: center;
+  width: 12%;
 }
 .breadcrumb .section
 {
   color: rgba(0,0,0,0.3);
-  margin: 0 0.7em;
 }
 .breadcrumb .section.active
 {
@@ -50,8 +50,7 @@ a:hover
 }
 .breadcrumb #toggle-vibration
 {
-  margin: 0 0.7em;
-  opacity: 0.3;
+  opacity: 0.4;
 }
 .breadcrumb #toggle-vibration.active
 {

@@ -139,7 +139,7 @@ var Keyboard = function(sendkeyfunc)
   kb.navi = {
     keys:[[
       {code:0x26,key:'Up',display:icons.up,width:1},
-      {width: 2},
+      {width: 1},
       {code:33,key:"PgUp"},
       {code:36,key:"Home"},
       {code:45,key:"Ins"},
@@ -148,7 +148,6 @@ var Keyboard = function(sendkeyfunc)
       {code:0x25,key:'Left',display:icons.left,width:1},
       {code:0x28,key:'Down',display:icons.down,width:1},
       {code:0x27,key:'Right',display:icons.right,width:1},
-      {width: 1},
       {code:34,key:"PgDn"},
       {code:35,key:"End"},
       {code:18,key:"Menu"},
@@ -156,7 +155,7 @@ var Keyboard = function(sendkeyfunc)
     ]],
     span:[1,0],
     row:2,
-    width:100/8,
+    width:100/7,
     width_unit: "%",
     target:'.keyboard.navi'
   }
