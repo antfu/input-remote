@@ -1,12 +1,14 @@
 # ToDo
 
 ### Client/Windows
-- *None for Now*
+- [ ] Warning on another instance running
+- [ ] Warning on open server failed
 
-### Sender
-- Touchpad MouseButtons
-- Touchpad speed option
-- Vibrate slider
-- Emojis
-- Disconnect/Reconnect option
-- Warning on connect failed
+### Controller
+- [ ] Touchpad mouse buttons
+- [ ] Touchpad speed option
+- [ ] Vibrate slider
+- [ ] Emojis
+- [ ] Disconnect/Reconnect option
+- [ ] Warning on connect failed
+- [ ] **Commands System** (eq, Shutdown, sleep, notify, lock...)
