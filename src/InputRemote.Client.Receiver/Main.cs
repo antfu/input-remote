@@ -45,12 +45,21 @@ namespace InputRemote.Client.Receiver
                 EmbeddedServerEnabled = true;
                 ws_server = new EmbeddedServer(ws_port);
                 http_server = new StaticHttpServer(http_dir, http_port);
+                ws_server.OnError += (sender, e) =>
+                {
+                    if (e.Exception.SocketErrorCode == System.Net.Sockets.SocketError.AddressAlreadyInUse)
+                        MessageBox.Show("Port " + ws_port.ToString() + " is already in use, can not start server. Exiting.");
+                    else
+                        MessageBox.Show("Unhandlered exception on http server: " + e.Exception.Message.ToString() + ". Exiting.");
+
+                    Application.Exit();
+                };
                 http_server.OnError += (sender, e) =>
                 {
                     if (e.Exception.SocketErrorCode == System.Net.Sockets.SocketError.AddressAlreadyInUse)
-                        MessageBox.Show("Port "+ http_port.ToString() + " is already in use, can not start server, exiting");
+                        MessageBox.Show("Port " + http_port.ToString() + " is already in use, can not start server. Exiting.");
                     else
-                        MessageBox.Show("Unhandlered exception on http server: " + e.Exception.Message.ToString());
+                        MessageBox.Show("Unhandlered exception on http server: " + e.Exception.Message.ToString() + ". Exiting.");
 
                     Application.Exit();
                 };

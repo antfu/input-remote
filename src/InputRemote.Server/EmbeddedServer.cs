@@ -7,9 +7,20 @@ using WebSocketSharp.Server;
 using WebSocketSharp;
 using Newtonsoft.Json;
 using InputRemote.Tools;
+using System.Net.Sockets;
 
 namespace InputRemote.Server
 {
+    public delegate void SocketExceptionHandler(object sender, SocketExceptionEventArgs e);
+
+    public class SocketExceptionEventArgs : EventArgs
+    {
+        public SocketException Exception { get; private set; }
+        public SocketExceptionEventArgs(SocketException ex)
+        {
+            Exception = ex;
+        }
+    }
     public class BaseBehavior : WebSocketBehavior
     {
         private static SenderService _sender;
@@ -140,6 +151,8 @@ namespace InputRemote.Server
             SenderWsAddress = Address + "/ws/s";
             RecevierWsAddress = Address + "/ws/r";
         }
+        public event SocketExceptionHandler OnError;
+
         public void Start()
         {
             try
@@ -147,9 +160,10 @@ namespace InputRemote.Server
                 server.Start();
                 Console.WriteLine("WebSocket server started on " + Address);
             }
-            catch(Exception ex)
+            catch(SocketException ex)
             {
                 Console.WriteLine("Error " + ex.Message);
+                OnError?.Invoke(this, new SocketExceptionEventArgs(ex));
             }
         }
         public void Stop()
