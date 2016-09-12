@@ -40,11 +40,20 @@ namespace InputRemote.Client.Receiver
         {
             if (agent != null
                 || agent.IsConnected != true
-                || MessageBox.Show("Enabling embedded server will cause you lost existing connection. Are you sure?","Are you sure?",MessageBoxButtons.YesNo) == DialogResult.Yes)
+                || MessageBox.Show("Enabling embedded server will cause you lost existing connection. Are you sure?", "Are you sure?", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 EmbeddedServerEnabled = true;
                 ws_server = new EmbeddedServer(ws_port);
                 http_server = new StaticHttpServer(http_dir, http_port);
+                http_server.OnError += (sender, e) =>
+                {
+                    if (e.Exception.SocketErrorCode == System.Net.Sockets.SocketError.AddressAlreadyInUse)
+                        MessageBox.Show("Port "+ http_port.ToString() + " is already in use, can not start server, exiting");
+                    else
+                        MessageBox.Show("Unhandlered exception on http server: " + e.Exception.Message.ToString());
+
+                    Application.Exit();
+                };
                 ws_server.Start();
                 http_server.Start();
                 useEmbeddedServerToolStripMenuItem.Checked = true;

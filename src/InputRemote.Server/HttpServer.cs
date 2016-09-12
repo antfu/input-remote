@@ -16,6 +16,18 @@ using System.Threading;
 
 namespace InputRemote.Server.Http
 {
+    public delegate void SocketExceptionHandler(object sender, SocketExceptionEventArgs e);
+
+    public class SocketExceptionEventArgs : EventArgs
+    {
+        public SocketException Exception { get; private set; }
+        public SocketExceptionEventArgs(SocketException ex)
+        {
+            Exception = ex;
+        }
+    }
+
+
     public class HttpProcessor
     {
         public TcpClient socket;
@@ -213,17 +225,26 @@ namespace InputRemote.Server.Http
             this.port = port;
         }
 
+        public event SocketExceptionHandler OnError;
+
         public void listen()
         {
-            listener = new TcpListener(port);
-            listener.Start();
-            while (is_active)
+            try
             {
-                TcpClient s = listener.AcceptTcpClient();
-                HttpProcessor processor = new HttpProcessor(s, this);
-                Thread thread = new Thread(new ThreadStart(processor.process));
-                thread.Start();
-                Thread.Sleep(1);
+                listener = new TcpListener(port);
+                listener.Start();
+                while (is_active)
+                {
+                    TcpClient s = listener.AcceptTcpClient();
+                    HttpProcessor processor = new HttpProcessor(s, this);
+                    Thread thread = new Thread(new ThreadStart(processor.process));
+                    thread.Start();
+                    Thread.Sleep(1);
+                }
+            }
+            catch (SocketException ex)
+            {
+                OnError?.Invoke(this, new SocketExceptionEventArgs(ex));
             }
         }
 
