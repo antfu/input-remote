@@ -18,7 +18,9 @@ namespace InputRemote.Client.Receiver
         private NotifyIconAgent notifyAgent;
         private EmbeddedServer ws_server;
         private StaticHttpServer http_server;
-        private string ws_url = "ws://localhost:81/ws/r";
+        private SettingHelper settings;
+        private string ws_url;
+
 #if DEBUG
         private string http_dir = "../../../Controller";
 #else
@@ -28,6 +30,12 @@ namespace InputRemote.Client.Receiver
         public bool EmbeddedServerEnabled { get; set; } = false;
         public Main()
         {
+            settings = SettingHelper.GetSetting("setting.json");
+            if (settings["ws_port"] == null)
+                settings["ws_port"] = 81;
+            if (settings["http_port"] == null)
+                settings["http_port"] = 80;
+            ws_url = "ws://localhost:" + settings["ws_port"].ToString() + "/ws/r";
             InitializeComponent();
         }
 
@@ -36,15 +44,18 @@ namespace InputRemote.Client.Receiver
             agent.Reconnect(ws_url, true);
         }
 
-        private void EnableEmbeddedServer(int ws_port = 81, int http_port = 80)
+        private void EnableEmbeddedServer()
         {
+            
+            int ws_port = settings["ws_port"];
+            int http_port = settings["http_port"];
             if (agent != null
                 || agent.IsConnected != true
                 || MessageBox.Show("Enabling embedded server will cause you lost existing connection. Are you sure?", "Are you sure?", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 EmbeddedServerEnabled = true;
                 ws_server = new EmbeddedServer(ws_port);
-                http_server = new StaticHttpServer(http_dir, http_port);
+                http_server = new StaticHttpServer(http_dir, http_port, ws_port);
                 ws_server.OnError += (sender, e) =>
                 {
                     if (e.Exception.SocketErrorCode == System.Net.Sockets.SocketError.AddressAlreadyInUse)

@@ -6,51 +6,47 @@ var touchpad;
 
 var mouse_speed = 3;
 // Disable scroll
-document.body.addEventListener('touchmove', function(event) {
+document.body.addEventListener('touchmove', function (event) {
   event.preventDefault();
 }, false);
 
-$('#toggle-keyboard').click(function() {
-  if ($(this).hasClass('active'))
-  {
+$('#toggle-keyboard').click(function () {
+  if ($(this).hasClass('active')) {
     $('#keyboard-dock').removeClass('hidden');
-    switch_keyboards('qwert',$('.breadcrumb .section:first'))
-  }
-  else
-  {
+    switch_keyboards('qwert', $('.breadcrumb .section:first'))
+  } else {
     $('#keyboard-dock').addClass('hidden');
-    switch_keyboards(null,'')
+    switch_keyboards(null, '')
   }
 });
-$('#toggle-touchpad').click(function() {
-  if ($(this).hasClass('active'))
-  {
+$('#toggle-touchpad').click(function () {
+  if ($(this).hasClass('active')) {
     $('.touchpad').removeClass('hidden');
     touchpad.start();
-  }
-  else
-  {
+  } else {
     $('.touchpad').addClass('hidden');
     touchpad.stop();
   }
 });
 
-function switch_keyboards(key,bread) {
+function switch_keyboards(key, bread) {
   $('.keyboard').hide();
   $('.breadcrumb .section').removeClass('active');
   $(bread).addClass('active');
-  if(key)
-      $('.keyboard.'+key).show();
+  if (key)
+    $('.keyboard.' + key).show();
 }
-switch_keyboards(null,$('#none_keyboad'));
+switch_keyboards(null, $('#none_keyboad'));
 
 var pressed = {};
-var ws_url = 'ws://'+location.host+':81/ws/s';
+var ws_port = ws_port || 81;
+var ws_url = 'ws://' + location.hostname + ':' + ws_port + '/ws/s';
 var client = new WSClient(ws_url, true, window.location.protocol == 'file:');
-client.onstatechange = function(state) {
+client.onstatechange = function (state) {
   $('.nav .state').html(state);
 }
 client.connect();
+
 function sendkey(event) {
   var keycode = event.keyCode;
   var obj = {};
@@ -67,11 +63,19 @@ function sendkey(event) {
   console.log(event.type + ': ' + obj.data.key);
 }
 
-var lastmousemove = {x:0,y:0};
-function sendmouse(type,touch_obj) {
+var lastmousemove = {
+  x: 0,
+  y: 0
+};
+
+function sendmouse(type, touch_obj) {
   var obj = {};
   var data = {};
-  if (touch_obj == undefined) touch_obj = {x:0,y:0,button:''};
+  if (touch_obj == undefined) touch_obj = {
+    x: 0,
+    y: 0,
+    button: ''
+  };
   data.x = parseInt((touch_obj.x || 0) * mouse_speed);
   data.y = parseInt((touch_obj.y || 0) * mouse_speed);
   data.button = touch_obj.button || '';
@@ -80,8 +84,7 @@ function sendmouse(type,touch_obj) {
   obj.subaction = type;
   obj.data = data;
 
-  if (type == 'move')
-  {
+  if (type == 'move') {
     if (data.x == lastmousemove.x && data.y == lastmousemove.y)
       return;
     lastmousemove.x = data.x;
@@ -91,21 +94,21 @@ function sendmouse(type,touch_obj) {
   client.sendkey(obj);
   console.log(type + ': ', obj.data);
 }
-document.addEventListener('keydown', function(event) {
+document.addEventListener('keydown', function (event) {
   if (!$('#toggle-physical').hasClass('active')) return;
   sendkey(event);
   event.preventDefault();
   return false;
 });
-document.addEventListener('keyup', function(event) {
+document.addEventListener('keyup', function (event) {
   if (!$('#toggle-physical').hasClass('active')) return;
   sendkey(event);
   event.preventDefault();
   return false;
 });
 
-$(function(){
-  keyboard = new Keyboard(sendkey,40);
+$(function () {
+  keyboard = new Keyboard(sendkey, 40);
   keyboard.make(keyboard.qwert);
   //keyboard.make(keyboard.qwert_full);
   keyboard.make(keyboard.numpad);
@@ -114,21 +117,19 @@ $(function(){
   keyboard.make(keyboard.media);
   keyboard.make(keyboard.navi);
   keyboard.register_key_event($('.keyboard key'));
-  keyboard.vibrate = function() {
+  keyboard.vibrate = function () {
     if ($('#toggle-vibration').hasClass('active'))
       navigator.vibrate(40);
   };
   touchpad = new Touchpad($('#touchpad'), sendmouse);
-  touchpad.on_state_change = function (icon,text) {
+  touchpad.on_state_change = function (icon, text) {
     $('.touchpad .background i').text(icon);
     $('.touchpad .background span').text(text);
   };
 
-  if ($(window).width() <= 500)
-  {
+  if ($(window).width() <= 500) {
     $('#toggle-keyboard, #toggle-touchpad').click();
-  }
-  else {
+  } else {
     $('#toggle-physical').click();
   }
 });

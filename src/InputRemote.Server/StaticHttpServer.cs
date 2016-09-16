@@ -14,10 +14,12 @@ namespace InputRemote.Server.Http
 
         public string Root {get; private set;}
         public bool AllowParentDirectory { get; set; } = false;
+        private int _ws_port;
 
-        public StaticHttpServer(string root_path, int port) : base(port)
+        public StaticHttpServer(string root_path, int port, int ws_port = 81) : base(port)
         {
             this.Root = root_path;
+            this._ws_port = ws_port;
         }
         public override void handleGETRequest(HttpProcessor p)
         {
@@ -31,13 +33,16 @@ namespace InputRemote.Server.Http
                     p.writeFailure();
                     return;
                 }
-                using (fs = File.Open(this.Root + HttpUtility.UrlDecode(p.http_url), FileMode.Open))
-                {
-                    //p.writeSuccess();
-                    //p.writeSuccess(GetMimeType(Path.GetExtension(p.http_url)));
-                    fs.CopyTo(p.outputStream.BaseStream);
-                    p.outputStream.BaseStream.Flush();
-                }
+                if (p.http_url == "/static/ws_port.js")
+                    p.outputStream.WriteLine("var ws_port = "+ _ws_port .ToString()+ ";");
+                else
+                    using (fs = File.Open(this.Root + HttpUtility.UrlDecode(p.http_url), FileMode.Open))
+                    {
+                        //p.writeSuccess();
+                        //p.writeSuccess(GetMimeType(Path.GetExtension(p.http_url)));
+                        fs.CopyTo(p.outputStream.BaseStream);
+                        p.outputStream.BaseStream.Flush();
+                    }
             }
             catch (Exception e)
             {
