@@ -99,6 +99,7 @@ namespace InputRemote.Client.Receiver
         private void Main_Load(object sender, EventArgs e)
         {
             this.Opacity = 0;
+            this.Hide();
             //Control.CheckForIllegalCrossThreadCalls = false;
 
             agent = new WebsocketAgent(ws_url);
@@ -109,9 +110,9 @@ namespace InputRemote.Client.Receiver
             agent.OnConnect += Agent_OnConnect;
             agent.OnClose += Agent_OnClose;
             agent.OnPeerStateChange += Receiver_OnPeerStateChange;
-            
+
             TrayNotifyIcon.Icon = Properties.Resources.r_red;
-             notifyAgent = new NotifyIconAgent(TrayNotifyIcon, agent)
+            notifyAgent = new NotifyIconAgent(TrayNotifyIcon, agent)
             {
                 DisconnectIcon = Properties.Resources.r_red,
                 WaitingIcon = Properties.Resources.r_grey,
@@ -120,6 +121,8 @@ namespace InputRemote.Client.Receiver
             };
 
             EnableEmbeddedServer();
+
+            System.Diagnostics.Process.Start("http://localhost:" + settings["http_port"].ToString() + "/about.html");
         }
 
         private void Agent_OnMouseButton(WebsocketAgent agent, MouseActionInfo info)

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>InputRemote</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <link rel='shortcut icon' id="favion" href='static/favicon.ico'/>
+  <link rel="stylesheet" href="static/style.css">
+  <link rel="stylesheet" href="static/material-icons.css">
+</head>
+<body>
+  <div class="about">
+    <div>InputRemote server started!</div>
+    <div>Use your phone connecting to <a id="urls" href="/"></a></div>
+  </div>
+</body>
+<script src="static/jquery-3.1.0.min.js"></script>
+<script>
+  $('#urls').text('http://this_computer:'+location.port+'/');
+</script>
+</html>
