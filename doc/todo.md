@@ -1,10 +1,11 @@
 # ToDo
 
-### Client/Windows
-- [ ] Warning on another instance running
-- [ ] Warning on open server failed
+### Host
+- [x] Warning on another instance running
+- [x] Warning on open server failed
 
-### Controller
+### Webpages
+- [x] Add about page
 - [ ] Touchpad mouse buttons
 - [ ] Touchpad speed option
 - [ ] Vibrate slider
