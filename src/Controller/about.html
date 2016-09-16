@@ -9,15 +9,27 @@
 </head>
 <body>
   <div class="about">
-    <div>InputRemote server started!</div>
-    <div>Use your phone connecting to <a id="urls"></a></div>
+    <div style="font-size: 1.6em;">InputRemote server started!</div>
+    <div>Connect your phone into the same LAN network as this PC.</div>
+    <div>Open your browser and go to <a id="urls"></a>, </div>
+    <div>or just scan the qrcode below.</div>
+    <div id="qrcode"></div>
   </div>
 </body>
 <script src="static/jquery-3.1.0.min.js"></script>
+<script src="static/qrcode.min.js"></script>
 <script src="static/lan_ip.js"></script>
 <script>
   var lan_ip = lan_ip || 'this_computer';
   var url = 'http://'+lan_ip+':'+location.port+'/';
   $('#urls').text(url).attr('href',url);
+  var qrcode = new QRCode(document.getElementById("qrcode"), {
+    text: url,
+    width: 128,
+    height: 128,
+    colorDark : "#666",
+    colorLight : "#fff",
+    correctLevel : QRCode.CorrectLevel.L
+  });
 </script>
 </html>

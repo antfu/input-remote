@@ -37,6 +37,9 @@ a:hover {
   margin     : 1em 0.1em;
   font-family: monospace;
 }
+.about #qrcode {
+  margin: 3em 0.1em;
+}
 .breadcrumb > * {
   display       : inline-block;
   vertical-align: center;

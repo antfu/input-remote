@@ -36,7 +36,7 @@ namespace InputRemote.Server.Http
                 }
                 if (p.http_url == "/static/ws_port.js")
                     p.outputStream.WriteLine("var ws_port = "+ _ws_port .ToString()+ ";");
-                if (p.http_url == "/static/lan_ip.js")
+                else if (p.http_url == "/static/lan_ip.js")
                     p.outputStream.WriteLine("var lan_ip = '" + IpHelper.GetLocalIPAddress().ToString() + "';");
                 else
                     using (fs = File.Open(this.Root + HttpUtility.UrlDecode(p.http_url), FileMode.Open))
