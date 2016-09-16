@@ -58,6 +58,7 @@
     <Compile Include="MouseActionInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Agent.cs" />
+    <Compile Include="Utils\IpHelper.cs" />
     <Compile Include="Utils\SettingHelper.cs" />
   </ItemGroup>
   <ItemGroup />

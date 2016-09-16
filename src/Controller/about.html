@@ -10,11 +10,14 @@
 <body>
   <div class="about">
     <div>InputRemote server started!</div>
-    <div>Use your phone connecting to <a id="urls" href="/"></a></div>
+    <div>Use your phone connecting to <a id="urls"></a></div>
   </div>
 </body>
 <script src="static/jquery-3.1.0.min.js"></script>
+<script src="static/lan_ip.js"></script>
 <script>
-  $('#urls').text('http://this_computer:'+location.port+'/');
+  var lan_ip = lan_ip || 'this_computer';
+  var url = 'http://'+lan_ip+':'+location.port+'/';
+  $('#urls').text(url).attr('href',url);
 </script>
 </html>

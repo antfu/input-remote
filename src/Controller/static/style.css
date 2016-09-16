@@ -30,10 +30,11 @@ a:hover {
   pointer-events: none;
 }
 .about {
-  margin: 2em;
+  margin     : 2em;
+  user-select: initial;
 }
 .about > div {
-  margin: 1em 0.1em;
+  margin     : 1em 0.1em;
   font-family: monospace;
 }
 .breadcrumb > * {
