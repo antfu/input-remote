@@ -1,0 +1,9 @@
+﻿;!@Install@!UTF-8!
+InstallPath="%Temp%"
+Title="InputRemote"
+GUIMode="2"
+OverwriteMode="2"
+RunProgram="hidcon:\"%%T\\InputRemote.Client.Receiver.exe\""
+;!@InstallEnd@!
+7zSFXBuilder_UseDefMod=7zsd_All
+7zSFXBuilder_UPXCommands=--best --all-methods

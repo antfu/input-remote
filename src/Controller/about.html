@@ -21,7 +21,8 @@
 <script src="static/lan_ip.js"></script>
 <script>
   var lan_ip = lan_ip || 'this_computer';
-  var url = 'http://'+lan_ip+':'+location.port+'/';
+  var port = location.port ? (':'+location.port) : '';
+  var url = 'http://'+lan_ip+port+'/';
   $('#urls').text(url).attr('href',url);
   var qrcode = new QRCode(document.getElementById("qrcode"), {
     text: url,

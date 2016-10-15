@@ -31,11 +31,12 @@
             this.components = new System.ComponentModel.Container();
             this.TrayNotifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.TrayMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.useEmbeddedServerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.connectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.enableToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.useEmbeddedServerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.qRCodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.TrayMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -52,45 +53,55 @@
             this.useEmbeddedServerToolStripMenuItem,
             this.connectToolStripMenuItem,
             this.enableToolStripMenuItem,
+            this.qRCodeToolStripMenuItem,
             this.toolStripSeparator2,
             this.exitToolStripMenuItem});
             this.TrayMenu.Name = "TrayMenu";
             this.TrayMenu.ShowCheckMargin = true;
             this.TrayMenu.ShowImageMargin = false;
-            this.TrayMenu.Size = new System.Drawing.Size(239, 163);
+            this.TrayMenu.Size = new System.Drawing.Size(167, 142);
+            // 
+            // useEmbeddedServerToolStripMenuItem
+            // 
+            this.useEmbeddedServerToolStripMenuItem.Name = "useEmbeddedServerToolStripMenuItem";
+            this.useEmbeddedServerToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
+            this.useEmbeddedServerToolStripMenuItem.Text = "Embedded Server";
+            this.useEmbeddedServerToolStripMenuItem.Visible = false;
+            this.useEmbeddedServerToolStripMenuItem.Click += new System.EventHandler(this.useEmbeddedServerToolStripMenuItem_Click);
             // 
             // connectToolStripMenuItem
             // 
             this.connectToolStripMenuItem.Name = "connectToolStripMenuItem";
-            this.connectToolStripMenuItem.Size = new System.Drawing.Size(238, 30);
+            this.connectToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
             this.connectToolStripMenuItem.Text = "&Connect";
+            this.connectToolStripMenuItem.Visible = false;
             this.connectToolStripMenuItem.Click += new System.EventHandler(this.connectToolStripMenuItem_Click);
             // 
             // enableToolStripMenuItem
             // 
             this.enableToolStripMenuItem.CheckOnClick = true;
             this.enableToolStripMenuItem.Name = "enableToolStripMenuItem";
-            this.enableToolStripMenuItem.Size = new System.Drawing.Size(238, 30);
+            this.enableToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
             this.enableToolStripMenuItem.Text = "Enable";
-            // 
-            // useEmbeddedServerToolStripMenuItem
-            // 
-            this.useEmbeddedServerToolStripMenuItem.Name = "useEmbeddedServerToolStripMenuItem";
-            this.useEmbeddedServerToolStripMenuItem.Size = new System.Drawing.Size(238, 30);
-            this.useEmbeddedServerToolStripMenuItem.Text = "Embedded Server";
-            this.useEmbeddedServerToolStripMenuItem.Click += new System.EventHandler(this.useEmbeddedServerToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(235, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(163, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(238, 30);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
             this.exitToolStripMenuItem.Text = "&Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            // 
+            // qRCodeToolStripMenuItem
+            // 
+            this.qRCodeToolStripMenuItem.Name = "qRCodeToolStripMenuItem";
+            this.qRCodeToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
+            this.qRCodeToolStripMenuItem.Text = "&QRCode";
+            this.qRCodeToolStripMenuItem.Click += new System.EventHandler(this.qRCodeToolStripMenuItem_Click);
             // 
             // Main
             // 
@@ -119,6 +130,7 @@
         private System.Windows.Forms.ToolStripMenuItem enableToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem useEmbeddedServerToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripMenuItem qRCodeToolStripMenuItem;
     }
 }
 

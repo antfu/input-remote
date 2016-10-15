@@ -121,7 +121,11 @@ namespace InputRemote.Client.Receiver
             };
 
             EnableEmbeddedServer();
+            OpenAboutPage();
+        }
 
+        private void OpenAboutPage()
+        {
             System.Diagnostics.Process.Start("http://localhost:" + settings["http_port"].ToString() + "/about.html");
         }
 
@@ -228,6 +232,11 @@ namespace InputRemote.Client.Receiver
                 DisableEmbeddedServer();
             else
                 EnableEmbeddedServer();
+        }
+
+        private void qRCodeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenAboutPage();
         }
     }
 }
