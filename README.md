@@ -5,7 +5,9 @@ a HID input sharing tool.
 ## Install
 **Windows**
 
-Simply download the [current alpha build v0.1.2](https://github.com/AnthonyFu117/input-remote/releases/tag/v0.1.2-alpha), decompress and execute `InputRemote.Client.Receiver.exe`. You may also need to install [.Net Framework 4.0](https://www.microsoft.com/en-us/download/details.aspx?id=17851).
+Simply download the [latest relase](https://github.com/AnthonyFu117/input-remote/releases), decompress and execute `InputRemote.Client.Receiver.exe`.
+
+You should install [.Net Framework 4.0](https://www.microsoft.com/en-us/download/details.aspx?id=17851) if needed.
 
 **Linux / Mac OS X**
 
