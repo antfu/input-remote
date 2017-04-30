@@ -18,8 +18,12 @@ We only support Windows for now. The supporting for Linux / Mac OS X may be met 
 1. Connect your smartphone and your PC into a **same** LAN network.
 1. Use your phone to scan the ***qr-code*** in about page
 1. You may see the tray icon of PC turn `Green` and `Sender Online` displayed on your phone browser.
-1. Check the `Enable` context menu of tray icon
+1. *Check the `Enable` context menu of tray icon*
 1. Now you can access your PC by taping and sliding on your smartphone screen. Enjoy it!
+
+## Screenshots
+![image](https://cloud.githubusercontent.com/assets/11247099/25568605/fb9a7b30-2e38-11e7-8454-92a68a38d7f9.png)
+![image](https://cloud.githubusercontent.com/assets/11247099/25568588/a1063060-2e38-11e7-8456-e8801bf1536a.png)
 
 ## Develop
 
